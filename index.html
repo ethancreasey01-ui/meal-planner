@@ -11,23 +11,13 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --ios-blue: #007AFF;
-            --ios-blue-dark: #0056D6;
-            --ios-gray: #8E8E93;
-            --ios-gray-light: #F2F2F7;
-            --ios-bg: #F5F5F7;
-            --ios-card: #FFFFFF;
-        }
-
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
-            background: var(--ios-bg);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             height: 100vh;
             width: 100vw;
             overflow: hidden;
-            color: #1C1C1E;
-            -webkit-font-smoothing: antialiased;
+            color: #333;
         }
 
         .app-container {
@@ -55,12 +45,10 @@
         }
 
         .panel-header {
-            padding: 16px 20px;
-            background: var(--ios-blue);
+            padding: 15px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             flex-shrink: 0;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
         }
 
         .panel-header h1 {
@@ -90,8 +78,7 @@
 
         .search-box input:focus {
             outline: none;
-            border-color: var(--ios-blue);
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+            border-color: #667eea;
         }
 
         .tab-nav {
@@ -118,8 +105,8 @@
         }
 
         .tab-btn.active {
-            color: var(--ios-blue);
-            border-bottom-color: var(--ios-blue);
+            color: #667eea;
+            border-bottom-color: #667eea;
             background: white;
         }
 
@@ -168,13 +155,13 @@
         }
 
         .grocery-item:hover {
-            border-color: var(--ios-blue);
+            border-color: #667eea;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
         .grocery-item.selected {
-            border-color: var(--ios-blue);
+            border-color: #667eea;
             background: #f0f4ff;
         }
 
@@ -237,7 +224,7 @@
         .btn-grocery {
             width: 100%;
             padding: 10px;
-            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-blue-dark) 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
             border-radius: 8px;
@@ -249,7 +236,7 @@
 
         .btn-grocery:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
 
         .btn-grocery:disabled {
@@ -281,7 +268,7 @@
         .recipe-card:hover {
             transform: translateY(-2px) scale(1.01);
             box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
-            border-color: var(--ios-blue);
+            border-color: #667eea;
         }
 
         .recipe-card:active {
@@ -326,7 +313,7 @@
 
         .tag {
             background: #e8f0fe;
-            color: var(--ios-blue);
+            color: #667eea;
             padding: 3px 8px;
             border-radius: 20px;
             font-size: 0.7rem;
@@ -371,7 +358,7 @@
         }
 
         .week-nav button:hover {
-            background: var(--ios-blue);
+            background: #667eea;
             color: white;
         }
 
@@ -400,17 +387,16 @@
             width: 50px;
             padding: 6px;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 6px;
             text-align: center;
             font-size: 1rem;
             font-weight: 600;
-            color: var(--ios-blue);
+            color: #667eea;
         }
 
         .servings-selector input:focus {
             outline: none;
-            border-color: var(--ios-blue);
-            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+            border-color: #667eea;
         }
 
         .actions {
@@ -442,24 +428,13 @@
         }
 
         .btn-primary {
-            background: var(--ios-blue);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
 
         .btn-primary:hover {
-            background: var(--ios-blue-dark);
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
 
         /* Calendar Grid */
@@ -517,7 +492,7 @@
         }
 
         .day-header.today {
-            background: var(--ios-blue);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         .day-header.today .day-name,
@@ -578,10 +553,10 @@
         }
 
         .drop-zone.drag-over {
-            border-color: var(--ios-blue);
+            border-color: #667eea;
             border-style: solid;
-            background: rgba(0, 122, 255, 0.08);
-            box-shadow: inset 0 0 0 2px rgba(0, 122, 255, 0.2);
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
+            box-shadow: inset 0 0 0 2px rgba(102, 126, 234, 0.2);
             transform: scale(1.02);
         }
 
@@ -593,10 +568,10 @@
         }
 
         .meal-item {
-            background: var(--ios-blue);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 8px 10px;
-            border-radius: 10px;
+            border-radius: 8px;
             font-size: 0.8rem;
             cursor: grab;
             position: relative;
@@ -604,18 +579,18 @@
             justify-content: space-between;
             align-items: center;
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
+            box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
             user-select: none;
         }
 
         .meal-item:hover {
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.4);
         }
 
         .meal-item.dragging {
             transform: scale(1.05) rotate(1deg);
-            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.4);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
             z-index: 1000;
         }
 
@@ -658,7 +633,7 @@
 
         .daily-macro-value {
             font-weight: 700;
-            color: var(--ios-blue);
+            color: #667eea;
         }
 
         /* Macro Summary - Weekly */
@@ -697,7 +672,7 @@
         }
 
         .macro-card.highlight {
-            background: var(--ios-blue);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
         }
 
@@ -753,7 +728,7 @@
         }
 
         .modal-header {
-            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-blue-dark) 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             padding: 20px;
             position: relative;
@@ -805,7 +780,7 @@
             font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: var(--ios-blue);
+            color: #667eea;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
@@ -855,7 +830,7 @@
         .modal-macro-value {
             font-size: 1.3rem;
             font-weight: 700;
-            color: var(--ios-blue);
+            color: #667eea;
         }
 
         .modal-macro-label {
@@ -866,19 +841,18 @@
 
         .recipe-link {
             display: inline-block;
-            background: var(--ios-blue);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 12px 24px;
-            border-radius: 10px;
+            padding: 10px 20px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: 600;
             transition: all 0.2s;
         }
 
         .recipe-link:hover {
-            background: var(--ios-blue-dark);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
 
         /* Scrollbar styling */
@@ -1006,9 +980,6 @@
                 <div class="actions">
                     <button class="btn btn-secondary" onclick="clearWeek()">🗑️ Clear</button>
                     <button class="btn btn-secondary" onclick="generateRandomMealPlan()" title="Auto-generate random meal plan">🎲 Generate Plan</button>
-                    <button class="btn btn-danger" onclick="clearLists()" title="Clear Apple Reminders lists">
-                        🧹 Clear Lists
-                    </button>
                     <button class="btn btn-primary" onclick="generateShoppingList()">
                         🛒 Shopping List
                     </button>
@@ -1104,7 +1075,6 @@
             {
                 id: 1,
                 name: "Cheesy Chicken Fajita Wraps",
-                emoji: "🌯",
                 calories: 394,
                 protein: 43,
                 carbs: 27,
@@ -1135,7 +1105,6 @@
             {
                 id: 2,
                 name: "Korean BBQ Chicken Wraps",
-                emoji: "🌯",
                 calories: 417,
                 protein: 39,
                 carbs: 38,
@@ -1167,203 +1136,6 @@
                     "In a second bowl, add yogurt, light mayo, gochujang, honey, garlic powder and milk for desired consistency",
                     "In a lined large sheet pan, spread marinated chicken evenly. Add cooking spray, oven bake 25-30 mins at 200C / 400F until golden!",
                     "Toast wraps in a stove flame, slice up chicken then serve with cucumber slaw and gochujang sauce. ENJOY!"
-                ]
-            },
-            {
-                id: 3,
-                name: "Oyakodon (Chicken & Egg Rice Bowl)",
-                emoji: "🍚",
-                calories: 485,
-                protein: 42,
-                carbs: 52,
-                fat: 14,
-                servings: 4,
-                tags: ["japanese", "comfort food", "bowl"],
-                source: "Recipe Book",
-                ingredients: [
-                    { name: "Chicken Thighs", amount: 150, unit: "g", perServing: true },
-                    { name: "Eggs", amount: 2, unit: "pc", perServing: true },
-                    { name: "White Rice", amount: 200, unit: "g", perServing: true },
-                    { name: "Yellow Onion", amount: 80, unit: "g", perServing: true },
-                    { name: "Dashi Stock", amount: 60, unit: "ml", perServing: true },
-                    { name: "Soy Sauce", amount: 15, unit: "ml", perServing: true },
-                    { name: "Mirin", amount: 15, unit: "ml", perServing: true },
-                    { name: "Sugar", amount: 5, unit: "g", perServing: true },
-                    { name: "Green Onions", amount: 10, unit: "g", perServing: true }
-                ],
-                directions: [
-                    "Cook rice according to package instructions",
-                    "Cut chicken into bite-sized pieces, slice onion thinly",
-                    "In a pan, combine dashi, soy sauce, mirin and sugar, bring to simmer",
-                    "Add onions and cook for 2-3 minutes until softened",
-                    "Add chicken and simmer until cooked through (5-7 mins)",
-                    "Pour beaten eggs over chicken, cover and cook for 1-2 minutes",
-                    "Serve over steamed rice, garnish with green onions"
-                ]
-            },
-            {
-                id: 4,
-                name: "Baconnaise Double Cheeseburgers",
-                emoji: "🍔",
-                calories: 650,
-                protein: 45,
-                carbs: 32,
-                fat: 38,
-                servings: 4,
-                tags: ["burger", "comfort food", "high protein"],
-                source: "TikTok",
-                ingredients: [
-                    { name: "Ground Beef", amount: 200, unit: "g", perServing: true },
-                    { name: "Bacon", amount: 60, unit: "g", perServing: true },
-                    { name: "Brioche Buns", amount: 1, unit: "pc", perServing: true },
-                    { name: "Cheddar Cheese", amount: 30, unit: "g", perServing: true },
-                    { name: "American Cheese", amount: 1, unit: "slice", perServing: true },
-                    { name: "Mayonnaise", amount: 15, unit: "g", perServing: true },
-                    { name: "Ketchup", amount: 10, unit: "g", perServing: true },
-                    { name: "Pickles", amount: 15, unit: "g", perServing: true },
-                    { name: "Lettuce", amount: 20, unit: "g", perServing: true },
-                    { name: "Tomato", amount: 30, unit: "g", perServing: true }
-                ],
-                directions: [
-                    "Cook bacon until crispy, set aside",
-                    "Form beef into patties, season with salt and pepper",
-                    "Grill or pan-sear patties over high heat for 3-4 mins per side",
-                    "Add cheese in last minute to melt",
-                    "Toast buns lightly",
-                    "Mix mayo and ketchup for baconnaise sauce",
-                    "Assemble burgers with sauce, lettuce, tomato, pickles, bacon and patties"
-                ]
-            },
-            {
-                id: 5,
-                name: "Mediterranean Roast Potatoes with Chicken",
-                emoji: "🥔",
-                calories: 520,
-                protein: 38,
-                carbs: 48,
-                fat: 22,
-                servings: 6,
-                tags: ["mediterranean", "sheet pan", "family"],
-                source: "Family Recipe",
-                ingredients: [
-                    { name: "Chicken Thighs", amount: 180, unit: "g", perServing: true },
-                    { name: "Baby Potatoes", amount: 250, unit: "g", perServing: true },
-                    { name: "Red Onion", amount: 40, unit: "g", perServing: true },
-                    { name: "Cherry Tomatoes", amount: 80, unit: "g", perServing: true },
-                    { name: "Olive Oil", amount: 15, unit: "ml", perServing: true },
-                    { name: "Lemon", amount: 0.5, unit: "pc", perServing: true },
-                    { name: "Garlic", amount: 2, unit: "cloves", perServing: true },
-                    { name: "Oregano", amount: 2, unit: "g", perServing: true },
-                    { name: "Feta Cheese", amount: 25, unit: "g", perServing: true },
-                    { name: "Kalamata Olives", amount: 15, unit: "g", perServing: true }
-                ],
-                directions: [
-                    "Preheat oven to 200C (400F)",
-                    "Halve potatoes and parboil for 5 minutes",
-                    "Toss potatoes with olive oil, lemon juice, garlic and oregano",
-                    "Season chicken thighs and add to sheet pan with potatoes",
-                    "Roast for 35-40 minutes until chicken is cooked and potatoes are crispy",
-                    "Add cherry tomatoes in last 10 minutes",
-                    "Top with crumbled feta and olives before serving"
-                ]
-            },
-            {
-                id: 6,
-                name: "Crispy Peri Peri Chicken & Bacon Pasta Salad",
-                emoji: "🍝",
-                calories: 580,
-                protein: 48,
-                carbs: 55,
-                fat: 24,
-                servings: 8,
-                tags: ["pasta salad", "meal prep", "spicy"],
-                source: "TikTok",
-                ingredients: [
-                    { name: "Chicken Thighs", amount: 140, unit: "g", perServing: true },
-                    { name: "Bacon", amount: 40, unit: "g", perServing: true },
-                    { name: "Pasta", amount: 80, unit: "g", perServing: true },
-                    { name: "Cherry Tomatoes", amount: 60, unit: "g", perServing: true },
-                    { name: "Cucumber", amount: 40, unit: "g", perServing: true },
-                    { name: "Red Onion", amount: 20, unit: "g", perServing: true },
-                    { name: "Peri Peri Sauce", amount: 20, unit: "g", perServing: true },
-                    { name: "Mayonnaise", amount: 15, unit: "g", perServing: true },
-                    { name: "Lemon Juice", amount: 5, unit: "ml", perServing: true },
-                    { name: "Garlic Powder", amount: 2, unit: "g", perServing: true }
-                ],
-                directions: [
-                    "Cook pasta according to package, rinse with cold water",
-                    "Season chicken with peri peri seasoning, cook until crispy",
-                    "Cook bacon until crispy, chop into bits",
-                    "Chop vegetables into bite-sized pieces",
-                    "Mix mayo, peri peri sauce, lemon juice and garlic for dressing",
-                    "Combine pasta, chicken, bacon, veggies and dressing",
-                    "Chill for at least 30 minutes before serving"
-                ]
-            },
-            {
-                id: 7,
-                name: "Crispy Chicken Bacon Burgers",
-                emoji: "🍔",
-                calories: 620,
-                protein: 46,
-                carbs: 38,
-                fat: 32,
-                servings: 4,
-                tags: ["burger", "crispy", "comfort food"],
-                source: "TikTok",
-                ingredients: [
-                    { name: "Chicken Thighs", amount: 170, unit: "g", perServing: true },
-                    { name: "Bacon", amount: 50, unit: "g", perServing: true },
-                    { name: "Brioche Buns", amount: 1, unit: "pc", perServing: true },
-                    { name: "Flour", amount: 30, unit: "g", perServing: true },
-                    { name: "Eggs", amount: 0.5, unit: "pc", perServing: true },
-                    { name: "Breadcrumbs", amount: 40, unit: "g", perServing: true },
-                    { name: "Lettuce", amount: 20, unit: "g", perServing: true },
-                    { name: "Tomato", amount: 30, unit: "g", perServing: true },
-                    { name: "Mayonnaise", amount: 15, unit: "g", perServing: true },
-                    { name: "BBQ Sauce", amount: 10, unit: "g", perServing: true }
-                ],
-                directions: [
-                    "Pound chicken thighs to even thickness",
-                    "Dredge chicken in flour, then egg wash, then breadcrumbs",
-                    "Fry chicken in oil until golden and crispy (5-6 mins per side)",
-                    "Cook bacon until crispy",
-                    "Toast buns and mix mayo with BBQ sauce",
-                    "Assemble burgers with sauce, lettuce, tomato, crispy chicken and bacon"
-                ]
-            },
-            {
-                id: 8,
-                name: "Chicken Pad Thai",
-                emoji: "🍜",
-                calories: 495,
-                protein: 38,
-                carbs: 52,
-                fat: 18,
-                servings: 4,
-                tags: ["thai", "noodles", "stir fry"],
-                source: "Recipe Book",
-                ingredients: [
-                    { name: "Rice Noodles", amount: 80, unit: "g", perServing: true },
-                    { name: "Chicken Breast", amount: 120, unit: "g", perServing: true },
-                    { name: "Eggs", amount: 1, unit: "pc", perServing: true },
-                    { name: "Bean Sprouts", amount: 40, unit: "g", perServing: true },
-                    { name: "Green Onions", amount: 20, unit: "g", perServing: true },
-                    { name: "Peanuts", amount: 15, unit: "g", perServing: true },
-                    { name: "Lime", amount: 0.5, unit: "pc", perServing: true },
-                    { name: "Fish Sauce", amount: 15, unit: "ml", perServing: true },
-                    { name: "Tamarind Paste", amount: 10, unit: "g", perServing: true },
-                    { name: "Palm Sugar", amount: 10, unit: "g", perServing: true },
-                    { name: "Garlic", amount: 2, unit: "cloves", perServing: true }
-                ],
-                directions: [
-                    "Soak rice noodles in warm water until soft, drain",
-                    "Mix fish sauce, tamarind, and palm sugar for pad thai sauce",
-                    "Stir fry garlic and chicken until cooked, set aside",
-                    "Push ingredients to side, scramble egg in pan",
-                    "Add noodles and sauce, toss everything together",
-                    "Add bean sprouts and green onions, cook for 1 minute",
-                    "Serve with crushed peanuts and lime wedge"
                 ]
             }
         ];
@@ -1785,40 +1557,6 @@
             }
         }
 
-        async function clearLists() {
-            if (!confirm('🧹 Clear Apple Reminders lists?\n\nThis will remove all items from:\n• 📅 This Week\'s Meals\n• 🛒 Shopping List\n\nAre you sure?')) {
-                return;
-            }
-            
-            const btn = document.querySelector('.btn-danger');
-            const originalText = btn.textContent;
-            btn.textContent = '🧹 Clearing...';
-            btn.disabled = true;
-            
-            try {
-                const response = await fetch('/api/clear-lists', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                
-                const data = await response.json();
-                
-                if (data.success) {
-                    alert(`✅ Lists cleared!\n\n• Cleared: ${data.summary.cleared} items\n• Failed: ${data.summary.failed} items`);
-                } else {
-                    alert('❌ Error clearing lists: ' + (data.error || 'Unknown error'));
-                }
-            } catch (error) {
-                console.error('Error clearing lists:', error);
-                alert('❌ Failed to clear lists.\n\nMake sure the server is running and remindctl is installed.');
-            } finally {
-                btn.textContent = originalText;
-                btn.disabled = false;
-            }
-        }
-
         function updateMacroSummary() {
             const meals = Object.values(mealPlan);
             const mealCount = meals.length;
@@ -1922,40 +1660,14 @@ ${ingredientList}
             btn.textContent = '⏳ Sending...';
             btn.disabled = true;
             
-            // Build meal plan for API
-            const formattedMealPlan = {};
-            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-            
-            days.forEach((day, index) => {
-                const today = new Date();
-                const startOfWeek = new Date(today);
-                startOfWeek.setDate(today.getDate() - today.getDay() + 1 + (currentWeekOffset * 7));
-                const date = new Date(startOfWeek);
-                date.setDate(startOfWeek.getDate() + index);
-                const dateKey = date.toISOString().split('T')[0];
-                
-                const lunchMeal = mealPlan[`${dateKey}-lunch`];
-                const dinnerMeal = mealPlan[`${dateKey}-dinner`];
-                
-                formattedMealPlan[day] = {
-                    lunch: lunchMeal ? lunchMeal.name : '-',
-                    dinner: dinnerMeal ? dinnerMeal.name : '-',
-                    lunchUrl: lunchMeal ? (lunchMeal.url || '') : '',
-                    dinnerUrl: dinnerMeal ? (dinnerMeal.url || '') : '',
-                    lunchImage: lunchMeal ? (lunchMeal.emoji || '🍽️') : '🍽️',
-                    dinnerImage: dinnerMeal ? (dinnerMeal.emoji || '🍽️') : '🍽️'
-                };
-            });
-            
             try {
-                const response = await fetch('/api/shopping-list', {
+                const response = await fetch('http://localhost:5001/api/shopping-list', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         ingredients: ingredients,
-                        mealPlan: formattedMealPlan,
                         listName: 'Shopping List'
                     })
                 });
@@ -1963,8 +1675,7 @@ ${ingredientList}
                 const data = await response.json();
                 
                 if (data.success) {
-                    const mealsMsg = data.mealsAdded ? `\n📅 ${data.mealsAdded} meals added to Meal Plan` : '';
-                    alert(`🎉 Success!\n\n✅ ${data.summary.successful} items added to Shopping List${mealsMsg}\n❌ ${data.summary.failed} failed\n\nCheck your Apple Reminders app!`);
+                    alert(`🎉 Success!\n\n✅ ${data.summary.successful} items added to Shopping List\n❌ ${data.summary.failed} failed\n\nCheck your Apple Reminders app!`);
                 } else {
                     alert(`❌ Error: ${data.error || 'Failed to add items'}`);
                 }
