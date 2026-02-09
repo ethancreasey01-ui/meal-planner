@@ -874,7 +874,142 @@
             background: #a1a1a1;
         }
 
-        /* Responsive */
+        /* ===== MOBILE OPTIMIZATIONS ===== */
+        
+        /* Mobile Bottom Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            padding: 8px 0;
+            z-index: 1000;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+        
+        .mobile-nav-items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: #666;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 12px;
+        }
+        
+        .mobile-nav-item.active {
+            color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .mobile-nav-item span:first-child {
+            font-size: 1.4rem;
+        }
+        
+        /* Mobile Calendar Day Swiper */
+        .mobile-day-swiper {
+            display: none;
+            background: white;
+            padding: 10px 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .day-swiper-container {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding-bottom: 5px;
+        }
+        
+        .day-swiper-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .day-swiper-item {
+            flex: 0 0 auto;
+            scroll-snap-align: start;
+            padding: 10px 16px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 60px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid transparent;
+        }
+        
+        .day-swiper-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .day-swiper-item .day-name {
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            opacity: 0.8;
+        }
+        
+        .day-swiper-item .day-number {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        /* Mobile Recipe Panel Toggle */
+        .mobile-panel-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .mobile-panel-overlay.active {
+            opacity: 1;
+        }
+        
+        .recipe-panel.mobile-open {
+            transform: translateX(0);
+        }
+        
+        /* Touch-friendly improvements */
+        @media (hover: none) {
+            .recipe-card:hover {
+                transform: none;
+            }
+            
+            .btn:hover, .btn-grocery:hover {
+                transform: none;
+            }
+            
+            .day-column:hover {
+                transform: none;
+            }
+        }
+        
+        /* Responsive Breakpoints */
         @media (max-width: 1200px) {
             .app-container {
                 grid-template-columns: 260px 1fr;
@@ -912,39 +1047,303 @@
             }
         }
 
-        @media (max-width: 900px) {
+        /* Mobile Layout - Up to 768px */
+        @media (max-width: 768px) {
+            body {
+                overflow: auto;
+                height: auto;
+                min-height: 100vh;
+                padding-bottom: 80px; /* Space for bottom nav */
+            }
+            
             .app-container {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto 1fr;
-            }
-            
-            .recipe-panel {
-                max-width: none;
-                max-height: 200px;
-                border-right: none;
-                border-bottom: 1px solid #e0e0e0;
-            }
-            
-            .recipe-list {
                 display: flex;
-                overflow-x: auto;
-                overflow-y: hidden;
+                flex-direction: column;
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            /* Mobile Navigation */
+            .mobile-nav {
+                display: block;
+            }
+            
+            /* Recipe Panel - Slide out from left */
+            .recipe-panel {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 85%;
+                max-width: 320px;
+                height: 100vh;
+                z-index: 1001;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                box-shadow: 4px 0 20px rgba(0,0,0,0.2);
+            }
+            
+            .recipe-panel.mobile-open {
+                transform: translateX(0);
+            }
+            
+            .mobile-panel-overlay {
+                display: block;
+            }
+            
+            .mobile-panel-overlay.active {
+                opacity: 1;
+            }
+            
+            /* Main Content */
+            .main-content {
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            /* Toolbar - Stack on mobile */
+            .toolbar {
+                flex-wrap: wrap;
                 gap: 10px;
+                height: auto;
+                padding: 12px 15px;
+            }
+            
+            .week-nav {
+                order: 1;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .week-nav h2 {
+                font-size: 1.1rem;
+            }
+            
+            .servings-selector {
+                order: 2;
+                flex: 1;
+                justify-content: center;
+            }
+            
+            .actions {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                gap: 8px;
+            }
+            
+            .btn {
+                padding: 10px 14px;
+                font-size: 0.8rem;
+                flex: 1;
+                justify-content: center;
+            }
+            
+            /* Mobile Day Swiper */
+            .mobile-day-swiper {
+                display: block;
+            }
+            
+            /* Calendar - Single column on mobile */
+            .calendar-container {
+                padding: 10px;
+                overflow: visible;
+            }
+            
+            .calendar-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+                min-width: auto;
+            }
+            
+            .day-column {
+                min-height: auto;
+                border-radius: 16px;
+                box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            }
+            
+            .day-header {
+                padding: 12px 15px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .day-header .day-name {
+                font-size: 0.9rem;
+            }
+            
+            .day-header .day-number {
+                font-size: 1.5rem;
+            }
+            
+            .meal-slots {
+                padding: 15px;
+                gap: 15px;
+            }
+            
+            .meal-slot {
+                min-height: auto;
+            }
+            
+            .meal-label {
+                font-size: 0.85rem;
+                margin-bottom: 10px;
+            }
+            
+            .drop-zone {
+                min-height: 80px;
+                padding: 12px;
+            }
+            
+            .meal-item {
+                padding: 12px 14px;
+                font-size: 0.95rem;
+            }
+            
+            .meal-item .remove {
+                width: 28px;
+                height: 28px;
+                font-size: 1rem;
+            }
+            
+            /* Daily Macros */
+            .daily-macros {
+                padding: 12px 15px;
+                font-size: 0.8rem;
+            }
+            
+            /* Macro Panel */
+            .macro-panel {
+                padding: 15px;
+                margin-bottom: 80px;
+            }
+            
+            .macro-header h3 {
+                font-size: 0.95rem;
+            }
+            
+            .macro-grid {
+                gap: 10px;
+            }
+            
+            .macro-card {
+                padding: 15px 10px;
+            }
+            
+            .macro-value {
+                font-size: 1.3rem;
+            }
+            
+            .macro-label {
+                font-size: 0.75rem;
+            }
+            
+            /* Recipe Cards - Larger touch targets */
+            .recipe-card {
+                padding: 16px;
+                margin-bottom: 12px;
+            }
+            
+            .recipe-card h3 {
+                font-size: 1rem;
+            }
+            
+            .recipe-meta {
+                font-size: 0.85rem;
+            }
+            
+            /* Modal - Full screen on mobile */
+            .modal-content {
+                width: 95%;
+                max-height: 90vh;
+                border-radius: 20px;
+            }
+            
+            .modal-header {
+                padding: 20px;
+            }
+            
+            .modal-header h2 {
+                font-size: 1.3rem;
+            }
+            
+            .modal-body {
+                padding: 20px;
+            }
+            
+            .modal-macros {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            
+            .modal-macro-value {
+                font-size: 1.5rem;
+            }
+            
+            /* Grocery list improvements */
+            .grocery-item {
+                padding: 16px;
+            }
+            
+            .grocery-item h4 {
+                font-size: 1rem;
+            }
+            
+            .price-row {
+                font-size: 0.95rem;
+                padding: 8px 0;
+            }
+            
+            .btn-grocery {
+                padding: 14px;
+                font-size: 1rem;
+            }
+        }
+        
+        /* Small phones */
+        @media (max-width: 380px) {
+            .toolbar {
                 padding: 10px;
             }
             
-            .recipe-card {
-                min-width: 200px;
-                margin-bottom: 0;
-                flex-shrink: 0;
+            .week-nav h2 {
+                font-size: 1rem;
             }
+            
+            .btn {
+                padding: 8px 10px;
+                font-size: 0.75rem;
+            }
+            
+            .day-swiper-item {
+                min-width: 55px;
+                padding: 8px 12px;
+            }
+            
+            .macro-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        /* Hide scrollbar but keep functionality */
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
         }
     </style>
 </head>
 <body>
+    <!-- Mobile Panel Overlay -->
+    <div class="mobile-panel-overlay" id="mobilePanelOverlay" onclick="closeMobilePanel()"></div>
+    
     <div class="app-container">
         <!-- Left Panel - Recipe Library -->
-        <div class="recipe-panel">
+        <div class="recipe-panel" id="recipePanel">
             <div class="panel-header">
                 <h1>🍽️ Meal Planner</h1>
                 <p>Plan meals & track specials</p>
@@ -986,6 +1385,13 @@
                 </div>
             </div>
 
+            <!-- Mobile Day Swiper -->
+            <div class="mobile-day-swiper">
+                <div class="day-swiper-container" id="daySwiper">
+                    <!-- Day swiper items injected here -->
+                </div>
+            </div>
+            
             <div class="calendar-container">
                 <div class="calendar-grid" id="calendarGrid">
                     <!-- Days injected here -->
@@ -1018,6 +1424,28 @@
             </div>
         </div>
     </div>
+    
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-nav" id="mobileNav">
+        <div class="mobile-nav-items">
+            <button class="mobile-nav-item active" onclick="switchMobileView('calendar')" id="nav-calendar">
+                <span>📅</span>
+                <span>Calendar</span>
+            </button>
+            <button class="mobile-nav-item" onclick="switchMobileView('recipes')" id="nav-recipes">
+                <span>🍽️</span>
+                <span>Recipes</span>
+            </button>
+            <button class="mobile-nav-item" onclick="switchMobileView('groceries')" id="nav-groceries">
+                <span>🛒</span>
+                <span>Specials</span>
+            </button>
+            <button class="mobile-nav-item" onclick="generateShoppingList()" id="nav-shopping">
+                <span>📋</span>
+                <span>List</span>
+            </button>
+        </div>
+    </nav>
 
     <!-- Recipe Detail Modal -->
     <div class="modal-overlay" id="recipeModal">
@@ -1226,9 +1654,145 @@
             renderRecipes();
             renderCalendar();
             updateMacroSummary();
+            renderMobileDaySwiper();
             
             document.getElementById('searchInput').addEventListener('input', filterRecipes);
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                if (window.innerWidth > 768) {
+                    closeMobilePanel();
+                }
+            });
+            
+            // Touch swipe detection for mobile calendar
+            initTouchGestures();
         }
+        
+        // Mobile Day Swiper
+        let currentMobileDay = 0;
+        
+        function renderMobileDaySwiper() {
+            const swiper = document.getElementById('daySwiper');
+            if (!swiper) return;
+            
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            const today = new Date();
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay() + 1 + (currentWeekOffset * 7));
+            
+            swiper.innerHTML = days.map((dayName, index) => {
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + index);
+                const isToday = date.toDateString() === today.toDateString();
+                const isActive = index === currentMobileDay;
+                
+                return `
+                    <div class="day-swiper-item ${isActive ? 'active' : ''} ${isToday ? 'today' : ''}" 
+                         onclick="selectMobileDay(${index})" data-index="${index}">
+                        <div class="day-name">${dayName}</div>
+                        <div class="day-number">${date.getDate()}</div>
+                    </div>
+                `;
+            }).join('');
+            
+            // Scroll active day into view
+            const activeItem = swiper.querySelector('.day-swiper-item.active');
+            if (activeItem) {
+                activeItem.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+            }
+        }
+        
+        function selectMobileDay(index) {
+            currentMobileDay = index;
+            renderMobileDaySwiper();
+            
+            // Scroll to the selected day in the calendar
+            const dayColumns = document.querySelectorAll('.day-column');
+            if (dayColumns[index]) {
+                dayColumns[index].scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+        
+        // Mobile View Switching
+        function switchMobileView(view) {
+            // Update nav active state
+            document.querySelectorAll('.mobile-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.getElementById(`nav-${view}`).classList.add('active');
+            
+            if (view === 'recipes') {
+                // Open recipe panel
+                document.getElementById('recipePanel').classList.add('mobile-open');
+                document.getElementById('mobilePanelOverlay').classList.add('active');
+                switchTab('recipes');
+            } else if (view === 'groceries') {
+                // Open grocery panel
+                document.getElementById('recipePanel').classList.add('mobile-open');
+                document.getElementById('mobilePanelOverlay').classList.add('active');
+                switchTab('groceries');
+            } else if (view === 'calendar') {
+                // Close any open panels
+                closeMobilePanel();
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+        
+        function closeMobilePanel() {
+            document.getElementById('recipePanel').classList.remove('mobile-open');
+            document.getElementById('mobilePanelOverlay').classList.remove('active');
+            
+            // Reset nav to calendar if we were on recipes/groceries
+            const activeNav = document.querySelector('.mobile-nav-item.active');
+            if (activeNav && (activeNav.id === 'nav-recipes' || activeNav.id === 'nav-groceries')) {
+                document.querySelectorAll('.mobile-nav-item').forEach(item => item.classList.remove('active'));
+                document.getElementById('nav-calendar').classList.add('active');
+            }
+        }
+        
+        // Touch Gestures for Mobile
+        function initTouchGestures() {
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            const calendarContainer = document.querySelector('.calendar-container');
+            if (!calendarContainer) return;
+            
+            calendarContainer.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            
+            calendarContainer.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+            
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                const diff = touchStartX - touchEndX;
+                
+                if (Math.abs(diff) > swipeThreshold) {
+                    if (diff > 0) {
+                        // Swipe left - next week
+                        changeWeek(1);
+                    } else {
+                        // Swipe right - previous week
+                        changeWeek(-1);
+                    }
+                }
+            }
+        }
+        
+        // Override changeWeek to also update mobile swiper
+        const originalChangeWeek = changeWeek;
+        changeWeek = function(direction) {
+            currentWeekOffset += direction;
+            renderCalendar();
+            renderMobileDaySwiper();
+            updateMacroSummary();
+        };
 
         // Render Recipe Cards
         function renderRecipes(filter = '') {
