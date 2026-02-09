@@ -1,0 +1,2520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍽️ Meal Planner Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --ios-blue: #007AFF;
+            --ios-blue-dark: #0056D6;
+            --ios-gray: #8E8E93;
+            --ios-gray-light: #F2F2F7;
+            --ios-bg: #F5F5F7;
+            --ios-card: #FFFFFF;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+            background: var(--ios-bg);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            color: #1C1C1E;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .app-container {
+            display: grid;
+            grid-template-columns: minmax(280px, 25%) 1fr;
+            height: 100vh;
+            width: 100vw;
+            gap: 0;
+            overflow: hidden;
+        }
+
+        /* Left Panel - Recipe Library */
+        .recipe-panel {
+            background: #fff;
+            border-right: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+            z-index: 10;
+            min-width: 260px;
+            max-width: 400px;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .panel-header {
+            padding: 16px 20px;
+            background: var(--ios-blue);
+            color: white;
+            flex-shrink: 0;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        .panel-header h1 {
+            font-size: 1.3rem;
+            margin-bottom: 3px;
+        }
+
+        .panel-header p {
+            opacity: 0.9;
+            font-size: 0.85rem;
+        }
+
+        .search-box {
+            padding: 12px 20px;
+            border-bottom: 1px solid #e0e0e0;
+            flex-shrink: 0;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--ios-blue);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+        }
+
+        .tab-nav {
+            display: flex;
+            border-bottom: 1px solid #e0e0e0;
+            background: #f8f9fa;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #666;
+            transition: all 0.2s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .tab-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .tab-btn.active {
+            color: var(--ios-blue);
+            border-bottom-color: var(--ios-blue);
+            background: white;
+        }
+
+        .recipe-list {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 15px;
+            min-height: 0;
+        }
+
+        .grocery-list {
+            flex: 1;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 15px;
+            min-height: 0;
+        }
+
+        .grocery-header {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .grocery-header h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .grocery-header p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .grocery-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .grocery-item:hover {
+            border-color: var(--ios-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .grocery-item.selected {
+            border-color: var(--ios-blue);
+            background: #f0f4ff;
+        }
+
+        .grocery-item h4 {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .price-row:last-child {
+            border-bottom: none;
+        }
+
+        .price-store {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .price-store.coles {
+            color: #e31e24;
+        }
+
+        .price-store.woolies {
+            color: #008841;
+        }
+
+        .price-value {
+            font-weight: 700;
+        }
+
+        .price-value.special {
+            color: #e31e24;
+        }
+
+        .savings-badge {
+            background: #4CAF50;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .grocery-actions {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .btn-grocery {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-blue-dark) 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-grocery:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-grocery:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .last-updated {
+            text-align: center;
+            font-size: 0.75rem;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        .recipe-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+            cursor: grab;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            position: relative;
+            user-select: none;
+            touch-action: none;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+            border-color: var(--ios-blue);
+        }
+
+        .recipe-card:active {
+            cursor: grabbing;
+            transform: scale(0.98);
+        }
+
+        .recipe-card.dragging {
+            opacity: 0.9;
+            cursor: grabbing;
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.25);
+            z-index: 1000;
+            position: relative;
+        }
+
+        .recipe-card h3 {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .recipe-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .recipe-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .recipe-tags {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #e8f0fe;
+            color: var(--ios-blue);
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        /* Main Content - Calendar */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            background: #f5f5f5;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .toolbar {
+            background: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+            flex-shrink: 0;
+            height: 60px;
+        }
+
+        .week-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .week-nav button {
+            background: #f0f0f0;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s;
+        }
+
+        .week-nav button:hover {
+            background: var(--ios-blue);
+            color: white;
+        }
+
+        .week-nav h2 {
+            font-size: 1.3rem;
+            color: #333;
+        }
+
+        .servings-selector {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8f9fa;
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .servings-selector label {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .servings-selector input {
+            width: 50px;
+            padding: 6px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--ios-blue);
+        }
+
+        .servings-selector input:focus {
+            outline: none;
+            border-color: var(--ios-blue);
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.15);
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-primary {
+            background: var(--ios-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--ios-blue-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Calendar Grid */
+        .calendar-container {
+            flex: 1;
+            padding: 15px;
+            overflow: auto;
+            min-height: 0;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(140px, 1fr));
+            gap: 10px;
+            min-width: 980px;
+            height: 100%;
+        }
+
+        .day-column {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s;
+        }
+
+        .day-column:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .day-header {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+            background: #fafafa;
+            flex-shrink: 0;
+        }
+
+        .day-header .day-name {
+            font-size: 0.75rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .day-header .day-number {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #333;
+            margin-top: 3px;
+        }
+
+        .day-header.today {
+            background: var(--ios-blue);
+        }
+
+        .day-header.today .day-name,
+        .day-header.today .day-number {
+            color: white;
+        }
+
+        .meal-slots {
+            padding: 10px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-y: auto;
+        }
+
+        .meal-slot {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 80px;
+        }
+
+        .meal-slot .drop-zone {
+            flex: 1;
+        }
+
+        .meal-slot {
+            margin-bottom: 15px;
+        }
+
+        .meal-label {
+            font-size: 0.75rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .drop-zone {
+            min-height: 70px;
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 8px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: #fafafa;
+        }
+
+        .drop-zone:hover {
+            border-color: #bbb;
+            background: #f5f5f5;
+        }
+
+        .drop-zone.drag-over {
+            border-color: var(--ios-blue);
+            border-style: solid;
+            background: rgba(0, 122, 255, 0.08);
+            box-shadow: inset 0 0 0 2px rgba(0, 122, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        .drop-zone .placeholder {
+            text-align: center;
+            color: #ccc;
+            font-size: 0.8rem;
+            padding: 20px 0;
+        }
+
+        .meal-item {
+            background: var(--ios-blue);
+            color: white;
+            padding: 8px 10px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            cursor: grab;
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
+            user-select: none;
+        }
+
+        .meal-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        .meal-item.dragging {
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: 0 8px 20px rgba(0, 122, 255, 0.4);
+            z-index: 1000;
+        }
+
+        .meal-item .remove {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 0.75rem;
+            line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            flex-shrink: 0;
+            aspect-ratio: 1;
+        }
+
+        .meal-item .remove:hover {
+            background: rgba(255,255,255,0.4);
+        }
+
+        /* Daily Macros */
+        .daily-macros {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #e0e0e0;
+            font-size: 0.7rem;
+            color: #666;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .daily-macro-item {
+            text-align: center;
+        }
+
+        .daily-macro-value {
+            font-weight: 700;
+            color: var(--ios-blue);
+        }
+
+        /* Macro Summary - Weekly */
+        .macro-panel {
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            padding: 15px 20px;
+            flex-shrink: 0;
+            height: auto;
+            min-height: 130px;
+        }
+
+        .macro-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .macro-header h3 {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .macro-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        .macro-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .macro-card.highlight {
+            background: var(--ios-blue);
+            color: white;
+        }
+
+        .macro-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .macro-label {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* Recipe Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-blue-dark) 100%);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+
+        .modal-header h2 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+        }
+
+        .modal-header .recipe-source {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-section {
+            margin-bottom: 20px;
+        }
+
+        .modal-section h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--ios-blue);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ingredients-list {
+            list-style: none;
+        }
+
+        .ingredients-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+        }
+
+        .ingredients-list li:last-child {
+            border-bottom: none;
+        }
+
+        .directions-list {
+            list-style: decimal;
+            padding-left: 20px;
+        }
+
+        .directions-list li {
+            padding: 10px 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .modal-macros {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .modal-macro-item {
+            text-align: center;
+        }
+
+        .modal-macro-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--ios-blue);
+        }
+
+        .modal-macro-label {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 3px;
+        }
+
+        .recipe-link {
+            display: inline-block;
+            background: var(--ios-blue);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .recipe-link:hover {
+            background: var(--ios-blue-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a1a1a1;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .app-container {
+                grid-template-columns: 260px 1fr;
+            }
+            
+            .calendar-grid {
+                grid-template-columns: repeat(7, minmax(120px, 1fr));
+                gap: 8px;
+            }
+            
+            .day-column {
+                min-height: 350px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .app-container {
+                grid-template-columns: 240px 1fr;
+            }
+            
+            .recipe-card {
+                padding: 12px;
+            }
+            
+            .recipe-card h3 {
+                font-size: 0.85rem;
+            }
+            
+            .day-header .day-number {
+                font-size: 1.2rem;
+            }
+            
+            .meal-label {
+                font-size: 0.7rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .app-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+            }
+            
+            .recipe-panel {
+                max-width: none;
+                max-height: 200px;
+                border-right: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+            
+            .recipe-list {
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            .recipe-card {
+                min-width: 200px;
+                margin-bottom: 0;
+                flex-shrink: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Left Panel - Recipe Library -->
+        <div class="recipe-panel">
+            <div class="panel-header">
+                <h1>🍽️ Meal Planner</h1>
+                <p>Plan meals & track specials</p>
+            </div>
+            <!-- Tab Navigation -->
+            <div class="tab-nav">
+                <button class="tab-btn active" onclick="switchTab('recipes')" id="tab-recipes">🍽️ Recipes</button>
+                <button class="tab-btn" onclick="switchTab('groceries')" id="tab-groceries">🛒 Specials</button>
+            </div>
+            <div class="search-box">
+                <input type="text" placeholder="🔍 Search..." id="searchInput">
+            </div>
+            <div class="recipe-list" id="recipeList">
+                <!-- Recipes injected here -->
+            </div>
+            <div class="grocery-list" id="groceryList" style="display: none;">
+                <!-- Grocery specials injected here -->
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="toolbar">
+                <div class="week-nav">
+                    <button onclick="changeWeek(-1)">◀</button>
+                    <h2 id="weekDisplay">This Week</h2>
+                    <button onclick="changeWeek(1)">▶</button>
+                </div>
+                <div class="servings-selector">
+                    <label for="servingsInput">👥 Servings:</label>
+                    <input type="number" id="servingsInput" value="1" min="1" max="20" onchange="updateServings()">
+                </div>
+                <div class="actions">
+                    <button class="btn btn-secondary" onclick="clearWeek()">🗑️ Clear</button>
+                    <button class="btn btn-secondary" onclick="generateRandomMealPlan()" title="Auto-generate random meal plan">🎲 Generate Plan</button>
+                    <button class="btn btn-danger" onclick="clearLists()" title="Clear Apple Reminders lists">
+                        🧹 Clear Lists
+                    </button>
+                    <button class="btn btn-primary" onclick="generateShoppingList()">
+                        🛒 Shopping List
+                    </button>
+                </div>
+            </div>
+
+            <div class="calendar-container">
+                <div class="calendar-grid" id="calendarGrid">
+                    <!-- Days injected here -->
+                </div>
+            </div>
+
+            <div class="macro-panel">
+                <div class="macro-header">
+                    <h3>📊 Weekly Macro Summary</h3>
+                    <span id="mealCount">0 meals planned</span>
+                </div>
+                <div class="macro-grid">
+                    <div class="macro-card highlight">
+                        <div class="macro-value" id="totalCalories">0</div>
+                        <div class="macro-label">calories / day</div>
+                    </div>
+                    <div class="macro-card">
+                        <div class="macro-value" id="totalProtein">0g</div>
+                        <div class="macro-label">protein / day</div>
+                    </div>
+                    <div class="macro-card">
+                        <div class="macro-value" id="totalCarbs">0g</div>
+                        <div class="macro-label">carbs / day</div>
+                    </div>
+                    <div class="macro-card">
+                        <div class="macro-value" id="totalFat">0g</div>
+                        <div class="macro-label">fat / day</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recipe Detail Modal -->
+    <div class="modal-overlay" id="recipeModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Recipe Name</h2>
+                <div class="recipe-source" id="modalSource">Source: TikTok</div>
+                <button class="modal-close" onclick="closeModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-section" id="modalLinkSection" style="display: none;">
+                    <h4>🔗 Recipe Source</h4>
+                    <a href="#" id="modalLink" target="_blank" class="recipe-link">View Original Recipe →</a>
+                </div>
+                <div class="modal-section">
+                    <h4>📊 Macros (per serving)</h4>
+                    <div class="modal-macros" id="modalMacros">
+                        <div class="modal-macro-item">
+                            <div class="modal-macro-value">394</div>
+                            <div class="modal-macro-label">calories</div>
+                        </div>
+                        <div class="modal-macro-item">
+                            <div class="modal-macro-value">43g</div>
+                            <div class="modal-macro-label">protein</div>
+                        </div>
+                        <div class="modal-macro-item">
+                            <div class="modal-macro-value">27g</div>
+                            <div class="modal-macro-label">carbs</div>
+                        </div>
+                        <div class="modal-macro-item">
+                            <div class="modal-macro-value">17g</div>
+                            <div class="modal-macro-label">fat</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-section">
+                    <h4>📝 Ingredients</h4>
+                    <ul class="ingredients-list" id="modalIngredients">
+                        <!-- Ingredients injected here -->
+                    </ul>
+                </div>
+                <div class="modal-section">
+                    <h4>👨‍🍳 Directions</h4>
+                    <ol class="directions-list" id="modalDirections">
+                        <!-- Directions injected here -->
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample recipe data
+        const recipes = [
+            {
+                id: 1,
+                name: "Cheesy Chicken Fajita Wraps",
+                emoji: "🌯",
+                calories: 394,
+                protein: 43,
+                carbs: 27,
+                fat: 17,
+                servings: 10,
+                tags: ["high protein", "meal prep"],
+                source: "TikTok @mealprepking",
+                url: "https://www.tiktok.com/@mealprepking/video/1234567890",
+                ingredients: [
+                    { name: "Chicken Thighs", amount: 160, unit: "g", perServing: true },
+                    { name: "Red Onion", amount: 20, unit: "g", perServing: true },
+                    { name: "White Onion", amount: 20, unit: "g", perServing: true },
+                    { name: "Bell Peppers", amount: 45, unit: "g", perServing: true },
+                    { name: "Cheddar Cheese", amount: 10, unit: "g", perServing: true },
+                    { name: "Mozzarella", amount: 10, unit: "g", perServing: true },
+                    { name: "Tortilla Wraps", amount: 1, unit: "pc", perServing: true },
+                    { name: "Yogurt", amount: 15, unit: "g", perServing: true },
+                    { name: "Mayo", amount: 8, unit: "g", perServing: true }
+                ],
+                directions: [
+                    "Cube chicken thighs and season with fajita seasoning, olive oil, and lime juice",
+                    "Line sheet pan with baking paper, add onions and peppers, season and roast at 190C for 20 mins",
+                    "Spread marinated chicken over vegetables, bake at 200C for 25-30 mins until golden",
+                    "Add cheese, tomatoes, and coriander while hot, mix until melted",
+                    "Serve with wraps and spicy sauce"
+                ]
+            },
+            {
+                id: 2,
+                name: "Korean BBQ Chicken Wraps",
+                emoji: "🌯",
+                calories: 417,
+                protein: 39,
+                carbs: 38,
+                fat: 12,
+                servings: 10,
+                tags: ["korean", "sheet pan", "meal prep"],
+                source: "TikTok @mealprepking",
+                url: "https://vt.tiktok.com/ZSasCnndj/",
+                ingredients: [
+                    { name: "Chicken Thighs (boneless, skinless)", amount: 160, unit: "g", perServing: true },
+                    { name: "Gochujang Paste", amount: 10, unit: "g", perServing: true },
+                    { name: "Minced Garlic", amount: 6, unit: "g", perServing: true },
+                    { name: "Sesame Seeds", amount: 4, unit: "g", perServing: true },
+                    { name: "Honey", amount: 6, unit: "g", perServing: true },
+                    { name: "Light Soy Sauce", amount: 3, unit: "g", perServing: true },
+                    { name: "Dark Soy Sauce", amount: 4, unit: "g", perServing: true },
+                    { name: "Low Fat Yogurt", amount: 20, unit: "g", perServing: true },
+                    { name: "Light Mayo", amount: 12, unit: "g", perServing: true },
+                    { name: "Cucumber", amount: 30, unit: "g", perServing: true },
+                    { name: "Grated Carrots", amount: 20, unit: "g", perServing: true },
+                    { name: "Red Onion", amount: 20, unit: "g", perServing: true },
+                    { name: "Rice Vinegar", amount: 4, unit: "g", perServing: true },
+                    { name: "Sriracha", amount: 3, unit: "g", perServing: true },
+                    { name: "Low Carb Flour Wraps", amount: 1, unit: "pc", perServing: true }
+                ],
+                directions: [
+                    "Trim excess fat from chicken thighs, add seasonings and marinade ingredients then mix and set aside",
+                    "In a bowl, add cucumber, carrots, red onion, sesame seeds, rice vinegar and sriracha. Mix until well combined",
+                    "In a second bowl, add yogurt, light mayo, gochujang, honey, garlic powder and milk for desired consistency",
+                    "In a lined large sheet pan, spread marinated chicken evenly. Add cooking spray, oven bake 25-30 mins at 200C / 400F until golden!",
+                    "Toast wraps in a stove flame, slice up chicken then serve with cucumber slaw and gochujang sauce. ENJOY!"
+                ]
+            },
+            {
+                id: 3,
+                name: "Oyakodon (Chicken & Egg Rice Bowl)",
+                emoji: "🍚",
+                calories: 485,
+                protein: 42,
+                carbs: 52,
+                fat: 14,
+                servings: 4,
+                tags: ["japanese", "comfort food", "bowl"],
+                source: "Recipe Book",
+                ingredients: [
+                    { name: "Chicken Thighs", amount: 150, unit: "g", perServing: true },
+                    { name: "Eggs", amount: 2, unit: "pc", perServing: true },
+                    { name: "White Rice", amount: 200, unit: "g", perServing: true },
+                    { name: "Yellow Onion", amount: 80, unit: "g", perServing: true },
+                    { name: "Dashi Stock", amount: 60, unit: "ml", perServing: true },
+                    { name: "Soy Sauce", amount: 15, unit: "ml", perServing: true },
+                    { name: "Mirin", amount: 15, unit: "ml", perServing: true },
+                    { name: "Sugar", amount: 5, unit: "g", perServing: true },
+                    { name: "Green Onions", amount: 10, unit: "g", perServing: true }
+                ],
+                directions: [
+                    "Cook rice according to package instructions",
+                    "Cut chicken into bite-sized pieces, slice onion thinly",
+                    "In a pan, combine dashi, soy sauce, mirin and sugar, bring to simmer",
+                    "Add onions and cook for 2-3 minutes until softened",
+                    "Add chicken and simmer until cooked through (5-7 mins)",
+                    "Pour beaten eggs over chicken, cover and cook for 1-2 minutes",
+                    "Serve over steamed rice, garnish with green onions"
+                ]
+            },
+            {
+                id: 4,
+                name: "Baconnaise Double Cheeseburgers",
+                emoji: "🍔",
+                calories: 650,
+                protein: 45,
+                carbs: 32,
+                fat: 38,
+                servings: 4,
+                tags: ["burger", "comfort food", "high protein"],
+                source: "TikTok",
+                ingredients: [
+                    { name: "Ground Beef", amount: 200, unit: "g", perServing: true },
+                    { name: "Bacon", amount: 60, unit: "g", perServing: true },
+                    { name: "Brioche Buns", amount: 1, unit: "pc", perServing: true },
+                    { name: "Cheddar Cheese", amount: 30, unit: "g", perServing: true },
+                    { name: "American Cheese", amount: 1, unit: "slice", perServing: true },
+                    { name: "Mayonnaise", amount: 15, unit: "g", perServing: true },
+                    { name: "Ketchup", amount: 10, unit: "g", perServing: true },
+                    { name: "Pickles", amount: 15, unit: "g", perServing: true },
+                    { name: "Lettuce", amount: 20, unit: "g", perServing: true },
+                    { name: "Tomato", amount: 30, unit: "g", perServing: true }
+                ],
+                directions: [
+                    "Cook bacon until crispy, set aside",
+                    "Form beef into patties, season with salt and pepper",
+                    "Grill or pan-sear patties over high heat for 3-4 mins per side",
+                    "Add cheese in last minute to melt",
+                    "Toast buns lightly",
+                    "Mix mayo and ketchup for baconnaise sauce",
+                    "Assemble burgers with sauce, lettuce, tomato, pickles, bacon and patties"
+                ]
+            },
+            {
+                id: 5,
+                name: "Mediterranean Roast Potatoes with Chicken",
+                emoji: "🥔",
+                calories: 520,
+                protein: 38,
+                carbs: 48,
+                fat: 22,
+                servings: 6,
+                tags: ["mediterranean", "sheet pan", "family"],
+                source: "Family Recipe",
+                ingredients: [
+                    { name: "Chicken Thighs", amount: 180, unit: "g", perServing: true },
+                    { name: "Baby Potatoes", amount: 250, unit: "g", perServing: true },
+                    { name: "Red Onion", amount: 40, unit: "g", perServing: true },
+                    { name: "Cherry Tomatoes", amount: 80, unit: "g", perServing: true },
+                    { name: "Olive Oil", amount: 15, unit: "ml", perServing: true },
+                    { name: "Lemon", amount: 0.5, unit: "pc", perServing: true },
+                    { name: "Garlic", amount: 2, unit: "cloves", perServing: true },
+                    { name: "Oregano", amount: 2, unit: "g", perServing: true },
+                    { name: "Feta Cheese", amount: 25, unit: "g", perServing: true },
+                    { name: "Kalamata Olives", amount: 15, unit: "g", perServing: true }
+                ],
+                directions: [
+                    "Preheat oven to 200C (400F)",
+                    "Halve potatoes and parboil for 5 minutes",
+                    "Toss potatoes with olive oil, lemon juice, garlic and oregano",
+                    "Season chicken thighs and add to sheet pan with potatoes",
+                    "Roast for 35-40 minutes until chicken is cooked and potatoes are crispy",
+                    "Add cherry tomatoes in last 10 minutes",
+                    "Top with crumbled feta and olives before serving"
+                ]
+            },
+            {
+                id: 6,
+                name: "Crispy Peri Peri Chicken & Bacon Pasta Salad",
+                emoji: "🍝",
+                calories: 580,
+                protein: 48,
+                carbs: 55,
+                fat: 24,
+                servings: 8,
+                tags: ["pasta salad", "meal prep", "spicy"],
+                source: "TikTok",
+                ingredients: [
+                    { name: "Chicken Thighs", amount: 140, unit: "g", perServing: true },
+                    { name: "Bacon", amount: 40, unit: "g", perServing: true },
+                    { name: "Pasta", amount: 80, unit: "g", perServing: true },
+                    { name: "Cherry Tomatoes", amount: 60, unit: "g", perServing: true },
+                    { name: "Cucumber", amount: 40, unit: "g", perServing: true },
+                    { name: "Red Onion", amount: 20, unit: "g", perServing: true },
+                    { name: "Peri Peri Sauce", amount: 20, unit: "g", perServing: true },
+                    { name: "Mayonnaise", amount: 15, unit: "g", perServing: true },
+                    { name: "Lemon Juice", amount: 5, unit: "ml", perServing: true },
+                    { name: "Garlic Powder", amount: 2, unit: "g", perServing: true }
+                ],
+                directions: [
+                    "Cook pasta according to package, rinse with cold water",
+                    "Season chicken with peri peri seasoning, cook until crispy",
+                    "Cook bacon until crispy, chop into bits",
+                    "Chop vegetables into bite-sized pieces",
+                    "Mix mayo, peri peri sauce, lemon juice and garlic for dressing",
+                    "Combine pasta, chicken, bacon, veggies and dressing",
+                    "Chill for at least 30 minutes before serving"
+                ]
+            },
+            {
+                id: 7,
+                name: "Crispy Chicken Bacon Burgers",
+                emoji: "🍔",
+                calories: 620,
+                protein: 46,
+                carbs: 38,
+                fat: 32,
+                servings: 4,
+                tags: ["burger", "crispy", "comfort food"],
+                source: "TikTok",
+                ingredients: [
+                    { name: "Chicken Thighs", amount: 170, unit: "g", perServing: true },
+                    { name: "Bacon", amount: 50, unit: "g", perServing: true },
+                    { name: "Brioche Buns", amount: 1, unit: "pc", perServing: true },
+                    { name: "Flour", amount: 30, unit: "g", perServing: true },
+                    { name: "Eggs", amount: 0.5, unit: "pc", perServing: true },
+                    { name: "Breadcrumbs", amount: 40, unit: "g", perServing: true },
+                    { name: "Lettuce", amount: 20, unit: "g", perServing: true },
+                    { name: "Tomato", amount: 30, unit: "g", perServing: true },
+                    { name: "Mayonnaise", amount: 15, unit: "g", perServing: true },
+                    { name: "BBQ Sauce", amount: 10, unit: "g", perServing: true }
+                ],
+                directions: [
+                    "Pound chicken thighs to even thickness",
+                    "Dredge chicken in flour, then egg wash, then breadcrumbs",
+                    "Fry chicken in oil until golden and crispy (5-6 mins per side)",
+                    "Cook bacon until crispy",
+                    "Toast buns and mix mayo with BBQ sauce",
+                    "Assemble burgers with sauce, lettuce, tomato, crispy chicken and bacon"
+                ]
+            },
+            {
+                id: 8,
+                name: "Chicken Pad Thai",
+                emoji: "🍜",
+                calories: 495,
+                protein: 38,
+                carbs: 52,
+                fat: 18,
+                servings: 4,
+                tags: ["thai", "noodles", "stir fry"],
+                source: "Recipe Book",
+                ingredients: [
+                    { name: "Rice Noodles", amount: 80, unit: "g", perServing: true },
+                    { name: "Chicken Breast", amount: 120, unit: "g", perServing: true },
+                    { name: "Eggs", amount: 1, unit: "pc", perServing: true },
+                    { name: "Bean Sprouts", amount: 40, unit: "g", perServing: true },
+                    { name: "Green Onions", amount: 20, unit: "g", perServing: true },
+                    { name: "Peanuts", amount: 15, unit: "g", perServing: true },
+                    { name: "Lime", amount: 0.5, unit: "pc", perServing: true },
+                    { name: "Fish Sauce", amount: 15, unit: "ml", perServing: true },
+                    { name: "Tamarind Paste", amount: 10, unit: "g", perServing: true },
+                    { name: "Palm Sugar", amount: 10, unit: "g", perServing: true },
+                    { name: "Garlic", amount: 2, unit: "cloves", perServing: true }
+                ],
+                directions: [
+                    "Soak rice noodles in warm water until soft, drain",
+                    "Mix fish sauce, tamarind, and palm sugar for pad thai sauce",
+                    "Stir fry garlic and chicken until cooked, set aside",
+                    "Push ingredients to side, scramble egg in pan",
+                    "Add noodles and sauce, toss everything together",
+                    "Add bean sprouts and green onions, cook for 1 minute",
+                    "Serve with crushed peanuts and lime wedge"
+                ]
+            }
+        ];
+
+        // Ingredient Aliases - Maps variations to standard names
+        const ingredientAliases = {
+            'chicken thighs (boneless, skinless)': 'Chicken Thighs',
+            'boneless skinless chicken thighs': 'Chicken Thighs',
+            'boneless chicken thighs': 'Chicken Thighs',
+            'chicken thighs': 'Chicken Thighs',
+            'chicken thigh': 'Chicken Thighs',
+            'chicken breast': 'Chicken Breast',
+            'chicken breasts': 'Chicken Breast',
+            'bell peppers': 'Bell Peppers',
+            'bell pepper': 'Bell Peppers',
+            'capsicum': 'Bell Peppers',
+            'red bell pepper': 'Bell Peppers',
+            'green bell pepper': 'Bell Peppers',
+            'yellow bell pepper': 'Bell Peppers',
+            'red onion': 'Red Onion',
+            'red onions': 'Red Onion',
+            'white onion': 'White Onion',
+            'white onions': 'White Onion',
+            'onion': 'Onion',
+            'onions': 'Onion',
+            'garlic': 'Garlic',
+            'garlic cloves': 'Garlic',
+            'minced garlic': 'Garlic',
+            'sesame seeds': 'Sesame Seeds',
+            'honey': 'Honey',
+            'yogurt': 'Yogurt',
+            'low fat yogurt': 'Yogurt',
+            'greek yogurt': 'Yogurt',
+            'mayo': 'Mayonnaise',
+            'mayonnaise': 'Mayonnaise',
+            'light mayo': 'Mayonnaise',
+            'soy sauce': 'Soy Sauce',
+            'light soy sauce': 'Soy Sauce',
+            'dark soy sauce': 'Soy Sauce',
+            'cucumber': 'Cucumber',
+            'cucumbers': 'Cucumber',
+            'carrots': 'Carrots',
+            'grated carrots': 'Carrots',
+            'carrot': 'Carrots',
+            'rice vinegar': 'Rice Vinegar',
+            'sriracha': 'Sriracha',
+            'wraps': 'Wraps',
+            'tortilla wraps': 'Wraps',
+            'low carb wraps': 'Wraps',
+            'flour wraps': 'Wraps',
+            'tortillas': 'Tortillas',
+            'corn tortillas': 'Tortillas',
+            'cheese': 'Cheese',
+            'cheddar cheese': 'Cheddar Cheese',
+            'mozzarella cheese': 'Mozzarella',
+            'feta cheese': 'Feta Cheese',
+            'parmesan cheese': 'Parmesan',
+            'olive oil': 'Olive Oil',
+            'butter': 'Butter',
+            'salt': 'Salt',
+            'pepper': 'Black Pepper',
+            'black pepper': 'Black Pepper'
+        };
+
+        function normalizeIngredientName(name) {
+            const lowerName = name.toLowerCase().trim();
+            // Check for exact match first
+            if (ingredientAliases[lowerName]) {
+                return ingredientAliases[lowerName];
+            }
+            // Check if any alias is contained in the name
+            for (const [alias, standard] of Object.entries(ingredientAliases)) {
+                if (lowerName.includes(alias)) {
+                    return standard;
+                }
+            }
+            // Return original with proper capitalization
+            return name.replace(/\b\w/g, l => l.toUpperCase());
+        }
+
+        // State
+        let currentWeekOffset = 0;
+        let mealPlan = {}; // { "2024-01-15-lunch": recipeId, ... }
+        let servingsCount = 1; // Number of people to cook for
+
+        // Initialize
+        function init() {
+            renderRecipes();
+            renderCalendar();
+            updateMacroSummary();
+            
+            document.getElementById('searchInput').addEventListener('input', filterRecipes);
+        }
+
+        // Render Recipe Cards
+        function renderRecipes(filter = '') {
+            const list = document.getElementById('recipeList');
+            const filtered = recipes.filter(r => 
+                r.name.toLowerCase().includes(filter.toLowerCase()) ||
+                r.tags.some(t => t.toLowerCase().includes(filter.toLowerCase()))
+            );
+            
+            list.innerHTML = filtered.map(recipe => `
+                <div class="recipe-card" draggable="true" data-recipe-id="${recipe.id}" onclick="openRecipeModal(${recipe.id})">
+                    <h3>${recipe.name}</h3>
+                    <div class="recipe-meta">
+                        <span>🔥 ${recipe.calories} cal</span>
+                        <span>💪 ${recipe.protein}g pro</span>
+                    </div>
+                    <div class="recipe-tags">
+                        ${recipe.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add drag listeners
+            document.querySelectorAll('.recipe-card').forEach(card => {
+                card.addEventListener('dragstart', handleDragStart);
+                card.addEventListener('dragend', handleDragEnd);
+            });
+        }
+
+        function filterRecipes(e) {
+            renderRecipes(e.target.value);
+        }
+
+        // Drag & Drop Handlers
+        let draggedRecipe = null;
+        let draggedElement = null;
+
+        function handleDragStart(e) {
+            draggedRecipe = recipes.find(r => r.id == this.dataset.recipeId);
+            draggedElement = this;
+            this.classList.add('dragging');
+            
+            // Set drag image for smoother experience
+            e.dataTransfer.effectAllowed = 'copy';
+            e.dataTransfer.setData('text/plain', this.dataset.recipeId);
+            
+            // Add visual feedback after a slight delay
+            setTimeout(() => {
+                this.style.opacity = '0.6';
+            }, 0);
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            this.style.opacity = '1';
+            draggedRecipe = null;
+            draggedElement = null;
+            
+            // Clean up any drag-over states
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.classList.remove('drag-over');
+            });
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.dataTransfer.dropEffect = 'copy';
+            
+            // Add drag-over class with throttling
+            if (!this.classList.contains('drag-over')) {
+                this.classList.add('drag-over');
+            }
+        }
+
+        function handleDragLeave(e) {
+            e.stopPropagation();
+            // Only remove if we're actually leaving the element (not entering a child)
+            if (!this.contains(e.relatedTarget)) {
+                this.classList.remove('drag-over');
+            }
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            this.classList.remove('drag-over');
+            
+            if (!draggedRecipe) return;
+            
+            const slotKey = this.dataset.slot;
+            
+            // Check if moving from another slot
+            if (draggedElement && draggedElement.dataset.slot) {
+                const sourceSlot = draggedElement.dataset.slot;
+                delete mealPlan[sourceSlot];
+            }
+            
+            mealPlan[slotKey] = draggedRecipe;
+            
+            // Animate the change
+            requestAnimationFrame(() => {
+                renderCalendar();
+                updateMacroSummary();
+            });
+        }
+
+        function handleMealDragStart(e) {
+            const slotKey = this.dataset.slot;
+            draggedRecipe = mealPlan[slotKey];
+            draggedElement = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', 'move');
+            
+            setTimeout(() => {
+                this.style.opacity = '0.5';
+            }, 0);
+        }
+
+        function handleMealDragEnd(e) {
+            this.classList.remove('dragging');
+            this.style.opacity = '1';
+            draggedRecipe = null;
+            draggedElement = null;
+            
+            document.querySelectorAll('.drop-zone').forEach(zone => {
+                zone.classList.remove('drag-over');
+            });
+        }
+
+        // Render Calendar
+        function renderCalendar() {
+            const grid = document.getElementById('calendarGrid');
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            const today = new Date();
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay() + 1 + (currentWeekOffset * 7));
+            
+            document.getElementById('weekDisplay').textContent = 
+                currentWeekOffset === 0 ? 'This Week' : 
+                currentWeekOffset === 1 ? 'Next Week' : 
+                `Week ${currentWeekOffset > 0 ? '+' + currentWeekOffset : currentWeekOffset}`;
+            
+            grid.innerHTML = days.map((dayName, index) => {
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + index);
+                const dateKey = date.toISOString().split('T')[0];
+                const isToday = date.toDateString() === today.toDateString();
+                
+                const lunch = mealPlan[`${dateKey}-lunch`];
+                const dinner = mealPlan[`${dateKey}-dinner`];
+                
+                // Calculate daily macros (multiplied by servings)
+                const dailyCalories = ((lunch?.calories || 0) + (dinner?.calories || 0)) * servingsCount;
+                const dailyProtein = ((lunch?.protein || 0) + (dinner?.protein || 0)) * servingsCount;
+                const dailyCarbs = ((lunch?.carbs || 0) + (dinner?.carbs || 0)) * servingsCount;
+                const dailyFat = ((lunch?.fat || 0) + (dinner?.fat || 0)) * servingsCount;
+                const hasMeals = lunch || dinner;
+                
+                return `
+                    <div class="day-column">
+                        <div class="day-header ${isToday ? 'today' : ''}">
+                            <div class="day-name">${dayName}</div>
+                            <div class="day-number">${date.getDate()}</div>
+                        </div>
+                        <div class="meal-slots">
+                            <div class="meal-slot">
+                                <div class="meal-label">🌞 Lunch</div>
+                                <div class="drop-zone" data-slot="${dateKey}-lunch" 
+                                     ondragover="handleDragOver.call(this, event)" 
+                                     ondragleave="handleDragLeave.call(this, event)"
+                                     ondrop="handleDrop.call(this, event)">
+                                    ${lunch ? `
+                                        <div class="meal-item" draggable="true" data-slot="${dateKey}-lunch" data-recipe-id="${lunch.id}"
+                                             ondragstart="handleMealDragStart.call(this, event)"
+                                             ondragend="handleMealDragEnd.call(this, event)"
+                                             onclick="openRecipeModal(${lunch.id})">
+                                            <span>${lunch.name}</span>
+                                            <button class="remove" onclick="event.stopPropagation(); removeMeal('${dateKey}-lunch', event)">×</button>
+                                        </div>
+                                    ` : '<div class="placeholder">Drop here</div>'}
+                                </div>
+                            </div>
+                            <div class="meal-slot">
+                                <div class="meal-label">🌙 Dinner</div>
+                                <div class="drop-zone" data-slot="${dateKey}-dinner"
+                                     ondragover="handleDragOver.call(this, event)" 
+                                     ondragleave="handleDragLeave.call(this, event)"
+                                     ondrop="handleDrop.call(this, event)">
+                                    ${dinner ? `
+                                        <div class="meal-item" draggable="true" data-slot="${dateKey}-dinner" data-recipe-id="${dinner.id}"
+                                             ondragstart="handleMealDragStart.call(this, event)"
+                                             ondragend="handleMealDragEnd.call(this, event)"
+                                             onclick="openRecipeModal(${dinner.id})">
+                                            <span>${dinner.name}</span>
+                                            <button class="remove" onclick="event.stopPropagation(); removeMeal('${dateKey}-dinner', event)">×</button>
+                                        </div>
+                                    ` : '<div class="placeholder">Drop here</div>'}
+                                </div>
+                            </div>
+                        </div>
+                        ${hasMeals ? `
+                            <div class="daily-macros">
+                                <div class="daily-macro-item">
+                                    <div class="daily-macro-value">${dailyCalories}</div>
+                                    <div>cal</div>
+                                </div>
+                                <div class="daily-macro-item">
+                                    <div class="daily-macro-value">${dailyProtein}g</div>
+                                    <div>pro</div>
+                                </div>
+                                <div class="daily-macro-item">
+                                    <div class="daily-macro-value">${dailyCarbs}g</div>
+                                    <div>carb</div>
+                                </div>
+                                <div class="daily-macro-item">
+                                    <div class="daily-macro-value">${dailyFat}g</div>
+                                    <div>fat</div>
+                                </div>
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function removeMeal(slotKey, event) {
+            if (event) {
+                event.stopPropagation();
+            }
+            delete mealPlan[slotKey];
+            renderCalendar();
+            updateMacroSummary();
+        }
+
+        // Recipe Modal Functions
+        function openRecipeModal(recipeId) {
+            const recipe = recipes.find(r => r.id === recipeId);
+            if (!recipe) return;
+            
+            document.getElementById('modalTitle').textContent = recipe.name;
+            document.getElementById('modalSource').textContent = `Source: ${recipe.source || 'Unknown'}`;
+            
+            // Update link
+            const linkSection = document.getElementById('modalLinkSection');
+            const linkElement = document.getElementById('modalLink');
+            if (recipe.url) {
+                linkSection.style.display = 'block';
+                linkElement.href = recipe.url;
+                linkElement.textContent = `View on ${recipe.source || 'Source'} →`;
+            } else {
+                linkSection.style.display = 'none';
+            }
+            
+            // Update macros
+            const macrosHtml = `
+                <div class="modal-macro-item">
+                    <div class="modal-macro-value">${recipe.calories}</div>
+                    <div class="modal-macro-label">calories</div>
+                </div>
+                <div class="modal-macro-item">
+                    <div class="modal-macro-value">${recipe.protein}g</div>
+                    <div class="modal-macro-label">protein</div>
+                </div>
+                <div class="modal-macro-item">
+                    <div class="modal-macro-value">${recipe.carbs}g</div>
+                    <div class="modal-macro-label">carbs</div>
+                </div>
+                <div class="modal-macro-item">
+                    <div class="modal-macro-value">${recipe.fat}g</div>
+                    <div class="modal-macro-label">fat</div>
+                </div>
+            `;
+            document.getElementById('modalMacros').innerHTML = macrosHtml;
+            
+            // Update ingredients
+            const ingredientsHtml = recipe.ingredients.map(ing => `
+                <li>
+                    <span>${ing.name}</span>
+                    <span><strong>${ing.amount}${ing.unit}</strong></span>
+                </li>
+            `).join('');
+            document.getElementById('modalIngredients').innerHTML = ingredientsHtml;
+            
+            // Update directions
+            const directionsHtml = recipe.directions.map((step, i) => `
+                <li>${step}</li>
+            `).join('');
+            document.getElementById('modalDirections').innerHTML = directionsHtml;
+            
+            // Show modal
+            document.getElementById('recipeModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('recipeModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('recipeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        function changeWeek(direction) {
+            currentWeekOffset += direction;
+            renderCalendar();
+        }
+
+        function clearWeek() {
+            if (confirm('Clear all meals for this week?')) {
+                mealPlan = {};
+                renderCalendar();
+                updateMacroSummary();
+            }
+        }
+
+        async function clearLists() {
+            if (!confirm('🧹 Clear Apple Reminders lists?\n\nThis will remove all items from:\n• 📅 This Week\'s Meals\n• 🛒 Shopping List\n\nAre you sure?')) {
+                return;
+            }
+            
+            const btn = document.querySelector('.btn-danger');
+            const originalText = btn.textContent;
+            btn.textContent = '🧹 Clearing...';
+            btn.disabled = true;
+            
+            try {
+                const response = await fetch('/api/clear-lists', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert(`✅ Lists cleared!\n\n• Cleared: ${data.summary.cleared} items\n• Failed: ${data.summary.failed} items`);
+                } else {
+                    alert('❌ Error clearing lists: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error clearing lists:', error);
+                alert('❌ Failed to clear lists.\n\nMake sure the server is running and remindctl is installed.');
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        }
+
+        function updateMacroSummary() {
+            const meals = Object.values(mealPlan);
+            const mealCount = meals.length;
+            
+            const totals = meals.reduce((acc, meal) => ({
+                calories: acc.calories + (meal.calories * servingsCount),
+                protein: acc.protein + (meal.protein * servingsCount),
+                carbs: acc.carbs + (meal.carbs * servingsCount),
+                fat: acc.fat + (meal.fat * servingsCount)
+            }), { calories: 0, protein: 0, carbs: 0, fat: 0 });
+            
+            const days = 7;
+            const avgCalories = mealCount > 0 ? Math.round(totals.calories / days) : 0;
+            const avgProtein = mealCount > 0 ? Math.round(totals.protein / days) : 0;
+            const avgCarbs = mealCount > 0 ? Math.round(totals.carbs / days) : 0;
+            const avgFat = mealCount > 0 ? Math.round(totals.fat / days) : 0;
+            
+            document.getElementById('totalCalories').textContent = avgCalories;
+            document.getElementById('totalProtein').textContent = avgProtein + 'g';
+            document.getElementById('totalCarbs').textContent = avgCarbs + 'g';
+            document.getElementById('totalFat').textContent = avgFat + 'g';
+            document.getElementById('mealCount').textContent = `${mealCount} meal${mealCount !== 1 ? 's' : ''} planned`;
+        }
+
+        function updateServings() {
+            const input = document.getElementById('servingsInput');
+            servingsCount = parseInt(input.value) || 1;
+            if (servingsCount < 1) servingsCount = 1;
+            if (servingsCount > 20) servingsCount = 20;
+            input.value = servingsCount;
+            
+            // Update the display to show we're planning for X people
+            updateMacroSummary();
+        }
+
+        async function generateShoppingList() {
+            const meals = Object.values(mealPlan);
+            
+            if (meals.length === 0) {
+                alert('No meals planned yet! Drag recipes onto the calendar first.');
+                return;
+            }
+            
+            // Aggregate ingredients with normalization
+            const ingredientMap = {};
+            
+            meals.forEach(meal => {
+                meal.ingredients.forEach(ing => {
+                    // Normalize the ingredient name
+                    const normalizedName = normalizeIngredientName(ing.name);
+                    const key = normalizedName.toLowerCase().replace(/\s+/g, '_');
+                    
+                    if (!ingredientMap[key]) {
+                        ingredientMap[key] = {
+                            name: normalizedName,
+                            amount: 0,
+                            unit: ing.unit,
+                            meals: []
+                        };
+                    }
+                    
+                    // Multiply by servings count (number of people)
+                    ingredientMap[key].amount += ing.amount * servingsCount;
+                    if (!ingredientMap[key].meals.includes(meal.name)) {
+                        ingredientMap[key].meals.push(meal.name);
+                    }
+                });
+            });
+            
+            // Round amounts for display
+            const ingredientsArray = Object.values(ingredientMap)
+                .map(ing => ({
+                    ...ing,
+                    amount: Math.round(ing.amount * 10) / 10 // Round to 1 decimal
+                }))
+                .sort((a, b) => b.amount - a.amount);
+            
+            // Build summary
+            const ingredientList = ingredientsArray
+                .map(ing => `${ing.name}: ${ing.amount}${ing.unit}`)
+                .join('\n');
+            
+            const summary = `
+🛒 SHOPPING LIST PREVIEW
+
+👥 Cooking for: ${servingsCount} person${servingsCount > 1 ? 's' : ''}
+📊 ${meals.length} meals planned
+
+${ingredientList}
+
+✅ Send to Apple Reminders?`;
+            
+            if (confirm(summary)) {
+                // Call API to add to reminders
+                await sendToReminders(ingredientsArray);
+            }
+        }
+
+        async function sendToReminders(ingredients) {
+            const btn = document.querySelector('.btn-primary');
+            btn.textContent = '⏳ Sending...';
+            btn.disabled = true;
+            
+            // Build meal plan for API
+            const formattedMealPlan = {};
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            
+            days.forEach((day, index) => {
+                const today = new Date();
+                const startOfWeek = new Date(today);
+                startOfWeek.setDate(today.getDate() - today.getDay() + 1 + (currentWeekOffset * 7));
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + index);
+                const dateKey = date.toISOString().split('T')[0];
+                
+                const lunchMeal = mealPlan[`${dateKey}-lunch`];
+                const dinnerMeal = mealPlan[`${dateKey}-dinner`];
+                
+                formattedMealPlan[day] = {
+                    lunch: lunchMeal ? lunchMeal.name : '-',
+                    dinner: dinnerMeal ? dinnerMeal.name : '-',
+                    lunchUrl: lunchMeal ? (lunchMeal.url || '') : '',
+                    dinnerUrl: dinnerMeal ? (dinnerMeal.url || '') : '',
+                    lunchImage: lunchMeal ? (lunchMeal.emoji || '🍽️') : '🍽️',
+                    dinnerImage: dinnerMeal ? (dinnerMeal.emoji || '🍽️') : '🍽️'
+                };
+            });
+            
+            try {
+                const response = await fetch('/api/shopping-list', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        ingredients: ingredients,
+                        mealPlan: formattedMealPlan,
+                        listName: 'Shopping List'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const mealsMsg = data.mealsAdded ? `\n📅 ${data.mealsAdded} meals added to Meal Plan` : '';
+                    alert(`🎉 Success!\n\n✅ ${data.summary.successful} items added to Shopping List${mealsMsg}\n❌ ${data.summary.failed} failed\n\nCheck your Apple Reminders app!`);
+                } else {
+                    alert(`❌ Error: ${data.error || 'Failed to add items'}`);
+                }
+                
+            } catch (error) {
+                alert(`❌ Error: ${error.message}\n\nMake sure the backend server is running:\npython3 server.py (or refresh the page)`);
+            } finally {
+                btn.textContent = '🛒 Generate Shopping List';
+                btn.disabled = false;
+            }
+        }
+
+        // Random Meal Plan Generator
+        function generateRandomMealPlan() {
+            // Check if there's already a meal plan
+            const existingMeals = Object.keys(mealPlan).length;
+            if (existingMeals > 0) {
+                if (!confirm(`You already have ${existingMeals} meals planned. Generate a new random plan? This will only fill empty slots.`)) {
+                    return;
+                }
+            }
+            
+            const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+            const today = new Date();
+            const startOfWeek = new Date(today);
+            startOfWeek.setDate(today.getDate() - today.getDay() + 1 + (currentWeekOffset * 7));
+            
+            // Create a copy of recipes to avoid modifying original
+            let availableRecipes = [...recipes];
+            
+            // Shuffle recipes for randomness
+            for (let i = availableRecipes.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [availableRecipes[i], availableRecipes[j]] = [availableRecipes[j], availableRecipes[i]];
+            }
+            
+            let recipeIndex = 0;
+            let newMealsAdded = 0;
+            
+            // Fill each day with lunch and dinner
+            days.forEach((dayName, index) => {
+                const date = new Date(startOfWeek);
+                date.setDate(startOfWeek.getDate() + index);
+                const dateKey = date.toISOString().split('T')[0];
+                
+                // Add lunch (only if slot is empty)
+                if (!mealPlan[`${dateKey}-lunch`]) {
+                    mealPlan[`${dateKey}-lunch`] = availableRecipes[recipeIndex % availableRecipes.length];
+                    recipeIndex++;
+                    newMealsAdded++;
+                }
+                
+                // Add dinner (only if slot is empty, different recipe from lunch if possible)
+                if (!mealPlan[`${dateKey}-dinner`]) {
+                    mealPlan[`${dateKey}-dinner`] = availableRecipes[recipeIndex % availableRecipes.length];
+                    recipeIndex++;
+                    newMealsAdded++;
+                }
+            });
+            
+            renderCalendar();
+            updateMacroSummary();
+            
+            const totalMeals = Object.keys(mealPlan).length;
+            
+            if (newMealsAdded === 0) {
+                alert(`✅ Your week is already fully planned!\n\n📊 ${totalMeals} meals total\n🗑️ Click Clear to start over with a new random plan`);
+            } else {
+                alert(`🎲 Random meal plan generated!\n\n✅ ${newMealsAdded} new meals added\n📊 ${totalMeals} total meals planned\n👥 Serving ${servingsCount} person${servingsCount > 1 ? 's' : ''}\n\nClick 🛒 Shopping List when you're ready!`);
+            }
+        }
+
+        // Grocery Tracker Functions
+        const commonGroceryItems = [
+            {
+                id: 'coke-zero',
+                name: 'Coke Zero 10 Pack',
+                category: 'drinks',
+                coles: { price: 11.00, special: false, specialPrice: null },
+                woolies: { price: 8.50, special: true, specialPrice: 8.50, save: 2.50 }
+            },
+            {
+                id: 'eggs',
+                name: 'Free Range Eggs 12pk',
+                category: 'dairy',
+                coles: { price: 6.50, special: false, specialPrice: null },
+                woolies: { price: 5.00, special: true, specialPrice: 5.00, save: 1.50 }
+            },
+            {
+                id: 'milk',
+                name: 'Full Cream Milk 2L',
+                category: 'dairy',
+                coles: { price: 3.50, special: true, specialPrice: 2.80, save: 0.70 },
+                woolies: { price: 3.50, special: false, specialPrice: null }
+            },
+            {
+                id: 'bread',
+                name: 'White Bread 650g',
+                category: 'bakery',
+                coles: { price: 3.00, special: false, specialPrice: null },
+                woolies: { price: 2.50, special: true, specialPrice: 2.50, save: 0.50 }
+            },
+            {
+                id: 'bananas',
+                name: 'Bananas 1kg',
+                category: 'produce',
+                coles: { price: 4.50, special: true, specialPrice: 3.50, save: 1.00 },
+                woolies: { price: 4.90, special: false, specialPrice: null }
+            },
+            {
+                id: 'chicken-breast',
+                name: 'Chicken Breast 500g',
+                category: 'meat',
+                coles: { price: 8.50, special: false, specialPrice: null },
+                woolies: { price: 7.50, special: true, specialPrice: 7.50, save: 1.00 }
+            },
+            {
+                id: 'pasta',
+                name: 'Spaghetti Pasta 500g',
+                category: 'pantry',
+                coles: { price: 1.80, special: true, specialPrice: 1.20, save: 0.60 },
+                woolies: { price: 1.80, special: false, specialPrice: null }
+            },
+            {
+                id: 'yogurt',
+                name: 'Greek Yogurt 1kg',
+                category: 'dairy',
+                coles: { price: 5.50, special: false, specialPrice: null },
+                woolies: { price: 4.50, special: true, specialPrice: 4.50, save: 1.00 }
+            }
+        ];
+
+        let selectedGroceryItems = new Set();
+
+        function switchTab(tab) {
+            // Update tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(`tab-${tab}`).classList.add('active');
+
+            // Show/hide content
+            if (tab === 'recipes') {
+                document.getElementById('recipeList').style.display = 'block';
+                document.getElementById('groceryList').style.display = 'none';
+                renderRecipes();
+            } else {
+                document.getElementById('recipeList').style.display = 'none';
+                document.getElementById('groceryList').style.display = 'block';
+                renderGroceryList();
+            }
+        }
+
+        function renderGroceryList(filter = '') {
+            const list = document.getElementById('groceryList');
+            const filtered = commonGroceryItems.filter(item => 
+                item.name.toLowerCase().includes(filter.toLowerCase())
+            );
+
+            let html = `
+                <div class="grocery-header">
+                    <h3>🛒 Weekly Specials</h3>
+                    <p>Click items to add to your shopping list</p>
+                </div>
+                <div style="margin-bottom: 15px; text-align: center;">
+                    <button class="btn btn-secondary" onclick="refreshPrices()" style="width: 100%; font-size: 0.85rem;">
+                        🔄 Refresh Prices
+                    </button>
+                    <div style="font-size: 0.7rem; color: #999; margin-top: 5px;">
+                        Last updated: ${localStorage.getItem('lastPriceUpdate') || 'Demo prices shown'}
+                    </div>
+                </div>
+                <div id="scraper-status" style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 10px; margin-bottom: 15px; font-size: 0.8rem; color: #856404;">
+                    <strong>ℹ️ Loading prices...</strong>
+                </div>
+                <div style="margin-bottom: 15px; text-align: center;">
+                    <button class="btn btn-secondary" onclick="toggleManualEntry()" style="font-size: 0.8rem; width: 100%;">
+                        ✏️ Edit Prices Manually
+                    </button>
+                </div>
+                <div id="manual-entry-panel" style="display: none; background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                    <h4 style="margin-bottom: 10px; font-size: 0.9rem;">Edit Item Prices</h4>
+                    <div id="manual-entry-form"></div>
+                    <button class="btn btn-primary" onclick="saveManualPrices()" style="width: 100%; margin-top: 10px;">
+                        💾 Save Prices
+                    </button>
+                </div>
+            `;
+
+            if (filtered.length === 0) {
+                html += '<div style="text-align: center; color: #999; padding: 20px;">No items found</div>';
+            } else {
+                html += filtered.map(item => {
+                    const bestPrice = Math.min(
+                        item.coles.special ? item.coles.specialPrice : item.coles.price,
+                        item.woolies.special ? item.woolies.specialPrice : item.woolies.price
+                    );
+                    const isSelected = selectedGroceryItems.has(item.id);
+                    
+                    return `
+                        <div class="grocery-item ${isSelected ? 'selected' : ''}" 
+                             onclick="toggleGroceryItem('${item.id}')"
+                             data-id="${item.id}">
+                            <h4>${item.name}</h4>
+                            <div class="price-row">
+                                <div class="price-store coles">
+                                    🏪 Coles
+                                    ${item.coles.special ? '<span class="savings-badge">SPECIAL</span>' : ''}
+                                </div>
+                                <div class="price-value ${item.coles.special ? 'special' : ''}">
+                                    $${(item.coles.special ? item.coles.specialPrice : item.coles.price).toFixed(2)}
+                                </div>
+                            </div>
+                            <div class="price-row">
+                                <div class="price-store woolies">
+                                    🏪 Woolies
+                                    ${item.woolies.special ? '<span class="savings-badge">SPECIAL</span>' : ''}
+                                </div>
+                                <div class="price-value ${item.woolies.special ? 'special' : ''}">
+                                    $${(item.woolies.special ? item.woolies.specialPrice : item.woolies.price).toFixed(2)}
+                                </div>
+                            </div>
+                            ${bestPrice < Math.max(item.coles.price, item.woolies.price) ? `
+                                <div style="margin-top: 8px; font-size: 0.8rem; color: #4CAF50; font-weight: 600;">
+                                    💰 Best price: $${bestPrice.toFixed(2)} 
+                                    (Save $${(Math.max(item.coles.price, item.woolies.price) - bestPrice).toFixed(2)})
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            html += `
+                <div class="grocery-actions">
+                    <button class="btn-grocery" onclick="addSelectedGroceriesToShoppingList()" 
+                            ${selectedGroceryItems.size === 0 ? 'disabled' : ''}>
+                        🛒 Add ${selectedGroceryItems.size} item${selectedGroceryItems.size !== 1 ? 's' : ''} to Shopping List
+                    </button>
+                </div>
+                <div class="last-updated">
+                    Last updated: ${new Date().toLocaleDateString()}
+                </div>
+            `;
+
+            list.innerHTML = html;
+        }
+
+        function toggleGroceryItem(id) {
+            if (selectedGroceryItems.has(id)) {
+                selectedGroceryItems.delete(id);
+            } else {
+                selectedGroceryItems.add(id);
+            }
+            renderGroceryList(document.getElementById('searchInput').value);
+        }
+
+        async function refreshPrices() {
+            const btn = document.querySelector('.grocery-list .btn-secondary');
+            btn.textContent = '⏳ Scraping...';
+            btn.disabled = true;
+            
+            try {
+                // Call the scraper API
+                const response = await fetch('http://localhost:5002/api/prices/refresh', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch prices');
+                }
+                
+                const data = await response.json();
+                
+                // Update the grocery items with real data
+                const updatedCount = updateGroceryItemsFromApi(data);
+                
+                // Save update time
+                const now = new Date().toLocaleString();
+                localStorage.setItem('lastPriceUpdate', now);
+                
+                renderGroceryList();
+                
+                // Show success message with stats
+                const colesCount = Object.keys(data.coles || {}).length;
+                const wooliesCount = Object.keys(data.woolworths || {}).length;
+                const usedCache = data.status?.used_cache;
+                
+                let msg = `✅ Prices updated!\n\n`;
+                msg += `🟡 Coles: ${colesCount} items found\n`;
+                msg += `🟢 Woolies: ${wooliesCount} items found\n`;
+                if (updatedCount === 0) {
+                    msg += `\n⚠️ No prices could be scraped\n`;
+                    msg += `📝 You can edit prices manually using "Edit Prices Manually"`;
+                } else if (usedCache) {
+                    msg += `\nℹ️ Used cached data (scraping blocked)\n`;
+                    msg += `📝 Some prices may be from earlier today`;
+                }
+                
+                alert(msg);
+                
+            } catch (error) {
+                console.error('Error refreshing prices:', error);
+                alert('❌ Could not fetch live prices.\n\nUsing demo prices.\n\nTry the "Edit Prices Manually" button to enter current prices from the Woolies/Coles apps!');
+                
+                // Fall back to simulated updates
+                simulatePriceUpdates();
+            }
+            
+            btn.textContent = '🔄 Refresh Prices';
+            btn.disabled = false;
+        }
+
+        function toggleManualEntry() {
+            const panel = document.getElementById('manual-entry-panel');
+            if (panel.style.display === 'none') {
+                panel.style.display = 'block';
+                renderManualEntryForm();
+            } else {
+                panel.style.display = 'none';
+            }
+        }
+
+        function renderManualEntryForm() {
+            const form = document.getElementById('manual-entry-form');
+            form.innerHTML = commonGroceryItems.map(item => `
+                <div style="margin-bottom: 15px; padding: 10px; background: white; border-radius: 8px;">
+                    <div style="font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">${item.name}</div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <div>
+                            <label style="font-size: 0.75rem; color: #e31e24; display: block; margin-bottom: 3px;">🏪 Coles $</label>
+                            <input type="number" step="0.01" id="coles-${item.id}" value="${item.coles.price}" style="width: 100%; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                            <label style="font-size: 0.7rem; display: flex; align-items: center; margin-top: 3px; cursor: pointer;">
+                                <input type="checkbox" id="coles-special-${item.id}" ${item.coles.special ? 'checked' : ''} style="margin-right: 4px;">
+                                Special
+                            </label>
+                        </div>
+                        <div>
+                            <label style="font-size: 0.75rem; color: #008841; display: block; margin-bottom: 3px;">🏪 Woolies $</label>
+                            <input type="number" step="0.01" id="woolies-${item.id}" value="${item.woolies.price}" style="width: 100%; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
+                            <label style="font-size: 0.7rem; display: flex; align-items: center; margin-top: 3px; cursor: pointer;">
+                                <input type="checkbox" id="woolies-special-${item.id}" ${item.woolies.special ? 'checked' : ''} style="margin-right: 4px;">
+                                Special
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function saveManualPrices() {
+            commonGroceryItems.forEach(item => {
+                const colesPrice = parseFloat(document.getElementById(`coles-${item.id}`).value) || item.coles.price;
+                const wooliesPrice = parseFloat(document.getElementById(`woolies-${item.id}`).value) || item.woolies.price;
+                const colesSpecial = document.getElementById(`coles-special-${item.id}`).checked;
+                const wooliesSpecial = document.getElementById(`woolies-special-${item.id}`).checked;
+                
+                item.coles.price = colesPrice;
+                item.coles.special = colesSpecial;
+                item.woolies.price = wooliesPrice;
+                item.woolies.special = wooliesSpecial;
+            });
+            
+            localStorage.setItem('lastPriceUpdate', new Date().toLocaleString() + ' (manual)');
+            localStorage.setItem('manualPrices', JSON.stringify(commonGroceryItems));
+            
+            document.getElementById('manual-entry-panel').style.display = 'none';
+            renderGroceryList();
+            
+            alert('✅ Prices saved!');
+        }
+
+        function loadManualPrices() {
+            const saved = localStorage.getItem('manualPrices');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    parsed.forEach((savedItem, index) => {
+                        if (commonGroceryItems[index]) {
+                            commonGroceryItems[index].coles = savedItem.coles;
+                            commonGroceryItems[index].woolies = savedItem.woolies;
+                        }
+                    });
+                } catch (e) {
+                    console.error('Error loading saved prices:', e);
+                }
+            }
+        }
+        
+        function updateGroceryItemsFromApi(data) {
+            // Map API data to our grocery items
+            const coles = data.coles || {};
+            const woolies = data.woolworths || {};
+            let updatedCount = 0;
+            
+            commonGroceryItems.forEach(item => {
+                const itemId = item.id;
+                
+                // Update Coles data
+                if (coles[itemId] && coles[itemId].price > 0) {
+                    item.coles.price = coles[itemId].price;
+                    item.coles.special = coles[itemId].special || false;
+                    item.coles.specialPrice = coles[itemId].special_price;
+                    updatedCount++;
+                }
+                
+                // Update Woolies data
+                if (woolies[itemId] && woolies[itemId].price > 0) {
+                    item.woolies.price = woolies[itemId].price;
+                    item.woolies.special = woolies[itemId].special || false;
+                    item.woolies.specialPrice = woolies[itemId].special_price;
+                    updatedCount++;
+                }
+            });
+            
+            return updatedCount;
+        }
+        
+        function simulatePriceUpdates() {
+            // Fallback simulation if API fails
+            commonGroceryItems.forEach(item => {
+                const variation = () => (Math.random() - 0.5) * 0.1; // ±5%
+                
+                item.coles.price = Math.round(item.coles.price * (1 + variation()) * 100) / 100;
+                item.woolies.price = Math.round(item.woolies.price * (1 + variation()) * 100) / 100;
+                
+                if (item.coles.specialPrice) {
+                    item.coles.specialPrice = Math.round(item.coles.specialPrice * (1 + variation()) * 100) / 100;
+                }
+                if (item.woolies.specialPrice) {
+                    item.woolies.specialPrice = Math.round(item.woolies.specialPrice * (1 + variation()) * 100) / 100;
+                }
+            });
+            
+            localStorage.setItem('lastPriceUpdate', new Date().toLocaleString() + ' (simulated)');
+        }
+
+        async function addSelectedGroceriesToShoppingList() {
+            const items = Array.from(selectedGroceryItems).map(id => 
+                commonGroceryItems.find(item => item.id === id)
+            );
+
+            let results = [];
+            let successful = 0;
+
+            for (const item of items) {
+                // Find best price
+                const colesPrice = item.coles.special ? item.coles.specialPrice : item.coles.price;
+                const wooliesPrice = item.woolies.special ? item.woolies.specialPrice : item.woolies.price;
+                const bestStore = colesPrice <= wooliesPrice ? 'Coles' : 'Woolies';
+                const bestPrice = Math.min(colesPrice, wooliesPrice);
+
+                const title = `🛒 ${item.name} - $${bestPrice.toFixed(2)} @ ${bestStore}`;
+                
+                // Add to reminders (mock - in real app would call API)
+                results.push(title);
+                successful++;
+            }
+
+            alert(`✅ Added ${successful} item${successful !== 1 ? 's' : ''} to your shopping list!\n\n${results.join('\n')}`);
+            
+            // Clear selections
+            selectedGroceryItems.clear();
+            renderGroceryList();
+        }
+
+        // Load prices on startup
+        async function loadPricesOnStartup() {
+            // First load any manually saved prices
+            loadManualPrices();
+            
+            try {
+                const statusDiv = document.getElementById('scraper-status');
+                
+                // Try to fetch prices from API
+                const response = await fetch('http://localhost:5002/api/prices', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const updatedCount = updateGroceryItemsFromApi(data);
+                    
+                    // Update status
+                    const colesCount = Object.keys(data.coles || {}).length;
+                    const wooliesCount = Object.keys(data.woolworths || {}).length;
+                    const usedCache = data.status?.used_cache;
+                    
+                    if (statusDiv) {
+                        if (updatedCount > 0) {
+                            statusDiv.innerHTML = `
+                                <strong>✅ Live Prices Active</strong><br>
+                                🟡 Coles: ${colesCount} items | 🟢 Woolies: ${wooliesCount} items<br>
+                                <small>Click "Edit Prices Manually" to adjust prices</small>
+                            `;
+                            statusDiv.style.background = '#d4edda';
+                            statusDiv.style.borderColor = '#c3e6cb';
+                            statusDiv.style.color = '#155724';
+                        } else {
+                            statusDiv.innerHTML = `
+                                <strong>⚠️ Auto-scraping Limited</strong><br>
+                                Woolies/Coles block automated scraping.<br>
+                                <small>✏️ Use "Edit Prices Manually" to enter prices from their apps!</small>
+                            `;
+                        }
+                    }
+                    
+                    localStorage.setItem('lastPriceUpdate', new Date().toLocaleString());
+                } else {
+                    throw new Error('API error');
+                }
+            } catch (error) {
+                console.log('Using saved/demo prices - scraper not available');
+                const statusDiv = document.getElementById('scraper-status');
+                if (statusDiv) {
+                    const lastUpdate = localStorage.getItem('lastPriceUpdate');
+                    if (lastUpdate && lastUpdate.includes('manual')) {
+                        statusDiv.innerHTML = `
+                            <strong>✅ Manual Prices Loaded</strong><br>
+                            Using your saved prices.<br>
+                            <small>Last updated: ${lastUpdate}</small>
+                        `;
+                        statusDiv.style.background = '#d4edda';
+                        statusDiv.style.borderColor = '#c3e6cb';
+                        statusDiv.style.color = '#155724';
+                    } else {
+                        statusDiv.innerHTML = `
+                            <strong>ℹ️ Demo Prices Active</strong><br>
+                            ✏️ Click "Edit Prices Manually" to enter real prices from Woolies/Coles apps!
+                        `;
+                    }
+                }
+            }
+        }
+
+        // Start the app
+        init();
+        
+        // Load prices after init
+        loadPricesOnStartup();
+
+        // Update search to work with both tabs (after init)
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const activeTab = document.querySelector('.tab-btn.active').id === 'tab-recipes' ? 'recipes' : 'groceries';
+            if (activeTab === 'recipes') {
+                renderRecipes(e.target.value);
+            } else {
+                renderGroceryList(e.target.value);
+            }
+        });
+    </script>
+</body>
+</html>
