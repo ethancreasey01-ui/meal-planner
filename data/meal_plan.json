@@ -1,0 +1,443 @@
+{
+  "mealPlan": {
+    "2025-02-17-lunch": {
+      "calories": 300,
+      "carbs": 30,
+      "fat": 10,
+      "id": 1,
+      "name": "Test Meal",
+      "protein": 25
+    },
+    "2026-02-17-breakfast": {
+      "calories": 394,
+      "carbs": 27,
+      "directions": [
+        "Cube chicken thighs and season with fajita seasoning, olive oil, and lime juice",
+        "Line sheet pan with baking paper, add onions and peppers, season and roast at 190C for 20 mins",
+        "Spread marinated chicken over vegetables, bake at 200C for 25-30 mins until golden",
+        "Add cheese, tomatoes, and coriander while hot, mix until melted",
+        "Serve with wraps and spicy sauce"
+      ],
+      "fat": 17,
+      "id": 1,
+      "image": "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&h=300&fit=crop",
+      "ingredients": [
+        {
+          "amount": 160,
+          "name": "Chicken Thighs",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 20,
+          "name": "Red Onion",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 20,
+          "name": "White Onion",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 45,
+          "name": "Bell Peppers",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 10,
+          "name": "Cheddar Cheese",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 10,
+          "name": "Mozzarella",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 1,
+          "name": "Tortilla Wraps",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 15,
+          "name": "Yogurt",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 8,
+          "name": "Mayo",
+          "perServing": true,
+          "unit": "g"
+        }
+      ],
+      "localThumbnail": "/videos/1_cheesy_chicken_fajita_wraps_video_thumb.jpg",
+      "localVideo": "/videos/1_cheesy_chicken_fajita_wraps_video.mp4",
+      "name": "\ud83c\udf2f Cheesy Chicken Fajita Wraps",
+      "protein": 43,
+      "servings": 10,
+      "source": "TikTok @mealprepking",
+      "tags": [
+        "high protein",
+        "meal prep"
+      ],
+      "url": "https://www.tiktok.com/@mealprepking/video/1234567890"
+    },
+    "2026-02-18-dinner": {
+      "calories": 520,
+      "carbs": 48,
+      "directions": [
+        "Preheat oven to 200C / 400F",
+        "Cut potatoes into wedges, toss with olive oil, oregano, salt, and pepper",
+        "Roast potatoes for 20 minutes",
+        "Add chicken thighs, tomatoes, onion, and garlic to the pan",
+        "Squeeze lemon juice over everything, roast for another 25-30 mins",
+        "Top with crumbled feta and olives before serving"
+      ],
+      "fat": 22,
+      "id": 5,
+      "image": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=300&fit=crop",
+      "ingredients": [
+        {
+          "amount": 180,
+          "name": "Chicken Thighs",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 250,
+          "name": "Potatoes",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 80,
+          "name": "Cherry Tomatoes",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 40,
+          "name": "Red Onion",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 10,
+          "name": "Garlic",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 0.5,
+          "name": "Lemon",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 15,
+          "name": "Olive Oil",
+          "perServing": true,
+          "unit": "ml"
+        },
+        {
+          "amount": 2,
+          "name": "Dried Oregano",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 30,
+          "name": "Feta Cheese",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 20,
+          "name": "Kalamata Olives",
+          "perServing": true,
+          "unit": "g"
+        }
+      ],
+      "name": "\ud83e\udd54 Mediterranean Roast Potatoes with Chicken",
+      "protein": 35,
+      "servings": 6,
+      "source": "TikTok @mediterraneandiet",
+      "tags": [
+        "mediterranean",
+        "sheet pan",
+        "healthy"
+      ],
+      "url": "https://www.tiktok.com/@mediterraneandiet/video/roast"
+    },
+    "2026-02-18-lunch": {
+      "calories": 650,
+      "carbs": 35,
+      "directions": [
+        "Form beef into patties, season with salt and pepper",
+        "Cook bacon until crispy, set aside",
+        "Grill or pan-sear burger patties over high heat for 3-4 mins per side",
+        "Add cheese in the last minute to melt",
+        "Toast buns until golden",
+        "Mix mayo with bacon bits for 'baconnaise' sauce",
+        "Assemble burgers with sauce, lettuce, tomato, pickles, onion, patties, and bacon"
+      ],
+      "fat": 38,
+      "id": 4,
+      "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop",
+      "ingredients": [
+        {
+          "amount": 200,
+          "name": "Ground Beef",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 60,
+          "name": "Bacon",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 40,
+          "name": "Cheddar Cheese",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 1,
+          "name": "Burger Buns",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 20,
+          "name": "Mayo",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 20,
+          "name": "Lettuce",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 30,
+          "name": "Tomato",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 15,
+          "name": "Pickles",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 20,
+          "name": "Onion",
+          "perServing": true,
+          "unit": "g"
+        }
+      ],
+      "localThumbnail": "/videos/4_baconnaise_double_cheeseburgers_video_thumb.jpg",
+      "localVideo": "/videos/4_baconnaise_double_cheeseburgers_video.mp4",
+      "name": "\ud83c\udf54 Baconnaise Double Cheeseburgers",
+      "protein": 42,
+      "servings": 4,
+      "source": "TikTok @burgerking",
+      "tags": [
+        "burger",
+        "american",
+        "comfort food"
+      ],
+      "url": "https://www.tiktok.com/@burgerking/video/baconnaise"
+    },
+    "2026-02-19-dinner": {
+      "calories": 520,
+      "carbs": 48,
+      "directions": [
+        "Preheat oven to 200C / 400F",
+        "Cut potatoes into wedges, toss with olive oil, oregano, salt, and pepper",
+        "Roast potatoes for 20 minutes",
+        "Add chicken thighs, tomatoes, onion, and garlic to the pan",
+        "Squeeze lemon juice over everything, roast for another 25-30 mins",
+        "Top with crumbled feta and olives before serving"
+      ],
+      "fat": 22,
+      "id": 5,
+      "image": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=300&fit=crop",
+      "ingredients": [
+        {
+          "amount": 180,
+          "name": "Chicken Thighs",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 250,
+          "name": "Potatoes",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 80,
+          "name": "Cherry Tomatoes",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 40,
+          "name": "Red Onion",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 10,
+          "name": "Garlic",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 0.5,
+          "name": "Lemon",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 15,
+          "name": "Olive Oil",
+          "perServing": true,
+          "unit": "ml"
+        },
+        {
+          "amount": 2,
+          "name": "Dried Oregano",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 30,
+          "name": "Feta Cheese",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 20,
+          "name": "Kalamata Olives",
+          "perServing": true,
+          "unit": "g"
+        }
+      ],
+      "name": "\ud83e\udd54 Mediterranean Roast Potatoes with Chicken",
+      "protein": 35,
+      "servings": 6,
+      "source": "TikTok @mediterraneandiet",
+      "tags": [
+        "mediterranean",
+        "sheet pan",
+        "healthy"
+      ],
+      "url": "https://www.tiktok.com/@mediterraneandiet/video/roast"
+    },
+    "2026-02-19-lunch": {
+      "calories": 650,
+      "carbs": 35,
+      "directions": [
+        "Form beef into patties, season with salt and pepper",
+        "Cook bacon until crispy, set aside",
+        "Grill or pan-sear burger patties over high heat for 3-4 mins per side",
+        "Add cheese in the last minute to melt",
+        "Toast buns until golden",
+        "Mix mayo with bacon bits for 'baconnaise' sauce",
+        "Assemble burgers with sauce, lettuce, tomato, pickles, onion, patties, and bacon"
+      ],
+      "fat": 38,
+      "id": 4,
+      "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop",
+      "ingredients": [
+        {
+          "amount": 200,
+          "name": "Ground Beef",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 60,
+          "name": "Bacon",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 40,
+          "name": "Cheddar Cheese",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 1,
+          "name": "Burger Buns",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 20,
+          "name": "Mayo",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 20,
+          "name": "Lettuce",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 30,
+          "name": "Tomato",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 15,
+          "name": "Pickles",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 20,
+          "name": "Onion",
+          "perServing": true,
+          "unit": "g"
+        }
+      ],
+      "localThumbnail": "/videos/4_baconnaise_double_cheeseburgers_video_thumb.jpg",
+      "localVideo": "/videos/4_baconnaise_double_cheeseburgers_video.mp4",
+      "name": "\ud83c\udf54 Baconnaise Double Cheeseburgers",
+      "protein": 42,
+      "servings": 4,
+      "source": "TikTok @burgerking",
+      "tags": [
+        "burger",
+        "american",
+        "comfort food"
+      ],
+      "url": "https://www.tiktok.com/@burgerking/video/baconnaise"
+    }
+  },
+  "currentWeekOffset": 0,
+  "servingsCount": 1,
+  "favoriteRecipes": [
+    2,
+    1
+  ],
+  "customGroceryItems": [],
+  "lastUpdated": "2026-02-17T03:29:28Z"
+}
