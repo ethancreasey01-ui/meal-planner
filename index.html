@@ -1743,19 +1743,19 @@
                 <div class="macro-grid">
                     <div class="macro-card highlight">
                         <div class="macro-value" id="totalCalories">0</div>
-                        <div class="macro-label">calories / day</div>
+                        <div class="macro-label">cal / person / day</div>
                     </div>
                     <div class="macro-card">
                         <div class="macro-value" id="totalProtein">0g</div>
-                        <div class="macro-label">protein / day</div>
+                        <div class="macro-label">protein / person / day</div>
                     </div>
                     <div class="macro-card">
                         <div class="macro-value" id="totalCarbs">0g</div>
-                        <div class="macro-label">carbs / day</div>
+                        <div class="macro-label">carbs / person / day</div>
                     </div>
                     <div class="macro-card">
                         <div class="macro-value" id="totalFat">0g</div>
-                        <div class="macro-label">fat / day</div>
+                        <div class="macro-label">fat / person / day</div>
                     </div>
                 </div>
             </div>
@@ -2995,11 +2995,11 @@
                 const dinner = mealPlan[`${dateKey}-dinner`];
                 const snacks = mealPlan[`${dateKey}-snacks`];
                 
-                // Calculate daily macros (multiplied by servings)
-                const dailyCalories = ((breakfast?.calories || 0) + (lunch?.calories || 0) + (dinner?.calories || 0) + (snacks?.calories || 0)) * servingsCount;
-                const dailyProtein = ((breakfast?.protein || 0) + (lunch?.protein || 0) + (dinner?.protein || 0) + (snacks?.protein || 0)) * servingsCount;
-                const dailyCarbs = ((breakfast?.carbs || 0) + (lunch?.carbs || 0) + (dinner?.carbs || 0) + (snacks?.carbs || 0)) * servingsCount;
-                const dailyFat = ((breakfast?.fat || 0) + (lunch?.fat || 0) + (dinner?.fat || 0) + (snacks?.fat || 0)) * servingsCount;
+                // Calculate daily macros per person (not multiplied by servings)
+                const dailyCalories = (breakfast?.calories || 0) + (lunch?.calories || 0) + (dinner?.calories || 0) + (snacks?.calories || 0);
+                const dailyProtein = (breakfast?.protein || 0) + (lunch?.protein || 0) + (dinner?.protein || 0) + (snacks?.protein || 0);
+                const dailyCarbs = (breakfast?.carbs || 0) + (lunch?.carbs || 0) + (dinner?.carbs || 0) + (snacks?.carbs || 0);
+                const dailyFat = (breakfast?.fat || 0) + (lunch?.fat || 0) + (dinner?.fat || 0) + (snacks?.fat || 0);
                 const hasMeals = breakfast || lunch || dinner || snacks;
                 
                 return `
@@ -3082,19 +3082,19 @@
                             <div class="daily-macros">
                                 <div class="daily-macro-item">
                                     <div class="daily-macro-value">${dailyCalories}</div>
-                                    <div>cal</div>
+                                    <div>cal/person</div>
                                 </div>
                                 <div class="daily-macro-item">
                                     <div class="daily-macro-value">${dailyProtein}g</div>
-                                    <div>pro</div>
+                                    <div>pro/person</div>
                                 </div>
                                 <div class="daily-macro-item">
                                     <div class="daily-macro-value">${dailyCarbs}g</div>
-                                    <div>carb</div>
+                                    <div>carb/person</div>
                                 </div>
                                 <div class="daily-macro-item">
                                     <div class="daily-macro-value">${dailyFat}g</div>
-                                    <div>fat</div>
+                                    <div>fat/person</div>
                                 </div>
                             </div>
                         ` : ''}
@@ -3430,15 +3430,15 @@
             });
             const numDaysWithMeals = daysWithMeals.size || 1; // Avoid divide by zero
             
-            // Calculate totals (macros are per serving, multiply by servingsCount)
+            // Calculate totals (macros in recipes are per person)
             const totals = meals.reduce((acc, meal) => ({
-                calories: acc.calories + (meal.calories * servingsCount),
-                protein: acc.protein + (meal.protein * servingsCount),
-                carbs: acc.carbs + (meal.carbs * servingsCount),
-                fat: acc.fat + (meal.fat * servingsCount)
+                calories: acc.calories + meal.calories,
+                protein: acc.protein + meal.protein,
+                carbs: acc.carbs + meal.carbs,
+                fat: acc.fat + meal.fat
             }), { calories: 0, protein: 0, carbs: 0, fat: 0 });
             
-            // Calculate daily averages (only for days that have meals planned)
+            // Calculate daily averages per person (only for days that have meals planned)
             const avgCalories = mealCount > 0 ? Math.round(totals.calories / numDaysWithMeals) : 0;
             const avgProtein = mealCount > 0 ? Math.round(totals.protein / numDaysWithMeals) : 0;
             const avgCarbs = mealCount > 0 ? Math.round(totals.carbs / numDaysWithMeals) : 0;
@@ -3448,7 +3448,7 @@
             document.getElementById('totalProtein').textContent = avgProtein + 'g';
             document.getElementById('totalCarbs').textContent = avgCarbs + 'g';
             document.getElementById('totalFat').textContent = avgFat + 'g';
-            document.getElementById('mealCount').textContent = `${mealCount} meal${mealCount !== 1 ? 's' : ''} across ${numDaysWithMeals} day${numDaysWithMeals !== 1 ? 's' : ''}`;
+            document.getElementById('mealCount').textContent = `${mealCount} meal${mealCount !== 1 ? 's' : ''} across ${numDaysWithMeals} day${numDaysWithMeals !== 1 ? 's' : ''} • ${servingsCount} person${servingsCount !== 1 ? 's' : ''}`;
         }
 
         function updateServings() {
