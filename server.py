@@ -192,6 +192,11 @@ def index():
     """Serve the main HTML file"""
     return send_from_directory(BASE_DIR, 'index.html')
 
+@app.route('/test.html')
+def test_page():
+    """Serve the test HTML file"""
+    return send_from_directory(BASE_DIR, 'test.html')
+
 @app.route('/api/health', methods=['GET'])
 def health_check():
     return jsonify({"status": "ok", "service": "meal-planner-api"})
