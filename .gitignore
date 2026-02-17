@@ -1,0 +1,35 @@
+# Videos - too large for git
+videos/*.mp4
+videos/*.mov
+videos/*.webm
+videos/*.mkv
+videos/*.avi
+
+# But keep thumbnails
+!videos/*_thumb.jpg
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv
+pip-log.txt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.backup.*
+*.bak

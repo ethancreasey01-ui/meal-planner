@@ -2,173 +2,300 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍽️ Meal Planner Pro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#F5F5F7">
+    <title>Meal Planner</title>
     <style>
+        /* ============================================
+           APPLE DESIGN SYSTEM - MEAL PLANNER
+           ============================================ */
+        
+        :root {
+            /* iOS Colors */
+            --ios-blue: #007AFF;
+            --ios-blue-light: #5AC8FA;
+            --ios-orange: #FF9500;
+            --ios-green: #34C759;
+            --ios-red: #FF3B30;
+            --ios-purple: #AF52DE;
+            --ios-teal: #5AC8FA;
+            --ios-yellow: #FFCC00;
+            --ios-pink: #FF2D55;
+            --ios-indigo: #5856D6;
+            
+            /* System Grays */
+            --gray1: #8E8E93;
+            --gray2: #AEAEB2;
+            --gray3: #C7C7CC;
+            --gray4: #D1D1D6;
+            --gray5: #E5E5EA;
+            --gray6: #F2F2F7;
+            
+            /* Backgrounds */
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F5F5F7;
+            --bg-tertiary: #EFEFF4;
+            
+            /* Text */
+            --text-primary: #000000;
+            --text-secondary: #3C3C43;
+            --text-tertiary: rgba(60, 60, 67, 0.6);
+            --text-quaternary: rgba(60, 60, 67, 0.3);
+            
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            
+            /* Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+            
+            /* Animation */
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.12);
+            --shadow-xl: 0 24px 80px rgba(0, 0, 0, 0.16);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
+            background: var(--bg-secondary);
             height: 100vh;
+            height: 100dvh;
             width: 100vw;
             overflow: hidden;
-            color: #333;
+            color: var(--text-primary);
+            font-size: 16px;
+            line-height: 1.47059;
+            letter-spacing: -0.022em;
         }
 
         .app-container {
             display: grid;
-            grid-template-columns: minmax(280px, 25%) 1fr;
+            grid-template-columns: 340px 1fr;
             height: 100vh;
-            width: 100vw;
+            height: 100dvh;
             gap: 0;
             overflow: hidden;
         }
 
         /* Left Panel - Recipe Library */
         .recipe-panel {
-            background: #fff;
-            border-right: 1px solid #e0e0e0;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-right: 0.5px solid var(--gray4);
             display: flex;
             flex-direction: column;
-            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
-            z-index: 10;
-            min-width: 260px;
-            max-width: 400px;
-            width: 100%;
+            z-index: 100;
             height: 100vh;
             overflow: hidden;
         }
 
         .panel-header {
-            padding: 15px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            padding: var(--space-lg);
+            padding-top: calc(var(--space-lg) + env(safe-area-inset-top, 0px));
+            border-bottom: 0.5px solid var(--gray4);
             flex-shrink: 0;
         }
 
         .panel-header h1 {
-            font-size: 1.3rem;
-            margin-bottom: 3px;
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.021em;
+            margin-bottom: var(--space-xs);
+            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .panel-header p {
-            opacity: 0.9;
-            font-size: 0.85rem;
-        }
-
-        .search-box {
-            padding: 12px 20px;
-            border-bottom: 1px solid #e0e0e0;
-            flex-shrink: 0;
-        }
-
-        .search-box input {
-            width: 100%;
-            padding: 10px 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-
-        .search-box input:focus {
-            outline: none;
-            border-color: #667eea;
+            font-size: 15px;
+            color: var(--text-tertiary);
+            font-weight: 400;
         }
 
         .tab-nav {
             display: flex;
-            border-bottom: 1px solid #e0e0e0;
-            background: #f8f9fa;
+            padding: var(--space-md) var(--space-lg);
+            gap: 4px;
+            border-bottom: 0.5px solid var(--gray4);
         }
 
         .tab-btn {
             flex: 1;
-            padding: 12px;
+            padding: 8px 12px;
             border: none;
-            background: transparent;
+            background: var(--bg-tertiary);
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
-            color: #666;
-            transition: all 0.2s;
-            border-bottom: 3px solid transparent;
+            font-size: 13px;
+            color: var(--text-secondary);
+            transition: all 0.3s var(--ease-smooth);
+            border-radius: var(--radius-full);
         }
 
         .tab-btn:hover {
-            background: #f0f0f0;
+            background: var(--gray5);
+            color: var(--text-primary);
         }
 
         .tab-btn.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
-            background: white;
+            background: var(--bg-primary);
+            color: var(--ios-blue);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-box {
+            padding: var(--space-md) var(--space-lg);
+            border-bottom: 0.5px solid var(--gray4);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .search-box::before {
+            content: '🔍';
+            position: absolute;
+            left: 36px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            opacity: 0.5;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px 10px 40px;
+            border: none;
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-full);
+            font-size: 15px;
+            font-family: inherit;
+            color: var(--text-primary);
+            transition: all 0.2s var(--ease-smooth);
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-quaternary);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            background: var(--bg-primary);
+            box-shadow: inset 0 0 0 2px var(--ios-blue);
         }
 
         .recipe-list {
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 15px;
+            padding: var(--space-md);
             min-height: 0;
+        }
+
+        .recipe-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .recipe-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .recipe-list::-webkit-scrollbar-thumb {
+            background: var(--gray4);
+            border-radius: 3px;
         }
 
         .grocery-list {
             flex: 1;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 15px;
+            padding: var(--space-md);
             min-height: 0;
         }
 
         .grocery-header {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
+            background: linear-gradient(135deg, var(--ios-orange) 0%, var(--ios-red) 100%);
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-md);
             color: white;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grocery-header::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            border-radius: 50%;
         }
 
         .grocery-header h3 {
-            font-size: 1rem;
-            margin-bottom: 5px;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            position: relative;
+            z-index: 1;
         }
 
         .grocery-header p {
-            font-size: 0.8rem;
+            font-size: 14px;
             opacity: 0.9;
+            position: relative;
+            z-index: 1;
         }
 
         .grocery-item {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 10px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md);
+            margin-bottom: var(--space-sm);
             border: 2px solid transparent;
-            transition: all 0.2s;
+            transition: all 0.3s var(--ease-spring);
             cursor: pointer;
+            box-shadow: var(--shadow-sm);
         }
 
         .grocery-item:hover {
-            border-color: #667eea;
+            border-color: var(--ios-blue);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-md);
         }
 
         .grocery-item.selected {
-            border-color: #667eea;
-            background: #f0f4ff;
+            border-color: var(--ios-blue);
+            background: linear-gradient(135deg, rgba(0,122,255,0.05) 0%, rgba(175,82,222,0.05) 100%);
         }
 
         .grocery-item h4 {
-            font-size: 0.9rem;
-            margin-bottom: 8px;
-            color: #333;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: var(--space-sm);
+            color: var(--text-primary);
         }
 
         .price-row {
@@ -176,8 +303,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 6px 0;
-            font-size: 0.85rem;
-            border-bottom: 1px solid #eee;
+            font-size: 14px;
+            border-bottom: 0.5px solid var(--gray5);
         }
 
         .price-row:last-child {
@@ -188,14 +315,33 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            font-weight: 500;
         }
 
         .price-store.coles {
-            color: #e31e24;
+            color: var(--ios-red);
         }
 
         .price-store.woolies {
-            color: #008841;
+            color: var(--ios-green);
+        }
+
+        .price-value {
+            font-weight: 600;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .price-value.special {
+            color: var(--ios-red);
+        }
+
+        .savings-badge {
+            background: var(--ios-green);
+            color: white;
+            padding: 2px 8px;
+            border-radius: var(--radius-full);
+            font-size: 10px;
+            font-weight: 700;
         }
 
         .price-value {
@@ -253,22 +399,40 @@
         }
 
         .recipe-card {
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 10px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md);
+            margin-bottom: var(--space-sm);
             cursor: grab;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 2px solid transparent;
+            transition: all 0.3s var(--ease-spring);
+            border: 0.5px solid transparent;
             position: relative;
             user-select: none;
             touch-action: none;
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .recipe-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--ios-orange), var(--ios-red));
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .recipe-card:hover {
             transform: translateY(-2px) scale(1.01);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
-            border-color: #667eea;
+            box-shadow: var(--shadow-lg);
+            border-color: var(--gray4);
+        }
+
+        .recipe-card:hover::before {
+            opacity: 1;
         }
 
         .recipe-card:active {
@@ -279,23 +443,26 @@
         .recipe-card.dragging {
             opacity: 0.9;
             cursor: grabbing;
-            transform: scale(1.05) rotate(2deg);
-            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.25);
+            transform: scale(1.05) rotate(1deg);
+            box-shadow: var(--shadow-xl);
             z-index: 1000;
             position: relative;
         }
 
         .recipe-card h3 {
-            font-size: 0.95rem;
-            margin-bottom: 8px;
-            color: #333;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: var(--space-xs);
+            color: var(--text-primary);
+            line-height: 1.3;
         }
 
         .recipe-meta {
             display: flex;
-            gap: 12px;
-            font-size: 0.8rem;
-            color: #666;
+            gap: var(--space-md);
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-bottom: var(--space-sm);
         }
 
         .recipe-meta span {
@@ -307,134 +474,163 @@
         .recipe-tags {
             display: flex;
             gap: 6px;
-            margin-top: 8px;
             flex-wrap: wrap;
         }
 
         .tag {
-            background: #e8f0fe;
-            color: #667eea;
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-size: 0.7rem;
+            background: var(--bg-secondary);
+            color: var(--ios-blue);
+            padding: 4px 10px;
+            border-radius: var(--radius-full);
+            font-size: 11px;
             font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .tag.high-protein { color: var(--ios-orange); }
+        .tag.meal-prep { color: var(--ios-green); }
+        .tag.quick { color: var(--ios-purple); }
+
+        .recipe-thumbnail {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-sm);
+            box-shadow: var(--shadow-sm);
         }
 
         /* Main Content - Calendar */
         .main-content {
             display: flex;
             flex-direction: column;
-            background: #f5f5f5;
+            background: var(--bg-secondary);
             height: 100vh;
+            height: 100dvh;
             overflow: hidden;
         }
 
         .toolbar {
-            background: white;
-            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            padding: var(--space-md) var(--space-xl);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #e0e0e0;
+            border-bottom: 0.5px solid var(--gray4);
             flex-shrink: 0;
-            height: 60px;
+            height: 64px;
         }
 
         .week-nav {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: var(--space-md);
         }
 
         .week-nav button {
-            background: #f0f0f0;
+            background: var(--bg-tertiary);
             border: none;
             width: 36px;
             height: 36px;
-            border-radius: 8px;
+            border-radius: var(--radius-md);
             cursor: pointer;
-            font-size: 1.2rem;
-            transition: all 0.2s;
+            font-size: 18px;
+            transition: all 0.2s var(--ease-smooth);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .week-nav button:hover {
-            background: #667eea;
+            background: var(--ios-blue);
             color: white;
+            transform: scale(1.05);
         }
 
         .week-nav h2 {
-            font-size: 1.3rem;
-            color: #333;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.021em;
         }
 
         .servings-selector {
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: #f8f9fa;
-            padding: 6px 12px;
-            border-radius: 8px;
-            border: 1px solid #e0e0e0;
+            gap: var(--space-sm);
+            background: var(--bg-primary);
+            padding: 6px 14px;
+            border-radius: var(--radius-full);
+            border: 0.5px solid var(--gray4);
+            box-shadow: var(--shadow-sm);
         }
 
         .servings-selector label {
-            font-size: 0.9rem;
-            color: #666;
+            font-size: 14px;
+            color: var(--text-secondary);
             font-weight: 500;
         }
 
         .servings-selector input {
-            width: 50px;
-            padding: 6px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
+            width: 44px;
+            padding: 4px 8px;
+            border: none;
+            border-radius: var(--radius-sm);
             text-align: center;
-            font-size: 1rem;
+            font-size: 16px;
             font-weight: 600;
-            color: #667eea;
+            color: var(--ios-blue);
+            background: var(--bg-tertiary);
         }
 
         .servings-selector input:focus {
             outline: none;
-            border-color: #667eea;
+            background: var(--bg-secondary);
+            box-shadow: inset 0 0 0 2px var(--ios-blue);
         }
 
         .actions {
             display: flex;
-            gap: 10px;
+            gap: var(--space-sm);
         }
 
         .btn {
-            padding: 8px 16px;
-            border-radius: 8px;
+            padding: 10px 18px;
+            border-radius: var(--radius-full);
             border: none;
             cursor: pointer;
             font-weight: 600;
-            font-size: 0.85rem;
-            transition: all 0.2s;
+            font-size: 14px;
+            transition: all 0.2s var(--ease-smooth);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             white-space: nowrap;
         }
 
         .btn-secondary {
-            background: #f0f0f0;
-            color: #333;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
         }
 
         .btn-secondary:hover {
-            background: #e0e0e0;
+            background: var(--gray5);
+            transform: translateY(-1px);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--ios-blue);
             color: white;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.3);
         }
 
         .btn-primary:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+            background: #0051D5;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 122, 255, 0.4);
         }
 
         /* Calendar Grid */
@@ -447,52 +643,57 @@
 
         .calendar-grid {
             display: grid;
-            grid-template-columns: repeat(7, minmax(140px, 1fr));
-            gap: 10px;
-            min-width: 980px;
+            grid-template-columns: repeat(7, minmax(160px, 1fr));
+            gap: var(--space-md);
+            min-width: 1100px;
             height: 100%;
+            padding: var(--space-md);
         }
 
         .day-column {
-            background: white;
-            border-radius: 12px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-xl);
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            box-shadow: var(--shadow-sm);
             min-height: 280px;
             display: flex;
             flex-direction: column;
-            transition: transform 0.2s;
+            transition: all 0.3s var(--ease-spring);
+            border: 0.5px solid var(--gray5);
         }
 
         .day-column:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-md);
+            border-color: var(--gray4);
         }
 
         .day-header {
-            padding: 10px;
+            padding: var(--space-md);
             text-align: center;
-            border-bottom: 1px solid #f0f0f0;
-            background: #fafafa;
+            border-bottom: 0.5px solid var(--gray5);
+            background: var(--bg-secondary);
             flex-shrink: 0;
         }
 
         .day-header .day-name {
-            font-size: 0.75rem;
-            color: #666;
+            font-size: 11px;
+            color: var(--text-tertiary);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.06em;
+            font-weight: 600;
         }
 
         .day-header .day-number {
-            font-size: 1.3rem;
+            font-size: 24px;
             font-weight: 700;
-            color: #333;
-            margin-top: 3px;
+            color: var(--text-primary);
+            margin-top: 4px;
+            letter-spacing: -0.021em;
         }
 
         .day-header.today {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-purple) 100%);
         }
 
         .day-header.today .day-name,
@@ -501,11 +702,11 @@
         }
 
         .meal-slots {
-            padding: 10px;
+            padding: var(--space-md);
             flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: var(--space-md);
             overflow-y: auto;
         }
 
@@ -513,7 +714,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            min-height: 80px;
+            min-height: 90px;
         }
 
         .meal-slot .drop-zone {
@@ -521,76 +722,78 @@
         }
 
         .meal-slot {
-            margin-bottom: 15px;
+            margin-bottom: var(--space-md);
         }
 
         .meal-label {
-            font-size: 0.75rem;
-            color: #999;
+            font-size: 11px;
+            color: var(--text-tertiary);
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.06em;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 6px;
+            font-weight: 600;
         }
 
         .drop-zone {
-            min-height: 70px;
-            border: 2px dashed #ddd;
-            border-radius: 10px;
-            padding: 8px;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            min-height: 80px;
+            border: 2px dashed var(--gray4);
+            border-radius: var(--radius-lg);
+            padding: var(--space-sm);
+            transition: all 0.3s var(--ease-smooth);
             display: flex;
             flex-direction: column;
             gap: 6px;
-            background: #fafafa;
+            background: var(--bg-secondary);
         }
 
         .drop-zone:hover {
-            border-color: #bbb;
-            background: #f5f5f5;
+            border-color: var(--gray3);
+            background: var(--gray6);
         }
 
         .drop-zone.drag-over {
-            border-color: #667eea;
+            border-color: var(--ios-blue);
             border-style: solid;
-            background: linear-gradient(135deg, #f0f4ff 0%, #e8eeff 100%);
-            box-shadow: inset 0 0 0 2px rgba(102, 126, 234, 0.2);
+            background: linear-gradient(135deg, rgba(0,122,255,0.05) 0%, rgba(175,82,222,0.05) 100%);
+            box-shadow: inset 0 0 0 2px rgba(0, 122, 255, 0.15);
             transform: scale(1.02);
         }
 
         .drop-zone .placeholder {
             text-align: center;
-            color: #ccc;
-            font-size: 0.8rem;
-            padding: 20px 0;
+            color: var(--gray3);
+            font-size: 13px;
+            padding: 24px 0;
         }
 
         .meal-item {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-purple) 100%);
             color: white;
-            padding: 8px 10px;
-            border-radius: 8px;
-            font-size: 0.8rem;
+            padding: 10px 12px;
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 500;
             cursor: grab;
             position: relative;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 2px 6px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s var(--ease-spring);
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
             user-select: none;
         }
 
         .meal-item:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.35);
         }
 
         .meal-item.dragging {
             transform: scale(1.05) rotate(1deg);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.5);
+            box-shadow: var(--shadow-xl);
             z-index: 1000;
         }
 
@@ -598,31 +801,32 @@
             background: rgba(255,255,255,0.2);
             border: none;
             color: white;
-            width: 20px;
-            height: 20px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 0.75rem;
+            font-size: 14px;
             line-height: 1;
             display: flex;
             align-items: center;
             justify-content: center;
             padding: 0;
             flex-shrink: 0;
-            aspect-ratio: 1;
+            transition: all 0.2s;
         }
 
         .meal-item .remove:hover {
-            background: rgba(255,255,255,0.4);
+            background: rgba(255,255,255,0.35);
+            transform: scale(1.1);
         }
 
         /* Daily Macros */
         .daily-macros {
-            margin-top: 8px;
-            padding-top: 8px;
-            border-top: 1px dashed #e0e0e0;
-            font-size: 0.7rem;
-            color: #666;
+            margin-top: var(--space-sm);
+            padding-top: var(--space-sm);
+            border-top: 0.5px dashed var(--gray4);
+            font-size: 11px;
+            color: var(--text-tertiary);
             display: flex;
             justify-content: space-around;
         }
@@ -633,14 +837,17 @@
 
         .daily-macro-value {
             font-weight: 700;
-            color: #667eea;
+            color: var(--ios-blue);
+            font-size: 12px;
         }
 
         /* Macro Summary - Weekly */
         .macro-panel {
-            background: white;
-            border-top: 1px solid #e0e0e0;
-            padding: 15px 20px;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-top: 0.5px solid var(--gray4);
+            padding: var(--space-lg) var(--space-xl);
             flex-shrink: 0;
             height: auto;
             min-height: 130px;
@@ -650,41 +857,57 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: var(--space-md);
         }
 
         .macro-header h3 {
-            font-size: 1rem;
-            color: #333;
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
         .macro-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 15px;
+            gap: var(--space-md);
         }
 
         .macro-card {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-            padding: 12px;
-            border-radius: 10px;
+            background: var(--bg-primary);
+            padding: var(--space-md);
+            border-radius: var(--radius-lg);
             text-align: center;
+            box-shadow: var(--shadow-sm);
+            border: 0.5px solid var(--gray5);
+            transition: all 0.3s var(--ease-spring);
+        }
+
+        .macro-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
         .macro-card.highlight {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-purple) 100%);
             color: white;
+            border-color: transparent;
         }
 
         .macro-value {
-            font-size: 1.5rem;
+            font-size: 28px;
             font-weight: 700;
+            letter-spacing: -0.021em;
         }
 
         .macro-label {
-            font-size: 0.85rem;
-            opacity: 0.8;
-            margin-top: 5px;
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        .macro-card.highlight .macro-label {
+            color: rgba(255, 255, 255, 0.8);
         }
 
         /* Recipe Modal */
@@ -694,14 +917,15 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.3s var(--ease-smooth);
         }
 
         .modal-overlay.active {
@@ -710,44 +934,87 @@
         }
 
         .modal-content {
-            background: white;
-            border-radius: 20px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-2xl);
             width: 90%;
             max-width: 600px;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s var(--ease-spring);
+            box-shadow: 0 32px 80px rgba(0, 0, 0, 0.4);
         }
 
         .modal-overlay.active .modal-content {
-            transform: scale(1);
+            transform: scale(1) translateY(0);
         }
 
         .modal-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, var(--ios-blue) 0%, var(--ios-purple) 100%);
             color: white;
-            padding: 20px;
+            padding: var(--space-xl);
             position: relative;
         }
 
+        .modal-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal-video {
+            width: 100%;
+            max-height: 400px;
+            display: block;
+            background: #000;
+        }
+
+        .video-download-progress {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            background: var(--ios-blue);
+            color: white;
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+        }
+
+        .video-download-progress.spinner::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            margin-left: 8px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
         .modal-header h2 {
-            font-size: 1.4rem;
-            margin-bottom: 8px;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: var(--space-xs);
+            letter-spacing: -0.021em;
         }
 
         .modal-header .recipe-source {
             opacity: 0.9;
-            font-size: 0.9rem;
+            font-size: 15px;
+            font-weight: 500;
         }
 
         .modal-close {
             position: absolute;
-            top: 15px;
-            right: 15px;
+            top: var(--space-md);
+            right: var(--space-md);
             background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
@@ -755,36 +1022,38 @@
             height: 32px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 1.2rem;
+            font-size: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: background 0.2s;
+            transition: all 0.2s var(--ease-smooth);
         }
 
         .modal-close:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.35);
+            transform: scale(1.1);
         }
 
         .modal-body {
             flex: 1;
             overflow-y: auto;
-            padding: 20px;
+            padding: var(--space-xl);
         }
 
         .modal-section {
-            margin-bottom: 20px;
+            margin-bottom: var(--space-xl);
         }
 
         .modal-section h4 {
-            font-size: 0.85rem;
+            font-size: 13px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #667eea;
-            margin-bottom: 10px;
+            letter-spacing: 0.06em;
+            color: var(--ios-blue);
+            margin-bottom: var(--space-md);
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
+            font-weight: 600;
         }
 
         .ingredients-list {
@@ -1346,12 +1615,12 @@
         <div class="recipe-panel" id="recipePanel">
             <div class="panel-header">
                 <h1>🍽️ Meal Planner</h1>
-                <p>Plan meals & track specials</p>
+                <p>Plan meals & manage staples</p>
             </div>
             <!-- Tab Navigation -->
             <div class="tab-nav">
                 <button class="tab-btn active" onclick="switchTab('recipes')" id="tab-recipes">🍽️ Recipes</button>
-                <button class="tab-btn" onclick="switchTab('groceries')" id="tab-groceries">🛒 Specials</button>
+                <button class="tab-btn" onclick="switchTab('groceries')" id="tab-groceries">📋 Everyday Items</button>
             </div>
             <div class="search-box">
                 <input type="text" placeholder="🔍 Search..." id="searchInput">
@@ -1377,7 +1646,8 @@
                     <input type="number" id="servingsInput" value="1" min="1" max="20" onchange="updateServings()">
                 </div>
                 <div class="actions">
-                    <button class="btn btn-secondary" onclick="clearWeek()">🗑️ Clear</button>
+                    <button class="btn btn-secondary" onclick="clearWeek()">🗑️ Clear Week</button>
+                    <button class="btn btn-secondary" onclick="clearAllReminders()" title="Clear Apple Reminders lists">🧹 Clear Reminders</button>
                     <button class="btn btn-secondary" onclick="generateRandomMealPlan()" title="Auto-generate random meal plan">🎲 Generate Plan</button>
                     <button class="btn btn-primary" onclick="generateShoppingList()">
                         🛒 Shopping List
@@ -1437,8 +1707,8 @@
                 <span>Recipes</span>
             </button>
             <button class="mobile-nav-item" onclick="switchMobileView('groceries')" id="nav-groceries">
-                <span>🛒</span>
-                <span>Specials</span>
+                <span>📋</span>
+                <span>Items</span>
             </button>
             <button class="mobile-nav-item" onclick="generateShoppingList()" id="nav-shopping">
                 <span>📋</span>
@@ -1455,10 +1725,30 @@
                 <div class="recipe-source" id="modalSource">Source: TikTok</div>
                 <button class="modal-close" onclick="closeModal()">×</button>
             </div>
+            <img id="modalImage" class="modal-image" src="" alt="Recipe Image" style="display: none;">
+            
+            <!-- Video Section -->
+            <div id="modalVideoSection" style="display: none;">
+                <video id="modalVideo" class="modal-video" controls playsinline poster="">
+                    <source src="" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            
             <div class="modal-body">
                 <div class="modal-section" id="modalLinkSection" style="display: none;">
                     <h4>🔗 Recipe Source</h4>
                     <a href="#" id="modalLink" target="_blank" class="recipe-link">View Original Recipe →</a>
+                    <div id="videoDownloadSection" style="margin-top: 12px; padding: 12px; background: var(--bg-secondary); border-radius: var(--radius-md);">
+                        <div id="videoDownloadStatus">
+                            <button class="btn btn-secondary" onclick="downloadRecipeVideo()" style="width: 100%;">
+                                📥 Download Video
+                            </button>
+                            <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 8px; text-align: center;">
+                                Save locally so you never lose this recipe
+                            </p>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-section">
                     <h4>📊 Macros (per serving)</h4>
@@ -1503,6 +1793,7 @@
             {
                 id: 1,
                 name: "🌯 Cheesy Chicken Fajita Wraps",
+                image: "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&h=300&fit=crop",
                 calories: 394,
                 protein: 43,
                 carbs: 27,
@@ -1533,6 +1824,7 @@
             {
                 id: 2,
                 name: "🌯 Korean BBQ Chicken Wraps",
+                image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop",
                 calories: 417,
                 protein: 39,
                 carbs: 38,
@@ -1569,6 +1861,7 @@
             {
                 id: 3,
                 name: "🍚 Oyakodon (Chicken & Egg Rice Bowl)",
+                image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=300&fit=crop",
                 calories: 485,
                 protein: 38,
                 carbs: 52,
@@ -1600,6 +1893,7 @@
             {
                 id: 4,
                 name: "🍔 Baconnaise Double Cheeseburgers",
+                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop",
                 calories: 650,
                 protein: 42,
                 carbs: 35,
@@ -1632,6 +1926,7 @@
             {
                 id: 5,
                 name: "🥔 Mediterranean Roast Potatoes with Chicken",
+                image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=300&fit=crop",
                 calories: 520,
                 protein: 35,
                 carbs: 48,
@@ -1664,6 +1959,7 @@
             {
                 id: 6,
                 name: "🍝 Crispy Peri Peri Chicken & Bacon Pasta Salad",
+                image: "https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=400&h=300&fit=crop",
                 calories: 580,
                 protein: 40,
                 carbs: 55,
@@ -1696,6 +1992,7 @@
             {
                 id: 7,
                 name: "🍔 Crispy Chicken Bacon Burgers",
+                image: "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=400&h=300&fit=crop",
                 calories: 620,
                 protein: 44,
                 carbs: 42,
@@ -1728,6 +2025,7 @@
             {
                 id: 8,
                 name: "🍜 Chicken Pad Thai",
+                image: "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400&h=300&fit=crop",
                 calories: 495,
                 protein: 36,
                 carbs: 58,
@@ -1757,6 +2055,222 @@
                     "Add noodles and sauce, toss everything together",
                     "Add bean sprouts and green onions, cook for 1 minute",
                     "Serve with lime wedge and crushed peanuts on top"
+                ]
+            },
+            {
+                id: 10,
+                name: "🥩 High Protein Pepper Steak Rice Bowls",
+                image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400&h=300&fit=crop",
+                calories: 520,
+                protein: 53,
+                carbs: 45,
+                fat: 18,
+                servings: 4,
+                tags: ["high protein", "meal prep", "video"],
+                source: "TikTok @panaceapalm",
+                url: "https://www.tiktok.com/@panaceapalm",
+                ingredients: [
+                    { name: "Lean Steak", amount: 200, unit: "g", perServing: true },
+                    { name: "Bell Peppers", amount: 100, unit: "g", perServing: true },
+                    { name: "Onion", amount: 50, unit: "g", perServing: true },
+                    { name: "Rice", amount: 150, unit: "g", perServing: true },
+                    { name: "Soy Sauce", amount: 15, unit: "ml", perServing: true }
+                ],
+                directions: ["Watch video for full instructions! Slice steak and stir-fry with peppers and onions. Serve over rice with soy sauce."]
+            },
+            {
+                id: 11,
+                name: "🍜 Sweet Chilli Chicken Noodle Salad",
+                image: "https://images.unsplash.com/photo-1547592166-23acbe346499?w=400&h=300&fit=crop",
+                calories: 420,
+                protein: 28,
+                carbs: 55,
+                fat: 12,
+                servings: 4,
+                tags: ["cold", "meal prep", "video"],
+                source: "TikTok @zoeeatswell",
+                url: "https://www.tiktok.com/@zoeeatswell",
+                ingredients: [
+                    { name: "Rice Noodles", amount: 80, unit: "g", perServing: true },
+                    { name: "Chicken Breast", amount: 150, unit: "g", perServing: true },
+                    { name: "Cucumber", amount: 50, unit: "g", perServing: true },
+                    { name: "Carrot", amount: 40, unit: "g", perServing: true },
+                    { name: "Sweet Chilli Sauce", amount: 20, unit: "g", perServing: true },
+                    { name: "Coriander", amount: 5, unit: "g", perServing: true },
+                    { name: "Peanuts", amount: 10, unit: "g", perServing: true }
+                ],
+                directions: ["Cook noodles and chicken. Mix with vegetables and sauce. Top with coriander and peanuts."]
+            },
+            {
+                id: 12,
+                name: "🍗 Sweet Chilli Popcorn Chicken",
+                image: "https://images.unsplash.com/photo-1455619452474-d2be8b1e70cd?w=400&h=300&fit=crop",
+                calories: 496,
+                protein: 35,
+                carbs: 42,
+                fat: 22,
+                servings: 4,
+                tags: ["high protein", "crispy", "video"],
+                source: "TikTok @panaceapalm",
+                url: "https://www.tiktok.com/@panaceapalm",
+                ingredients: [
+                    { name: "Chicken Breast", amount: 200, unit: "g", perServing: true },
+                    { name: "Sweet Chilli Sauce", amount: 30, unit: "g", perServing: true },
+                    { name: "Sesame Seeds", amount: 5, unit: "g", perServing: true },
+                    { name: "Flour", amount: 30, unit: "g", perServing: true }
+                ],
+                directions: ["Coat chicken pieces and fry until crispy. Toss in sweet chilli sauce. Sprinkle with sesame seeds."]
+            },
+            {
+                id: 13,
+                name: "🍕 Cottage Cheese Pizza Toast",
+                image: "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=400&h=300&fit=crop",
+                calories: 486,
+                protein: 33,
+                carbs: 38,
+                fat: 24,
+                servings: 2,
+                tags: ["quick", "high protein", "video"],
+                source: "TikTok",
+                url: "https://www.tiktok.com",
+                ingredients: [
+                    { name: "Bread", amount: 2, unit: "slice", perServing: true },
+                    { name: "Cottage Cheese", amount: 80, unit: "g", perServing: true },
+                    { name: "Pizza Sauce", amount: 30, unit: "g", perServing: true },
+                    { name: "Hot Honey", amount: 10, unit: "g", perServing: true },
+                    { name: "Mixed Herbs", amount: 2, unit: "g", perServing: true }
+                ],
+                directions: ["Toast bread, spread with cottage cheese and pizza sauce. Drizzle with hot honey and sprinkle herbs."]
+            },
+            {
+                id: 3,
+                name: "🍚 Oyakodon (Chicken & Egg Rice Bowl)",
+                image: "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=300&fit=crop",
+                calories: 485,
+                protein: 38,
+                carbs: 52,
+                fat: 14,
+                servings: 4,
+                tags: ["japanese", "comfort food", "rice bowl", "video"],
+                source: "TikTok @japanesefoodie",
+                url: "https://www.tiktok.com/@japanesefoodie/video/oyakodon",
+                ingredients: [
+                    { name: "Chicken Thighs", amount: 200, unit: "g", perServing: true },
+                    { name: "Eggs", amount: 2, unit: "pc", perServing: true },
+                    { name: "Onion", amount: 80, unit: "g", perServing: true },
+                    { name: "Dashi Stock", amount: 60, unit: "ml", perServing: true },
+                    { name: "Soy Sauce", amount: 15, unit: "ml", perServing: true },
+                    { name: "Mirin", amount: 15, unit: "ml", perServing: true },
+                    { name: "Sugar", amount: 5, unit: "g", perServing: true },
+                    { name: "Cooked Rice", amount: 200, unit: "g", perServing: true },
+                    { name: "Green Onions", amount: 10, unit: "g", perServing: true }
+                ],
+                directions: [
+                    "Slice chicken and onion into bite-sized pieces",
+                    "In a pan, combine dashi, soy sauce, mirin, and sugar. Bring to a simmer",
+                    "Add onions and cook for 2-3 minutes until softened",
+                    "Add chicken and cook until no longer pink",
+                    "Pour beaten eggs evenly over the chicken, cover and cook for 1-2 minutes",
+                    "Slide the finished oyakodon over a bowl of rice, garnish with green onions"
+                ]
+            },
+            {
+                id: 14,
+                name: "🥔 Potato & Chicken Bake",
+                image: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=400&h=300&fit=crop",
+                calories: 580,
+                protein: 38,
+                carbs: 52,
+                fat: 26,
+                servings: 5,
+                tags: ["comfort food", "meal prep", "video"],
+                source: "TikTok @elliewilsonfitness",
+                url: "https://www.tiktok.com/@elliewilsonfitness",
+                ingredients: [
+                    { name: "Potatoes", amount: 250, unit: "g", perServing: true },
+                    { name: "Chicken Breast", amount: 180, unit: "g", perServing: true },
+                    { name: "Bacon", amount: 40, unit: "g", perServing: true },
+                    { name: "Cheese", amount: 50, unit: "g", perServing: true },
+                    { name: "Cream", amount: 30, unit: "ml", perServing: true },
+                    { name: "Spring Onions", amount: 10, unit: "g", perServing: true }
+                ],
+                directions: ["Layer potatoes, chicken, and bacon in a dish. Pour over cream and top with cheese. Bake until golden."]
+            },
+            {
+                id: 15,
+                name: "🌮 Chicken Katsu Smashed Tacos",
+                image: "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&h=300&fit=crop",
+                calories: 520,
+                protein: 32,
+                carbs: 48,
+                fat: 22,
+                servings: 4,
+                tags: ["crispy", "fusion", "video"],
+                source: "TikTok @tomjustcooks",
+                url: "https://www.tiktok.com/@tomjustcooks",
+                ingredients: [
+                    { name: "Chicken Breast", amount: 180, unit: "g", perServing: true },
+                    { name: "Tortillas", amount: 2, unit: "pc", perServing: true },
+                    { name: "Cabbage", amount: 50, unit: "g", perServing: true },
+                    { name: "Green Onions", amount: 10, unit: "g", perServing: true },
+                    { name: "Sesame Seeds", amount: 5, unit: "g", perServing: true },
+                    { name: "Katsu Sauce", amount: 20, unit: "g", perServing: true }
+                ],
+                directions: ["Bread and fry chicken katsu. Smash tortillas in pan. Top with sliced chicken, cabbage, green onions and sauce."]
+            },
+            {
+                id: 16,
+                name: "🍫 Mars Bar Protein Crisp Slice",
+                image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400&h=300&fit=crop",
+                calories: 200,
+                protein: 8,
+                carbs: 22,
+                fat: 10,
+                servings: 12,
+                tags: ["dessert", "snack", "video"],
+                source: "TikTok @mazzfitt",
+                url: "https://www.tiktok.com/@mazzfitt",
+                ingredients: [
+                    { name: "Rice Krispies", amount: 40, unit: "g", perServing: true },
+                    { name: "Protein Powder", amount: 15, unit: "g", perServing: true },
+                    { name: "Chocolate", amount: 20, unit: "g", perServing: true },
+                    { name: "Honey", amount: 10, unit: "g", perServing: true },
+                    { name: "Peanut Butter", amount: 10, unit: "g", perServing: true }
+                ],
+                directions: ["Mix rice krispies with protein and peanut butter. Press into pan. Melt chocolate and pour over. Chill and slice."]
+            },
+            {
+                id: 9,
+                name: "🍠 Sweet Potato Bowls",
+                image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
+                calories: 485,
+                protein: 18,
+                carbs: 68,
+                fat: 16,
+                servings: 6,
+                tags: ["vegetarian", "meal prep", "healthy"],
+                source: "TikTok @healthyrecipes",
+                url: "https://www.tiktok.com/@healthyrecipes/video/sweetpotato",
+                ingredients: [
+                    { name: "Sweet Potatoes", amount: 200, unit: "g", perServing: true },
+                    { name: "Corn", amount: 80, unit: "g", perServing: true },
+                    { name: "Black Beans", amount: 60, unit: "g", perServing: true },
+                    { name: "Red Onion", amount: 30, unit: "g", perServing: true },
+                    { name: "Cilantro", amount: 10, unit: "g", perServing: true },
+                    { name: "Avocado", amount: 0.5, unit: "pc", perServing: true },
+                    { name: "Lime", amount: 0.5, unit: "pc", perServing: true },
+                    { name: "Greek Yogurt", amount: 30, unit: "g", perServing: true },
+                    { name: "Chili Powder", amount: 2, unit: "g", perServing: true },
+                    { name: "Cumin", amount: 1, unit: "g", perServing: true }
+                ],
+                directions: [
+                    "Preheat oven to 220C / 425F",
+                    "Cube sweet potatoes, toss with olive oil, chili powder, cumin, salt and pepper",
+                    "Roast for 25-30 minutes until tender and slightly crispy",
+                    "Mix corn and black beans together",
+                    "Make lime crema by mixing Greek yogurt with lime juice and salt",
+                    "Assemble bowls with sweet potatoes, corn & beans, red onion, and avocado",
+                    "Top with cilantro and drizzle with lime crema"
                 ]
             }
         ];
@@ -1843,7 +2357,10 @@
         let servingsCount = 1; // Number of people to cook for
 
         // Initialize
-        function init() {
+        async function init() {
+            // First check for downloaded videos and update recipe data
+            await loadVideoData();
+            
             renderRecipes();
             renderCalendar();
             updateMacroSummary();
@@ -1860,6 +2377,35 @@
             
             // Touch swipe detection for mobile calendar
             initTouchGestures();
+        }
+        
+        // Load video data for all recipes on startup
+        async function loadVideoData() {
+            try {
+                const response = await fetch('http://localhost:5000/api/videos/list');
+                const data = await response.json();
+                
+                if (data.success && data.videos) {
+                    // For each video, update the corresponding recipe
+                    for (const video of data.videos) {
+                        if (video.recipeId) {
+                            const recipe = recipes.find(r => r.id === video.recipeId);
+                            if (recipe) {
+                                recipe.localVideo = video.path;
+                                
+                                // Also fetch thumbnail
+                                const thumbResponse = await fetch(`http://localhost:5000/api/videos/thumbnail?recipeId=${video.recipeId}`);
+                                const thumbData = await thumbResponse.json();
+                                if (thumbData.success && thumbData.thumbnailPath) {
+                                    recipe.localThumbnail = thumbData.thumbnailPath;
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading video data:', error);
+            }
         }
         
         // Mobile Day Swiper
@@ -1995,8 +2541,23 @@
                 r.tags.some(t => t.toLowerCase().includes(filter.toLowerCase()))
             );
             
-            list.innerHTML = filtered.map(recipe => `
+            list.innerHTML = filtered.map(recipe => {
+                // Use local video thumbnail if available, otherwise use the recipe image
+                const thumbnailSrc = recipe.localThumbnail || recipe.image;
+                const hasVideo = !!recipe.localVideo;
+                
+                return `
                 <div class="recipe-card" draggable="true" data-recipe-id="${recipe.id}" onclick="openRecipeModal(${recipe.id})">
+                    ${thumbnailSrc ? `
+                        <div style="position: relative;">
+                            <img src="${thumbnailSrc}" alt="${recipe.name}" class="recipe-thumbnail" loading="lazy">
+                            ${hasVideo ? `
+                                <div style="position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.7); color: white; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; display: flex; align-items: center; gap: 4px;">
+                                    ▶️ Video
+                                </div>
+                            ` : ''}
+                        </div>
+                    ` : ''}
                     <h3>${recipe.name}</h3>
                     <div class="recipe-meta">
                         <span>🔥 ${recipe.calories} cal</span>
@@ -2006,7 +2567,7 @@
                         ${recipe.tags.map(t => `<span class="tag">${t}</span>`).join('')}
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
             
             // Add drag listeners
             document.querySelectorAll('.recipe-card').forEach(card => {
@@ -2222,21 +2783,43 @@
             updateMacroSummary();
         }
 
+        // Track current recipe for video operations
+        let currentRecipeId = null;
+        let currentRecipe = null;
+
         // Recipe Modal Functions
-        function openRecipeModal(recipeId) {
+        async function openRecipeModal(recipeId) {
             const recipe = recipes.find(r => r.id === recipeId);
             if (!recipe) return;
+            
+            currentRecipeId = recipeId;
+            currentRecipe = recipe;
             
             document.getElementById('modalTitle').textContent = recipe.name;
             document.getElementById('modalSource').textContent = `Source: ${recipe.source || 'Unknown'}`;
             
-            // Update link
+            // Update image
+            const modalImage = document.getElementById('modalImage');
+            if (recipe.image) {
+                modalImage.src = recipe.image;
+                modalImage.style.display = 'block';
+            } else {
+                modalImage.style.display = 'none';
+            }
+            
+            // Check for downloaded video
+            await checkForVideo(recipeId);
+            
+            // Update link and video download section
             const linkSection = document.getElementById('modalLinkSection');
             const linkElement = document.getElementById('modalLink');
+            const videoDownloadSection = document.getElementById('videoDownloadSection');
+            
             if (recipe.url) {
                 linkSection.style.display = 'block';
                 linkElement.href = recipe.url;
                 linkElement.textContent = `View on ${recipe.source || 'Source'} →`;
+                videoDownloadSection.style.display = 'block';
             } else {
                 linkSection.style.display = 'none';
             }
@@ -2300,6 +2883,195 @@
                 closeModal();
             }
         });
+
+        // Video Download Functions
+        async function checkForVideo(recipeId) {
+            try {
+                const response = await fetch('http://localhost:5000/api/videos/list');
+                const data = await response.json();
+                
+                if (data.success && data.videos) {
+                    // Find video for this recipe
+                    const video = data.videos.find(v => v.recipeId === recipeId);
+                    
+                    const videoSection = document.getElementById('modalVideoSection');
+                    const videoElement = document.getElementById('modalVideo');
+                    const modalImage = document.getElementById('modalImage');
+                    const downloadStatus = document.getElementById('videoDownloadStatus');
+                    
+                    if (video) {
+                        // Video exists - show it
+                        videoElement.src = video.path;
+                        videoElement.muted = true; // Mute for autoplay
+                        videoSection.style.display = 'block';
+                        modalImage.style.display = 'none'; // Hide image when video is available
+                        
+                        // Try to find thumbnail for this video
+                        const thumbResponse = await fetch(`http://localhost:5000/api/videos/thumbnail?recipeId=${recipeId}`);
+                        const thumbData = await thumbResponse.json();
+                        
+                        if (thumbData.success && thumbData.thumbnailPath) {
+                            // Use video thumbnail as poster and update recipe card
+                            videoElement.poster = thumbData.thumbnailPath;
+                            
+                            // Update the recipe object with local thumbnail
+                            const recipe = recipes.find(r => r.id === recipeId);
+                            if (recipe) {
+                                recipe.localThumbnail = thumbData.thumbnailPath;
+                                recipe.localVideo = video.path;
+                                // Re-render recipes to show new thumbnail
+                                renderRecipes();
+                            }
+                        } else {
+                            videoElement.poster = modalImage.src;
+                        }
+                        
+                        // Auto-play the video (muted to comply with browser policies)
+                        videoElement.play().catch(err => {
+                            console.log('Autoplay blocked:', err);
+                        });
+                        
+                        // Update download button to delete option
+                        downloadStatus.innerHTML = `
+                            <div style="display: flex; gap: 10px;">
+                                <button class="btn btn-secondary" onclick="toggleVideoMute()" id="muteBtn" style="flex: 1;">
+                                    🔇 Unmute
+                                </button>
+                                <button class="btn btn-secondary" onclick="deleteRecipeVideo('${video.filename}')" style="flex: 1; background: #ff4444; color: white;">
+                                    🗑️ Delete
+                                </button>
+                            </div>
+                            <p style="font-size: 0.75rem; color: var(--ios-green); margin-top: 8px; text-align: center;">
+                                ✅ Video saved locally
+                            </p>
+                        `;
+                    } else {
+                        // No video - hide video section, show image
+                        videoSection.style.display = 'none';
+                        videoElement.src = '';
+                        if (modalImage.src) modalImage.style.display = 'block';
+                        
+                        // Show download button
+                        downloadStatus.innerHTML = `
+                            <button class="btn btn-secondary" onclick="downloadRecipeVideo()" style="width: 100%;">
+                                📥 Download Video
+                            </button>
+                            <p style="font-size: 0.75rem; color: var(--text-tertiary); margin-top: 8px; text-align: center;">
+                                Save locally so you never lose this recipe
+                            </p>
+                        `;
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking for video:', error);
+            }
+        }
+
+        function playVideo() {
+            const video = document.getElementById('modalVideo');
+            if (video.paused) {
+                video.play();
+            } else {
+                video.pause();
+            }
+        }
+
+        function toggleVideoMute() {
+            const video = document.getElementById('modalVideo');
+            const muteBtn = document.getElementById('muteBtn');
+            
+            if (video.muted) {
+                video.muted = false;
+                if (muteBtn) muteBtn.innerHTML = '🔊 Mute';
+            } else {
+                video.muted = true;
+                if (muteBtn) muteBtn.innerHTML = '🔇 Unmute';
+            }
+        }
+
+        async function downloadRecipeVideo() {
+            if (!currentRecipe || !currentRecipe.url) {
+                alert('No video URL available for this recipe');
+                return;
+            }
+            
+            const downloadStatus = document.getElementById('videoDownloadStatus');
+            downloadStatus.innerHTML = `
+                <div class="video-download-progress spinner">
+                    ⏳ Downloading video... This may take a minute
+                </div>
+            `;
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/videos/download', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        url: currentRecipe.url,
+                        recipeId: currentRecipeId,
+                        recipeName: currentRecipe.name.replace(/^[^\w\s]+\s*/, '') // Remove emoji
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Video downloaded - refresh the modal to show it
+                    await checkForVideo(currentRecipeId);
+                } else {
+                    downloadStatus.innerHTML = `
+                        <button class="btn btn-secondary" onclick="downloadRecipeVideo()" style="width: 100%;">
+                            🔄 Retry Download
+                        </button>
+                        <p style="font-size: 0.75rem; color: #ff4444; margin-top: 8px; text-align: center;">
+                            ❌ Download failed: ${data.error || 'Unknown error'}
+                        </p>
+                    `;
+                }
+            } catch (error) {
+                console.error('Download error:', error);
+                downloadStatus.innerHTML = `
+                    <button class="btn btn-secondary" onclick="downloadRecipeVideo()" style="width: 100%;">
+                        🔄 Retry Download
+                    </button>
+                    <p style="font-size: 0.75rem; color: #ff4444; margin-top: 8px; text-align: center;">
+                        ❌ Network error. Make sure the server is running.
+                    </p>
+                `;
+            }
+        }
+
+        async function deleteRecipeVideo(filename) {
+            if (!confirm('Delete this downloaded video? You can re-download it anytime.')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/videos/delete', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ filename: filename })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Clear local video/thumbnail from recipe
+                    const recipe = recipes.find(r => r.id === currentRecipeId);
+                    if (recipe) {
+                        delete recipe.localThumbnail;
+                        delete recipe.localVideo;
+                        renderRecipes(); // Re-render to show original image
+                    }
+                    await checkForVideo(currentRecipeId);
+                } else {
+                    alert('Failed to delete video: ' + (data.error || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Delete error:', error);
+                alert('Failed to delete video. Check console for details.');
+            }
+        }
 
         function changeWeek(direction) {
             currentWeekOffset += direction;
@@ -2409,6 +3181,8 @@ ${ingredientList}
             if (confirm(summary)) {
                 // Call API to add to reminders
                 await sendToReminders(ingredientsArray);
+                // Also add meals to the Meals list
+                await sendMealsToReminders();
             }
         }
 
@@ -2418,7 +3192,7 @@ ${ingredientList}
             btn.disabled = true;
             
             try {
-                const response = await fetch('http://localhost:5001/api/shopping-list', {
+                const response = await fetch('http://localhost:5000/api/shopping-list', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -2432,7 +3206,7 @@ ${ingredientList}
                 const data = await response.json();
                 
                 if (data.success) {
-                    alert(`🎉 Success!\n\n✅ ${data.summary.successful} items added to Shopping List\n❌ ${data.summary.failed} failed\n\nCheck your Apple Reminders app!`);
+                    alert(`🎉 Success!\n\n✅ ${data.summary.successful} items added to Shopping List\n📅 ${Object.keys(mealPlan).length} meals added to Meals list\n\nCheck your Apple Reminders app!`);
                 } else {
                     alert(`❌ Error: ${data.error || 'Failed to add items'}`);
                 }
@@ -2441,6 +3215,90 @@ ${ingredientList}
                 alert(`❌ Error: ${error.message}\n\nMake sure the backend server is running:\npython3 server.py (or refresh the page)`);
             } finally {
                 btn.textContent = '🛒 Generate Shopping List';
+                btn.disabled = false;
+            }
+        }
+
+        async function sendMealsToReminders() {
+            const meals = Object.values(mealPlan);
+            if (meals.length === 0) return;
+            
+            // Convert mealPlan to array with day and type info
+            const mealsWithDetails = Object.entries(mealPlan).map(([key, meal]) => {
+                // Key format is "YYYY-MM-DD-lunch" or "YYYY-MM-DD-dinner"
+                // Split from the end to get the meal type
+                const lastDashIndex = key.lastIndexOf('-');
+                const dateKey = key.substring(0, lastDashIndex);
+                const mealType = key.substring(lastDashIndex + 1);
+                
+                const date = new Date(dateKey);
+                const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                const dayName = days[date.getDay()];
+                
+                // Strip emoji from name since it's already included
+                const nameWithoutEmoji = meal.name.replace(/^[^\w\s]+\s*/, '');
+                
+                return {
+                    name: nameWithoutEmoji,
+                    emoji: meal.emoji || '🍽️',
+                    day: dayName,
+                    type: mealType
+                };
+            });
+            
+            try {
+                const response = await fetch('http://localhost:5000/api/meals', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        meals: mealsWithDetails,
+                        listName: 'Meals',
+                        servings: servingsCount
+                    })
+                });
+                
+                const data = await response.json();
+                console.log('Meals added to reminders:', data);
+                
+            } catch (error) {
+                console.error('Error adding meals to reminders:', error);
+            }
+        }
+
+        // Clear all reminders from Apple Reminders
+        async function clearAllReminders() {
+            if (!confirm('Clear all items from Apple Reminders?\n\nThis will delete everything from:\n• 🛒 Shopping List\n• 📅 This Week\'s Meals\n\nThis cannot be undone.')) {
+                return;
+            }
+
+            const btn = document.querySelector('.btn-secondary[onclick="clearAllReminders()"]');
+            const originalText = btn.textContent;
+            btn.textContent = '🧹 Clearing...';
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('http://localhost:5000/api/reminders/clear-all', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const totalDeleted = data.summary?.totalDeleted || 0;
+                    alert(`✅ Reminders cleared!\n\n🗑️ ${totalDeleted} items deleted from:\n• 🛒 Shopping List\n• 🍽️ Meals`);
+                } else {
+                    alert(`❌ Error: ${data.error || 'Failed to clear reminders'}`);
+                }
+
+            } catch (error) {
+                alert(`❌ Error: ${error.message}\n\nMake sure the backend server is running:\npython3 server.py`);
+            } finally {
+                btn.textContent = originalText;
                 btn.disabled = false;
             }
         }
@@ -2505,67 +3363,42 @@ ${ingredientList}
             }
         }
 
-        // Grocery Tracker Functions
+        // Everyday Items List - Common staples to add to shopping list
         const commonGroceryItems = [
-            {
-                id: 'coke-zero',
-                name: 'Coke Zero 10 Pack',
-                category: 'drinks',
-                coles: { price: 11.00, special: false, specialPrice: null },
-                woolies: { price: 8.50, special: true, specialPrice: 8.50, save: 2.50 }
-            },
-            {
-                id: 'eggs',
-                name: 'Free Range Eggs 12pk',
-                category: 'dairy',
-                coles: { price: 6.50, special: false, specialPrice: null },
-                woolies: { price: 5.00, special: true, specialPrice: 5.00, save: 1.50 }
-            },
-            {
-                id: 'milk',
-                name: 'Full Cream Milk 2L',
-                category: 'dairy',
-                coles: { price: 3.50, special: true, specialPrice: 2.80, save: 0.70 },
-                woolies: { price: 3.50, special: false, specialPrice: null }
-            },
-            {
-                id: 'bread',
-                name: 'White Bread 650g',
-                category: 'bakery',
-                coles: { price: 3.00, special: false, specialPrice: null },
-                woolies: { price: 2.50, special: true, specialPrice: 2.50, save: 0.50 }
-            },
-            {
-                id: 'bananas',
-                name: 'Bananas 1kg',
-                category: 'produce',
-                coles: { price: 4.50, special: true, specialPrice: 3.50, save: 1.00 },
-                woolies: { price: 4.90, special: false, specialPrice: null }
-            },
-            {
-                id: 'chicken-breast',
-                name: 'Chicken Breast 500g',
-                category: 'meat',
-                coles: { price: 8.50, special: false, specialPrice: null },
-                woolies: { price: 7.50, special: true, specialPrice: 7.50, save: 1.00 }
-            },
-            {
-                id: 'pasta',
-                name: 'Spaghetti Pasta 500g',
-                category: 'pantry',
-                coles: { price: 1.80, special: true, specialPrice: 1.20, save: 0.60 },
-                woolies: { price: 1.80, special: false, specialPrice: null }
-            },
-            {
-                id: 'yogurt',
-                name: 'Greek Yogurt 1kg',
-                category: 'dairy',
-                coles: { price: 5.50, special: false, specialPrice: null },
-                woolies: { price: 4.50, special: true, specialPrice: 4.50, save: 1.00 }
-            }
+            { id: 'coke-zero', name: '🥤 Coke Zero 10 Pack', category: 'drinks' },
+            { id: 'eggs', name: '🥚 Free Range Eggs 12pk', category: 'dairy' },
+            { id: 'milk', name: '🥛 Full Cream Milk 2L', category: 'dairy' },
+            { id: 'bread', name: '🍞 White Bread 650g', category: 'bakery' },
+            { id: 'bananas', name: '🍌 Bananas 1kg', category: 'produce' },
+            { id: 'chicken-breast', name: '🍗 Chicken Breast 500g', category: 'meat' },
+            { id: 'pasta', name: '🍝 Spaghetti Pasta 500g', category: 'pantry' },
+            { id: 'yogurt', name: '🥣 Greek Yogurt 1kg', category: 'dairy' },
+            { id: 'butter', name: '🧈 Butter 250g', category: 'dairy' },
+            { id: 'cheese', name: '🧀 Cheddar Cheese 250g', category: 'dairy' },
+            { id: 'rice', name: '🍚 Basmati Rice 1kg', category: 'pantry' },
+            { id: 'olive-oil', name: '🫒 Olive Oil 500ml', category: 'pantry' },
+            { id: 'garlic', name: '🧄 Garlic Bulb', category: 'produce' },
+            { id: 'onions', name: '🧅 Brown Onions 1kg', category: 'produce' },
+            { id: 'potatoes', name: '🥔 Potatoes 2kg', category: 'produce' },
+            { id: 'carrots', name: '🥕 Carrots 1kg', category: 'produce' },
+            { id: 'lettuce', name: '🥬 Iceberg Lettuce', category: 'produce' },
+            { id: 'tomatoes', name: '🍅 Tomatoes 500g', category: 'produce' },
+            { id: 'cucumber', name: '🥒 Cucumber', category: 'produce' },
+            { id: 'lemons', name: '🍋 Lemons 4pk', category: 'produce' },
+            { id: 'avocado', name: '🥑 Avocado', category: 'produce' },
+            { id: 'mince', name: '🥩 Beef Mince 500g', category: 'meat' },
+            { id: 'bacon', name: '🥓 Bacon 250g', category: 'meat' },
+            { id: 'toilet-paper', name: '🧻 Toilet Paper 8pk', category: 'household' },
+            { id: 'dish-liquid', name: '🧼 Dishwashing Liquid', category: 'household' },
+            { id: 'paper-towels', name: '🧽 Paper Towels 4pk', category: 'household' },
+            { id: 'washing-liquid', name: '🧴 Washing Liquid', category: 'household' },
+            { id: 'laundry-powder', name: '🧺 Laundry Powder', category: 'household' },
+            { id: 'shampoo', name: '🧴 Shampoo', category: 'personal' },
+            { id: 'toothpaste', name: '🪥 Toothpaste', category: 'personal' }
         ];
 
         let selectedGroceryItems = new Set();
+        let customGroceryItems = JSON.parse(localStorage.getItem('customGroceryItems') || '[]');
 
         function switchTab(tab) {
             // Update tab buttons
@@ -2592,31 +3425,29 @@ ${ingredientList}
 
             let html = `
                 <div class="grocery-header">
-                    <h3>🛒 Weekly Specials</h3>
-                    <p>Click items to add to your shopping list</p>
+                    <h3>📋 Everyday Items</h3>
+                    <p>Common staples to add to your shopping list</p>
                 </div>
                 <div style="margin-bottom: 15px; text-align: center;">
-                    <button class="btn btn-secondary" onclick="refreshPrices()" style="width: 100%; font-size: 0.85rem;">
-                        🔄 Refresh Prices
-                    </button>
-                    <div style="font-size: 0.7rem; color: #999; margin-top: 5px;">
-                        Last updated: ${localStorage.getItem('lastPriceUpdate') || 'Demo prices shown'}
-                    </div>
-                </div>
-                <div id="scraper-status" style="background: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 10px; margin-bottom: 15px; font-size: 0.8rem; color: #856404;">
-                    <strong>ℹ️ Loading prices...</strong>
-                </div>
-                <div style="margin-bottom: 15px; text-align: center;">
-                    <button class="btn btn-secondary" onclick="toggleManualEntry()" style="font-size: 0.8rem; width: 100%;">
-                        ✏️ Edit Prices Manually
+                    <button class="btn btn-secondary" onclick="toggleManualEntry()" id="toggle-custom-btn" style="font-size: 0.8rem; width: 100%;">
+                        ✏️ Add Custom Items
                     </button>
                 </div>
-                <div id="manual-entry-panel" style="display: none; background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
-                    <h4 style="margin-bottom: 10px; font-size: 0.9rem;">Edit Item Prices</h4>
+                <div id="manual-entry-panel" style="display: none; background: #f8f9fa; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid var(--border-color);">
+                    <h4 style="margin-bottom: 10px; font-size: 0.9rem;">Add Custom Items</h4>
                     <div id="manual-entry-form"></div>
                     <button class="btn btn-primary" onclick="saveManualPrices()" style="width: 100%; margin-top: 10px;">
-                        💾 Save Prices
+                        💾 Add Items
                     </button>
+                </div>
+            `;
+
+            // Add section header for preset items
+            html += `
+                <div style="margin: 20px 0 10px; padding-top: 15px; border-top: 1px solid var(--border-color);">
+                    <h4 style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 10px;">
+                        📦 Common Items (${filtered.length})
+                    </h4>
                 </div>
             `;
 
@@ -2624,10 +3455,6 @@ ${ingredientList}
                 html += '<div style="text-align: center; color: #999; padding: 20px;">No items found</div>';
             } else {
                 html += filtered.map(item => {
-                    const bestPrice = Math.min(
-                        item.coles.special ? item.coles.specialPrice : item.coles.price,
-                        item.woolies.special ? item.woolies.specialPrice : item.woolies.price
-                    );
                     const isSelected = selectedGroceryItems.has(item.id);
                     
                     return `
@@ -2635,30 +3462,9 @@ ${ingredientList}
                              onclick="toggleGroceryItem('${item.id}')"
                              data-id="${item.id}">
                             <h4>${item.name}</h4>
-                            <div class="price-row">
-                                <div class="price-store coles">
-                                    🏪 Coles
-                                    ${item.coles.special ? '<span class="savings-badge">SPECIAL</span>' : ''}
-                                </div>
-                                <div class="price-value ${item.coles.special ? 'special' : ''}">
-                                    $${(item.coles.special ? item.coles.specialPrice : item.coles.price).toFixed(2)}
-                                </div>
+                            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">
+                                ${isSelected ? '✅ Added to list' : '👆 Click to add'}
                             </div>
-                            <div class="price-row">
-                                <div class="price-store woolies">
-                                    🏪 Woolies
-                                    ${item.woolies.special ? '<span class="savings-badge">SPECIAL</span>' : ''}
-                                </div>
-                                <div class="price-value ${item.woolies.special ? 'special' : ''}">
-                                    $${(item.woolies.special ? item.woolies.specialPrice : item.woolies.price).toFixed(2)}
-                                </div>
-                            </div>
-                            ${bestPrice < Math.max(item.coles.price, item.woolies.price) ? `
-                                <div style="margin-top: 8px; font-size: 0.8rem; color: #4CAF50; font-weight: 600;">
-                                    💰 Best price: $${bestPrice.toFixed(2)} 
-                                    (Save $${(Math.max(item.coles.price, item.woolies.price) - bestPrice).toFixed(2)})
-                                </div>
-                            ` : ''}
                         </div>
                     `;
                 }).join('');
@@ -2668,11 +3474,8 @@ ${ingredientList}
                 <div class="grocery-actions">
                     <button class="btn-grocery" onclick="addSelectedGroceriesToShoppingList()" 
                             ${selectedGroceryItems.size === 0 ? 'disabled' : ''}>
-                        🛒 Add ${selectedGroceryItems.size} item${selectedGroceryItems.size !== 1 ? 's' : ''} to Shopping List
+                        📋 Add ${selectedGroceryItems.size} item${selectedGroceryItems.size !== 1 ? 's' : ''} to Shopping List
                     </button>
-                </div>
-                <div class="last-updated">
-                    Last updated: ${new Date().toLocaleDateString()}
                 </div>
             `;
 
@@ -2680,195 +3483,141 @@ ${ingredientList}
         }
 
         function toggleGroceryItem(id) {
+            console.log('Toggle item:', id, 'Current selected:', Array.from(selectedGroceryItems));
             if (selectedGroceryItems.has(id)) {
                 selectedGroceryItems.delete(id);
             } else {
                 selectedGroceryItems.add(id);
             }
+            console.log('After toggle:', Array.from(selectedGroceryItems));
             renderGroceryList(document.getElementById('searchInput').value);
         }
 
-        async function refreshPrices() {
-            const btn = document.querySelector('.grocery-list .btn-secondary');
-            btn.textContent = '⏳ Scraping...';
-            btn.disabled = true;
-            
-            try {
-                // Call the scraper API
-                const response = await fetch('http://localhost:5002/api/prices/refresh', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                
-                if (!response.ok) {
-                    throw new Error('Failed to fetch prices');
-                }
-                
-                const data = await response.json();
-                
-                // Update the grocery items with real data
-                const updatedCount = updateGroceryItemsFromApi(data);
-                
-                // Save update time
-                const now = new Date().toLocaleString();
-                localStorage.setItem('lastPriceUpdate', now);
-                
-                renderGroceryList();
-                
-                // Show success message with stats
-                const colesCount = Object.keys(data.coles || {}).length;
-                const wooliesCount = Object.keys(data.woolworths || {}).length;
-                const usedCache = data.status?.used_cache;
-                
-                let msg = `✅ Prices updated!\n\n`;
-                msg += `🟡 Coles: ${colesCount} items found\n`;
-                msg += `🟢 Woolies: ${wooliesCount} items found\n`;
-                if (updatedCount === 0) {
-                    msg += `\n⚠️ No prices could be scraped\n`;
-                    msg += `📝 You can edit prices manually using "Edit Prices Manually"`;
-                } else if (usedCache) {
-                    msg += `\nℹ️ Used cached data (scraping blocked)\n`;
-                    msg += `📝 Some prices may be from earlier today`;
-                }
-                
-                alert(msg);
-                
-            } catch (error) {
-                console.error('Error refreshing prices:', error);
-                alert('❌ Could not fetch live prices.\n\nUsing demo prices.\n\nTry the "Edit Prices Manually" button to enter current prices from the Woolies/Coles apps!');
-                
-                // Fall back to simulated updates
-                simulatePriceUpdates();
-            }
-            
-            btn.textContent = '🔄 Refresh Prices';
-            btn.disabled = false;
-        }
+        // Note: refreshPrices function removed - now just a simple everyday items list
 
         function toggleManualEntry() {
             const panel = document.getElementById('manual-entry-panel');
+            const btn = document.getElementById('toggle-custom-btn');
             if (panel.style.display === 'none') {
                 panel.style.display = 'block';
                 renderManualEntryForm();
+                if (btn) btn.innerHTML = '✕ Close Custom Items';
             } else {
                 panel.style.display = 'none';
+                if (btn) btn.innerHTML = '✏️ Add Custom Items';
             }
         }
 
         function renderManualEntryForm() {
             const form = document.getElementById('manual-entry-form');
-            form.innerHTML = commonGroceryItems.map(item => `
-                <div style="margin-bottom: 15px; padding: 10px; background: white; border-radius: 8px;">
-                    <div style="font-weight: 600; margin-bottom: 8px; font-size: 0.9rem;">${item.name}</div>
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
-                        <div>
-                            <label style="font-size: 0.75rem; color: #e31e24; display: block; margin-bottom: 3px;">🏪 Coles $</label>
-                            <input type="number" step="0.01" id="coles-${item.id}" value="${item.coles.price}" style="width: 100%; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
-                            <label style="font-size: 0.7rem; display: flex; align-items: center; margin-top: 3px; cursor: pointer;">
-                                <input type="checkbox" id="coles-special-${item.id}" ${item.coles.special ? 'checked' : ''} style="margin-right: 4px;">
-                                Special
-                            </label>
-                        </div>
-                        <div>
-                            <label style="font-size: 0.75rem; color: #008841; display: block; margin-bottom: 3px;">🏪 Woolies $</label>
-                            <input type="number" step="0.01" id="woolies-${item.id}" value="${item.woolies.price}" style="width: 100%; padding: 5px; border: 1px solid #ddd; border-radius: 4px;">
-                            <label style="font-size: 0.7rem; display: flex; align-items: center; margin-top: 3px; cursor: pointer;">
-                                <input type="checkbox" id="woolies-special-${item.id}" ${item.woolies.special ? 'checked' : ''} style="margin-right: 4px;">
-                                Special
-                            </label>
-                        </div>
-                    </div>
+            form.innerHTML = `
+                <div style="margin-bottom: 15px;">
+                    <label style="font-size: 0.8rem; display: block; margin-bottom: 5px;">Item Name</label>
+                    <input type="text" id="custom-item-name" placeholder="e.g., Coffee Beans" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9rem;">
                 </div>
-            `).join('');
+                <div style="margin-bottom: 15px;">
+                    <label style="font-size: 0.8rem; display: block; margin-bottom: 5px;">Category</label>
+                    <select id="custom-item-category" style="width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.9rem;">
+                        <option value="produce">🥬 Produce</option>
+                        <option value="dairy">🥛 Dairy</option>
+                        <option value="meat">🍗 Meat</option>
+                        <option value="pantry">🍚 Pantry</option>
+                        <option value="drinks">🥤 Drinks</option>
+                        <option value="bakery">🍞 Bakery</option>
+                        <option value="household">🧻 Household</option>
+                        <option value="personal">🧴 Personal Care</option>
+                        <option value="other">📦 Other</option>
+                    </select>
+                </div>
+                ${customGroceryItems.length > 0 ? `
+                    <div style="margin-bottom: 15px; border-top: 1px solid #eee; padding-top: 15px;">
+                        <label style="font-size: 0.8rem; display: block; margin-bottom: 8px;">Your Custom Items:</label>
+                        ${customGroceryItems.map((item, index) => `
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px; background: white; border-radius: 6px; margin-bottom: 5px;">
+                                <span>${item.name}</span>
+                                <button onclick="deleteCustomItem(${index})" style="background: #ff4444; color: white; border: none; border-radius: 4px; padding: 4px 8px; font-size: 0.75rem; cursor: pointer;">🗑️</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                ` : ''}
+            `;
         }
 
         function saveManualPrices() {
-            commonGroceryItems.forEach(item => {
-                const colesPrice = parseFloat(document.getElementById(`coles-${item.id}`).value) || item.coles.price;
-                const wooliesPrice = parseFloat(document.getElementById(`woolies-${item.id}`).value) || item.woolies.price;
-                const colesSpecial = document.getElementById(`coles-special-${item.id}`).checked;
-                const wooliesSpecial = document.getElementById(`woolies-special-${item.id}`).checked;
-                
-                item.coles.price = colesPrice;
-                item.coles.special = colesSpecial;
-                item.woolies.price = wooliesPrice;
-                item.woolies.special = wooliesSpecial;
-            });
+            const nameInput = document.getElementById('custom-item-name');
+            const categoryInput = document.getElementById('custom-item-category');
             
-            localStorage.setItem('lastPriceUpdate', new Date().toLocaleString() + ' (manual)');
-            localStorage.setItem('manualPrices', JSON.stringify(commonGroceryItems));
+            if (!nameInput || !categoryInput) {
+                console.error('Form elements not found');
+                return;
+            }
             
+            const name = nameInput.value.trim();
+            const category = categoryInput.value;
+            
+            console.log('Saving item:', { name, category });
+            
+            if (!name) {
+                alert('Please enter an item name in the field above');
+                nameInput.focus();
+                return;
+            }
+            
+            // Check for duplicates
+            const exists = customGroceryItems.find(item => 
+                item.name.toLowerCase() === name.toLowerCase()
+            );
+            
+            if (exists) {
+                alert(`"${name}" is already in your custom items!`);
+                return;
+            }
+            
+            const newItem = {
+                id: 'custom-' + Date.now(),
+                name: name,
+                category: category
+            };
+            
+            customGroceryItems.push(newItem);
+            commonGroceryItems.push(newItem);
+            
+            localStorage.setItem('customGroceryItems', JSON.stringify(customGroceryItems));
+            
+            // Clear and close
+            nameInput.value = '';
             document.getElementById('manual-entry-panel').style.display = 'none';
+            const btn = document.getElementById('toggle-custom-btn');
+            if (btn) btn.innerHTML = '✏️ Add Custom Items';
+            
             renderGroceryList();
             
-            alert('✅ Prices saved!');
+            alert(`✅ "${name}" added to your items!`);
+        }
+
+        function deleteCustomItem(index) {
+            const item = customGroceryItems[index];
+            customGroceryItems.splice(index, 1);
+            
+            const commonIndex = commonGroceryItems.findIndex(i => i.id === item.id);
+            if (commonIndex > -1) {
+                commonGroceryItems.splice(commonIndex, 1);
+            }
+            
+            localStorage.setItem('customGroceryItems', JSON.stringify(customGroceryItems));
+            renderManualEntryForm();
+            renderGroceryList();
         }
 
         function loadManualPrices() {
-            const saved = localStorage.getItem('manualPrices');
-            if (saved) {
-                try {
-                    const parsed = JSON.parse(saved);
-                    parsed.forEach((savedItem, index) => {
-                        if (commonGroceryItems[index]) {
-                            commonGroceryItems[index].coles = savedItem.coles;
-                            commonGroceryItems[index].woolies = savedItem.woolies;
-                        }
-                    });
-                } catch (e) {
-                    console.error('Error loading saved prices:', e);
-                }
-            }
-        }
-        
-        function updateGroceryItemsFromApi(data) {
-            // Map API data to our grocery items
-            const coles = data.coles || {};
-            const woolies = data.woolworths || {};
-            let updatedCount = 0;
-            
-            commonGroceryItems.forEach(item => {
-                const itemId = item.id;
-                
-                // Update Coles data
-                if (coles[itemId] && coles[itemId].price > 0) {
-                    item.coles.price = coles[itemId].price;
-                    item.coles.special = coles[itemId].special || false;
-                    item.coles.specialPrice = coles[itemId].special_price;
-                    updatedCount++;
-                }
-                
-                // Update Woolies data
-                if (woolies[itemId] && woolies[itemId].price > 0) {
-                    item.woolies.price = woolies[itemId].price;
-                    item.woolies.special = woolies[itemId].special || false;
-                    item.woolies.specialPrice = woolies[itemId].special_price;
-                    updatedCount++;
+            // Load custom items on init
+            customGroceryItems.forEach(item => {
+                if (!commonGroceryItems.find(i => i.id === item.id)) {
+                    commonGroceryItems.push(item);
                 }
             });
-            
-            return updatedCount;
         }
         
-        function simulatePriceUpdates() {
-            // Fallback simulation if API fails
-            commonGroceryItems.forEach(item => {
-                const variation = () => (Math.random() - 0.5) * 0.1; // ±5%
-                
-                item.coles.price = Math.round(item.coles.price * (1 + variation()) * 100) / 100;
-                item.woolies.price = Math.round(item.woolies.price * (1 + variation()) * 100) / 100;
-                
-                if (item.coles.specialPrice) {
-                    item.coles.specialPrice = Math.round(item.coles.specialPrice * (1 + variation()) * 100) / 100;
-                }
-                if (item.woolies.specialPrice) {
-                    item.woolies.specialPrice = Math.round(item.woolies.specialPrice * (1 + variation()) * 100) / 100;
-                }
-            });
-            
-            localStorage.setItem('lastPriceUpdate', new Date().toLocaleString() + ' (simulated)');
-        }
-
         async function addSelectedGroceriesToShoppingList() {
             const items = Array.from(selectedGroceryItems).map(id => 
                 commonGroceryItems.find(item => item.id === id)
@@ -2876,103 +3625,47 @@ ${ingredientList}
 
             let results = [];
             let successful = 0;
+            let failed = 0;
 
             for (const item of items) {
-                // Find best price
-                const colesPrice = item.coles.special ? item.coles.specialPrice : item.coles.price;
-                const wooliesPrice = item.woolies.special ? item.woolies.specialPrice : item.woolies.price;
-                const bestStore = colesPrice <= wooliesPrice ? 'Coles' : 'Woolies';
-                const bestPrice = Math.min(colesPrice, wooliesPrice);
-
-                const title = `🛒 ${item.name} - $${bestPrice.toFixed(2)} @ ${bestStore}`;
+                const title = `📋 ${item.name}`;
                 
-                // Add to reminders (mock - in real app would call API)
-                results.push(title);
-                successful++;
+                try {
+                    // Add to Apple Reminders Shopping List
+                    const response = await fetch('http://localhost:5000/api/shopping', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            items: [title]
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        results.push(`✅ ${item.name}`);
+                        successful++;
+                    } else {
+                        results.push(`❌ ${item.name}`);
+                        failed++;
+                    }
+                } catch (error) {
+                    console.error('Error adding item:', error);
+                    results.push(`❌ ${item.name}`);
+                    failed++;
+                }
             }
 
-            alert(`✅ Added ${successful} item${successful !== 1 ? 's' : ''} to your shopping list!\n\n${results.join('\n')}`);
+            alert(`Added ${successful} item${successful !== 1 ? 's' : ''} to Shopping List!${failed > 0 ? ` (${failed} failed)` : ''}\n\n${results.join('\n')}`);
             
             // Clear selections
             selectedGroceryItems.clear();
             renderGroceryList();
         }
 
-        // Load prices on startup
-        async function loadPricesOnStartup() {
-            // First load any manually saved prices
-            loadManualPrices();
-            
-            try {
-                const statusDiv = document.getElementById('scraper-status');
-                
-                // Try to fetch prices from API
-                const response = await fetch('http://localhost:5002/api/prices', {
-                    method: 'GET',
-                    headers: { 'Content-Type': 'application/json' }
-                });
-                
-                if (response.ok) {
-                    const data = await response.json();
-                    const updatedCount = updateGroceryItemsFromApi(data);
-                    
-                    // Update status
-                    const colesCount = Object.keys(data.coles || {}).length;
-                    const wooliesCount = Object.keys(data.woolworths || {}).length;
-                    const usedCache = data.status?.used_cache;
-                    
-                    if (statusDiv) {
-                        if (updatedCount > 0) {
-                            statusDiv.innerHTML = `
-                                <strong>✅ Live Prices Active</strong><br>
-                                🟡 Coles: ${colesCount} items | 🟢 Woolies: ${wooliesCount} items<br>
-                                <small>Click "Edit Prices Manually" to adjust prices</small>
-                            `;
-                            statusDiv.style.background = '#d4edda';
-                            statusDiv.style.borderColor = '#c3e6cb';
-                            statusDiv.style.color = '#155724';
-                        } else {
-                            statusDiv.innerHTML = `
-                                <strong>⚠️ Auto-scraping Limited</strong><br>
-                                Woolies/Coles block automated scraping.<br>
-                                <small>✏️ Use "Edit Prices Manually" to enter prices from their apps!</small>
-                            `;
-                        }
-                    }
-                    
-                    localStorage.setItem('lastPriceUpdate', new Date().toLocaleString());
-                } else {
-                    throw new Error('API error');
-                }
-            } catch (error) {
-                console.log('Using saved/demo prices - scraper not available');
-                const statusDiv = document.getElementById('scraper-status');
-                if (statusDiv) {
-                    const lastUpdate = localStorage.getItem('lastPriceUpdate');
-                    if (lastUpdate && lastUpdate.includes('manual')) {
-                        statusDiv.innerHTML = `
-                            <strong>✅ Manual Prices Loaded</strong><br>
-                            Using your saved prices.<br>
-                            <small>Last updated: ${lastUpdate}</small>
-                        `;
-                        statusDiv.style.background = '#d4edda';
-                        statusDiv.style.borderColor = '#c3e6cb';
-                        statusDiv.style.color = '#155724';
-                    } else {
-                        statusDiv.innerHTML = `
-                            <strong>ℹ️ Demo Prices Active</strong><br>
-                            ✏️ Click "Edit Prices Manually" to enter real prices from Woolies/Coles apps!
-                        `;
-                    }
-                }
-            }
-        }
-
         // Start the app
         init();
         
-        // Load prices after init
-        loadPricesOnStartup();
+        // Load custom items
+        loadManualPrices();
 
         // Update search to work with both tabs (after init)
         document.getElementById('searchInput').addEventListener('input', function(e) {
