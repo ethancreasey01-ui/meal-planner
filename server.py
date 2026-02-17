@@ -14,7 +14,13 @@ import glob
 import urllib.parse
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={
+    r"/api/*": {
+        "origins": "*",
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type", "Authorization"]
+    }
+})
 
 # Get the directory containing this script
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -862,7 +868,7 @@ def clear_meal_plan():
 
 
 if __name__ == '__main__':
-    PORT = int(os.environ.get('PORT', 5001))
+    PORT = int(os.environ.get('PORT', 5002))
     print(f"🍽️ Meal Planner API starting on http://localhost:{PORT}")
     print(f"📹 Video downloads will be saved to: {VIDEOS_DIR}")
     print(f"💾 Shared data will be saved to: {DATA_DIR}")
