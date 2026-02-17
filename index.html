@@ -4019,8 +4019,12 @@ ${ingredientList}
             renderGroceryList();
         }
 
-        // Start the app
-        init();
+        // Start the app when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
         
         // Load custom items
         loadManualPrices();
