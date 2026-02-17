@@ -440,6 +440,68 @@
             transform: scale(0.98);
         }
 
+        .recipe-card.favorite {
+            border-color: #FFD700;
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.3), var(--shadow-md);
+        }
+
+        .recipe-card.favorite::before {
+            opacity: 1;
+            background: linear-gradient(90deg, #FFD700, #FFA500);
+        }
+
+        .favorite-btn {
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .favorite-btn:active {
+            transform: scale(0.9);
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .meal-item {
+            animation: popIn 0.3s ease;
+        }
+
         .recipe-card.dragging {
             opacity: 0.9;
             cursor: grabbing;
@@ -1625,6 +1687,11 @@
             <div class="search-box">
                 <input type="text" placeholder="🔍 Search..." id="searchInput">
             </div>
+            <div style="padding: 0 var(--space-md) var(--space-md);">
+                <button id="favoritesFilterBtn" class="btn btn-secondary" onclick="toggleFavoritesFilter()" style="width: 100%; font-size: 0.85rem;">
+                    ☆ Show Favorites
+                </button>
+            </div>
             <div class="recipe-list" id="recipeList">
                 <!-- Recipes injected here -->
             </div>
@@ -2355,6 +2422,109 @@
         let currentWeekOffset = 0;
         let mealPlan = {}; // { "2024-01-15-lunch": recipeId, ... }
         let servingsCount = 1; // Number of people to cook for
+        let favoriteRecipes = new Set(); // Set of favorite recipe IDs
+        let showFavoritesOnly = false; // Filter toggle
+
+        // Confetti effect for completing week
+        function celebrateWeekComplete() {
+            const totalSlots = 28; // 7 days × 4 meals
+            const filledSlots = Object.keys(mealPlan).length;
+            
+            if (filledSlots === totalSlots) {
+                // Create confetti
+                for (let i = 0; i < 50; i++) {
+                    createConfetti();
+                }
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            const confetti = document.createElement('div');
+            confetti.style.position = 'fixed';
+            confetti.style.width = '10px';
+            confetti.style.height = '10px';
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.left = Math.random() * 100 + 'vw';
+            confetti.style.top = '-10px';
+            confetti.style.borderRadius = '50%';
+            confetti.style.zIndex = '9999';
+            confetti.style.pointerEvents = 'none';
+            document.body.appendChild(confetti);
+            
+            const animation = confetti.animate([
+                { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                { transform: `translateY(${window.innerHeight}px) rotate(${Math.random() * 360}deg)`, opacity: 0 }
+            ], {
+                duration: 2000 + Math.random() * 2000,
+                easing: 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+            });
+            
+            animation.onfinish = () => confetti.remove();
+        }
+
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--ios-green)' : 'var(--ios-blue)'};
+                color: white;
+                padding: 12px 20px;
+                border-radius: 10px;
+                font-weight: 600;
+                z-index: 9999;
+                animation: slideIn 0.3s ease;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 2500);
+        }
+
+        // Toggle favorite
+        function toggleFavorite(recipeId, event) {
+            event.stopPropagation();
+            if (favoriteRecipes.has(recipeId)) {
+                favoriteRecipes.delete(recipeId);
+                showToast('Removed from favorites');
+            } else {
+                favoriteRecipes.add(recipeId);
+                showToast('Added to favorites! ⭐');
+            }
+            saveFavorites();
+            renderRecipes(document.getElementById('searchInput').value);
+        }
+
+        // Save favorites
+        function saveFavorites() {
+            localStorage.setItem('favoriteRecipes', JSON.stringify([...favoriteRecipes]));
+        }
+
+        // Load favorites
+        function loadFavorites() {
+            const saved = localStorage.getItem('favoriteRecipes');
+            if (saved) {
+                favoriteRecipes = new Set(JSON.parse(saved));
+            }
+        }
+
+        // Toggle favorites filter
+        function toggleFavoritesFilter() {
+            showFavoritesOnly = !showFavoritesOnly;
+            const btn = document.getElementById('favoritesFilterBtn');
+            if (btn) {
+                btn.style.background = showFavoritesOnly ? 'var(--ios-yellow)' : '';
+                btn.textContent = showFavoritesOnly ? '⭐ Favorites Only' : '☆ Show Favorites';
+            }
+            renderRecipes(document.getElementById('searchInput').value);
+        }
 
         // Load saved data from localStorage
         function loadSavedData() {
@@ -2374,6 +2544,9 @@
                     servingsCount = parseInt(savedServings);
                     document.getElementById('servingsInput').value = servingsCount;
                 }
+                
+                // Load favorites
+                loadFavorites();
             } catch (e) {
                 console.error('Error loading saved data:', e);
             }
@@ -2385,6 +2558,9 @@
                 localStorage.setItem('mealPlan', JSON.stringify(mealPlan));
                 localStorage.setItem('currentWeekOffset', currentWeekOffset.toString());
                 localStorage.setItem('servingsCount', servingsCount.toString());
+                
+                // Check if week is complete
+                celebrateWeekComplete();
             } catch (e) {
                 console.error('Error saving data:', e);
             }
@@ -2573,18 +2749,24 @@
         // Render Recipe Cards
         function renderRecipes(filter = '') {
             const list = document.getElementById('recipeList');
-            const filtered = recipes.filter(r => 
+            let filtered = recipes.filter(r => 
                 r.name.toLowerCase().includes(filter.toLowerCase()) ||
                 r.tags.some(t => t.toLowerCase().includes(filter.toLowerCase()))
             );
+            
+            // Filter by favorites if enabled
+            if (showFavoritesOnly) {
+                filtered = filtered.filter(r => favoriteRecipes.has(r.id));
+            }
             
             list.innerHTML = filtered.map(recipe => {
                 // Use local video thumbnail if available, otherwise use the recipe image
                 const thumbnailSrc = recipe.localThumbnail || recipe.image;
                 const hasVideo = !!recipe.localVideo;
+                const isFavorite = favoriteRecipes.has(recipe.id);
                 
                 return `
-                <div class="recipe-card" draggable="true" data-recipe-id="${recipe.id}" onclick="openRecipeModal(${recipe.id})">
+                <div class="recipe-card ${isFavorite ? 'favorite' : ''}" draggable="true" data-recipe-id="${recipe.id}" onclick="openRecipeModal(${recipe.id})">
                     ${thumbnailSrc ? `
                         <div style="position: relative;">
                             <img src="${thumbnailSrc}" alt="${recipe.name}" class="recipe-thumbnail" loading="lazy">
@@ -2593,6 +2775,12 @@
                                     ▶️ Video
                                 </div>
                             ` : ''}
+                            <button class="favorite-btn ${isFavorite ? 'active' : ''}" 
+                                    onclick="toggleFavorite(${recipe.id}, event)"
+                                    style="position: absolute; top: 8px; right: 8px; background: ${isFavorite ? '#FFD700' : 'rgba(255,255,255,0.9)'}; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); transition: all 0.2s ease;"
+                                    title="${isFavorite ? 'Remove from favorites' : 'Add to favorites'}">
+                                ${isFavorite ? '⭐' : '☆'}
+                            </button>
                         </div>
                     ` : ''}
                     <h3>${recipe.name}</h3>
