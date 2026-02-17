@@ -2428,7 +2428,7 @@
         
         // API Base URL - change this to your server URL
         const API_BASE_URL = window.location.hostname === 'localhost' 
-            ? 'http://localhost:3001' 
+            ? 'http://localhost:3002' 
             : 'https://jacquline-cactoid-vanetta.ngrok-free.dev';
 
         // Confetti effect for completing week
@@ -3333,7 +3333,7 @@
             `;
             
             try {
-                const response = await fetch(`${API_BASE_URL}/api/videos/download', {
+                const response = await fetch(`${API_BASE_URL}/api/videos/download`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -3377,7 +3377,7 @@
             }
             
             try {
-                const response = await fetch(`${API_BASE_URL}/api/videos/delete', {
+                const response = await fetch(`${API_BASE_URL}/api/videos/delete`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ filename: filename })
@@ -3535,7 +3535,7 @@ ${ingredientList}
             btn.disabled = true;
             
             try {
-                const response = await fetch(`${API_BASE_URL}/api/shopping-list', {
+                const response = await fetch(`${API_BASE_URL}/api/shopping-list`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -3590,7 +3590,7 @@ ${ingredientList}
             });
             
             try {
-                const response = await fetch(`${API_BASE_URL}/api/meals', {
+                const response = await fetch(`${API_BASE_URL}/api/meals`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -3622,7 +3622,7 @@ ${ingredientList}
             btn.disabled = true;
 
             try {
-                const response = await fetch(`${API_BASE_URL}/api/reminders/clear-all', {
+                const response = await fetch(`${API_BASE_URL}/api/reminders/clear-all`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
