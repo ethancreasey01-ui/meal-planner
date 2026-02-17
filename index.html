@@ -2424,6 +2424,12 @@
         let servingsCount = 1; // Number of people to cook for
         let favoriteRecipes = new Set(); // Set of favorite recipe IDs
         let showFavoritesOnly = false; // Filter toggle
+        let customGroceryItems = []; // Custom items added by user
+        
+        // API Base URL - change this to your server URL
+        const API_BASE_URL = window.location.hostname === 'localhost' 
+            ? 'http://localhost:5000' 
+            : ${API_BASE_URL}';
 
         // Confetti effect for completing week
         function celebrateWeekComplete() {
@@ -2527,43 +2533,85 @@
         }
 
         // Load saved data from localStorage
-        function loadSavedData() {
+        // Load data from server
+        async function loadSavedData() {
             try {
-                const savedMealPlan = localStorage.getItem('mealPlan');
-                const savedWeekOffset = localStorage.getItem('currentWeekOffset');
-                const savedServings = localStorage.getItem('servingsCount');
+                const response = await fetch(`${API_BASE_URL}/api/data/mealplan`);
+                const result = await response.json();
                 
-                if (savedMealPlan) {
-                    mealPlan = JSON.parse(savedMealPlan);
-                    console.log('Loaded meal plan:', Object.keys(mealPlan).length, 'meals');
+                if (result.success && result.data) {
+                    const data = result.data;
+                    
+                    if (data.mealPlan) {
+                        mealPlan = data.mealPlan;
+                        console.log('Loaded meal plan from server:', Object.keys(mealPlan).length, 'meals');
+                    }
+                    if (data.currentWeekOffset !== undefined) {
+                        currentWeekOffset = data.currentWeekOffset;
+                    }
+                    if (data.servingsCount !== undefined) {
+                        servingsCount = data.servingsCount;
+                        document.getElementById('servingsInput').value = servingsCount;
+                    }
+                    if (data.favoriteRecipes) {
+                        favoriteRecipes = new Set(data.favoriteRecipes);
+                    }
+                    if (data.customGroceryItems) {
+                        customGroceryItems = data.customGroceryItems;
+                        customGroceryItems.forEach(item => {
+                            if (!commonGroceryItems.find(i => i.id === item.id)) {
+                                commonGroceryItems.push(item);
+                            }
+                        });
+                    }
+                    
+                    showToast('📥 Loaded shared meal plan');
                 }
-                if (savedWeekOffset) {
-                    currentWeekOffset = parseInt(savedWeekOffset);
-                }
-                if (savedServings) {
-                    servingsCount = parseInt(savedServings);
-                    document.getElementById('servingsInput').value = servingsCount;
-                }
-                
-                // Load favorites
-                loadFavorites();
             } catch (e) {
-                console.error('Error loading saved data:', e);
+                console.error('Error loading saved data from server:', e);
+                showToast('⚠️ Using default data', 'warning');
             }
         }
 
-        // Save data to localStorage
-        function saveData() {
+        // Save data to server
+        async function saveData() {
             try {
-                localStorage.setItem('mealPlan', JSON.stringify(mealPlan));
-                localStorage.setItem('currentWeekOffset', currentWeekOffset.toString());
-                localStorage.setItem('servingsCount', servingsCount.toString());
+                const data = {
+                    mealPlan: mealPlan,
+                    currentWeekOffset: currentWeekOffset,
+                    servingsCount: servingsCount,
+                    favoriteRecipes: [...favoriteRecipes],
+                    customGroceryItems: customGroceryItems
+                };
                 
-                // Check if week is complete
-                celebrateWeekComplete();
+                const response = await fetch(`${API_BASE_URL}/api/data/mealplan`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    console.log('💾 Saved to server:', result.lastUpdated);
+                    // Check if week is complete
+                    celebrateWeekComplete();
+                } else {
+                    console.error('Failed to save:', result.error);
+                }
             } catch (e) {
-                console.error('Error saving data:', e);
+                console.error('Error saving data to server:', e);
             }
+        }
+
+        // Save favorites to server
+        async function saveFavorites() {
+            await saveData();
+        }
+
+        // Load favorites (now handled in loadSavedData)
+        function loadFavorites() {
+            // Favorites are loaded in loadSavedData
         }
 
         // Initialize
@@ -2595,7 +2643,7 @@
         // Load video data for all recipes on startup
         async function loadVideoData() {
             try {
-                const response = await fetch('https://jacquline-cactoid-vanetta.ngrok-free.dev/api/videos/list');
+                const response = await fetch(`${API_BASE_URL}/api/videos/list`);
                 const data = await response.json();
                 
                 if (data.success && data.videos) {
@@ -2607,7 +2655,7 @@
                                 recipe.localVideo = video.path;
                                 
                                 // Also fetch thumbnail
-                                const thumbResponse = await fetch(`https://jacquline-cactoid-vanetta.ngrok-free.dev/api/videos/thumbnail?recipeId=${video.recipeId}`);
+                                const thumbResponse = await fetch(`${API_BASE_URL}/api/videos/thumbnail?recipeId=${video.recipeId}`);
                                 const thumbData = await thumbResponse.json();
                                 if (thumbData.success && thumbData.thumbnailPath) {
                                     recipe.localThumbnail = thumbData.thumbnailPath;
@@ -3151,7 +3199,7 @@
         // Video Download Functions
         async function checkForVideo(recipeId) {
             try {
-                const response = await fetch('https://jacquline-cactoid-vanetta.ngrok-free.dev/api/videos/list');
+                const response = await fetch(`${API_BASE_URL}/api/videos/list`);
                 const data = await response.json();
                 
                 if (data.success && data.videos) {
@@ -3171,7 +3219,7 @@
                         modalImage.style.display = 'none'; // Hide image when video is available
                         
                         // Try to find thumbnail for this video
-                        const thumbResponse = await fetch(`https://jacquline-cactoid-vanetta.ngrok-free.dev/api/videos/thumbnail?recipeId=${recipeId}`);
+                        const thumbResponse = await fetch(`${API_BASE_URL}/api/videos/thumbnail?recipeId=${recipeId}`);
                         const thumbData = await thumbResponse.json();
                         
                         if (thumbData.success && thumbData.thumbnailPath) {
@@ -3267,7 +3315,7 @@
             `;
             
             try {
-                const response = await fetch('https://jacquline-cactoid-vanetta.ngrok-free.dev/api/videos/download', {
+                const response = await fetch(`${API_BASE_URL}/api/videos/download', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
@@ -3311,7 +3359,7 @@
             }
             
             try {
-                const response = await fetch('https://jacquline-cactoid-vanetta.ngrok-free.dev/api/videos/delete', {
+                const response = await fetch(`${API_BASE_URL}/api/videos/delete', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ filename: filename })
@@ -3469,7 +3517,7 @@ ${ingredientList}
             btn.disabled = true;
             
             try {
-                const response = await fetch('https://jacquline-cactoid-vanetta.ngrok-free.dev/api/shopping-list', {
+                const response = await fetch(`${API_BASE_URL}/api/shopping-list', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -3524,7 +3572,7 @@ ${ingredientList}
             });
             
             try {
-                const response = await fetch('https://jacquline-cactoid-vanetta.ngrok-free.dev/api/meals', {
+                const response = await fetch(`${API_BASE_URL}/api/meals', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -3556,7 +3604,7 @@ ${ingredientList}
             btn.disabled = true;
 
             try {
-                const response = await fetch('https://jacquline-cactoid-vanetta.ngrok-free.dev/api/reminders/clear-all', {
+                const response = await fetch(`${API_BASE_URL}/api/reminders/clear-all', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -3924,7 +3972,7 @@ ${ingredientList}
                 
                 try {
                     // Add to Apple Reminders Shopping List
-                    const response = await fetch('https://jacquline-cactoid-vanetta.ngrok-free.dev/api/shopping', {
+                    const response = await fetch(`${API_BASE_URL}/api/shopping', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({

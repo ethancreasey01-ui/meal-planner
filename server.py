@@ -768,7 +768,101 @@ def serve_video(filename):
         return jsonify({"success": False, "error": str(e)}), 500
 
 
+# Server-side data storage for shared meal plans
+DATA_DIR = os.path.join(BASE_DIR, 'data')
+os.makedirs(DATA_DIR, exist_ok=True)
+MEAL_PLAN_FILE = os.path.join(DATA_DIR, 'meal_plan.json')
+
+# Default empty meal plan structure
+default_meal_plan = {
+    "mealPlan": {},
+    "currentWeekOffset": 0,
+    "servingsCount": 1,
+    "favoriteRecipes": [],
+    "customGroceryItems": [],
+    "lastUpdated": None
+}
+
+def load_meal_plan_data():
+    """Load meal plan data from server storage"""
+    try:
+        if os.path.exists(MEAL_PLAN_FILE):
+            with open(MEAL_PLAN_FILE, 'r') as f:
+                return json.load(f)
+        return default_meal_plan.copy()
+    except Exception as e:
+        print(f"Error loading meal plan: {e}")
+        return default_meal_plan.copy()
+
+def save_meal_plan_data(data):
+    """Save meal plan data to server storage"""
+    try:
+        data['lastUpdated'] = subprocess.run(['date', '-u', '+%Y-%m-%dT%H:%M:%SZ'], 
+                                            capture_output=True, text=True).stdout.strip()
+        with open(MEAL_PLAN_FILE, 'w') as f:
+            json.dump(data, f, indent=2)
+        return True
+    except Exception as e:
+        print(f"Error saving meal plan: {e}")
+        return False
+
+@app.route('/api/data/mealplan', methods=['GET'])
+def get_meal_plan():
+    """Get the shared meal plan data"""
+    try:
+        data = load_meal_plan_data()
+        return jsonify({
+            "success": True,
+            "data": data
+        })
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+@app.route('/api/data/mealplan', methods=['POST'])
+def update_meal_plan():
+    """Update the shared meal plan data"""
+    try:
+        new_data = request.json
+        current_data = load_meal_plan_data()
+        
+        # Update only the fields provided
+        if 'mealPlan' in new_data:
+            current_data['mealPlan'] = new_data['mealPlan']
+        if 'currentWeekOffset' in new_data:
+            current_data['currentWeekOffset'] = new_data['currentWeekOffset']
+        if 'servingsCount' in new_data:
+            current_data['servingsCount'] = new_data['servingsCount']
+        if 'favoriteRecipes' in new_data:
+            current_data['favoriteRecipes'] = new_data['favoriteRecipes']
+        if 'customGroceryItems' in new_data:
+            current_data['customGroceryItems'] = new_data['customGroceryItems']
+        
+        if save_meal_plan_data(current_data):
+            return jsonify({
+                "success": True,
+                "message": "Meal plan saved",
+                "lastUpdated": current_data['lastUpdated']
+            })
+        else:
+            return jsonify({"success": False, "error": "Failed to save"}), 500
+            
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+@app.route('/api/data/mealplan/clear', methods=['POST'])
+def clear_meal_plan():
+    """Clear all meal plan data"""
+    try:
+        if save_meal_plan_data(default_meal_plan.copy()):
+            return jsonify({"success": True, "message": "Meal plan cleared"})
+        else:
+            return jsonify({"success": False, "error": "Failed to clear"}), 500
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+
 if __name__ == '__main__':
     print("🍽️ Meal Planner API starting on http://localhost:5000")
     print(f"📹 Video downloads will be saved to: {VIDEOS_DIR}")
+    print(f"💾 Shared data will be saved to: {DATA_DIR}")
     app.run(debug=True, port=5000)
