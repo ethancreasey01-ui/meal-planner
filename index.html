@@ -3356,6 +3356,15 @@
             const meals = Object.values(mealPlan);
             const mealCount = meals.length;
             
+            // Calculate unique days that have meals
+            const daysWithMeals = new Set();
+            Object.keys(mealPlan).forEach(slotKey => {
+                const dateKey = slotKey.split('-').slice(0, 3).join('-'); // Extract YYYY-MM-DD
+                daysWithMeals.add(dateKey);
+            });
+            const numDaysWithMeals = daysWithMeals.size || 1; // Avoid divide by zero
+            
+            // Calculate totals (macros are per serving, multiply by servingsCount)
             const totals = meals.reduce((acc, meal) => ({
                 calories: acc.calories + (meal.calories * servingsCount),
                 protein: acc.protein + (meal.protein * servingsCount),
@@ -3363,17 +3372,17 @@
                 fat: acc.fat + (meal.fat * servingsCount)
             }), { calories: 0, protein: 0, carbs: 0, fat: 0 });
             
-            const days = 7;
-            const avgCalories = mealCount > 0 ? Math.round(totals.calories / days) : 0;
-            const avgProtein = mealCount > 0 ? Math.round(totals.protein / days) : 0;
-            const avgCarbs = mealCount > 0 ? Math.round(totals.carbs / days) : 0;
-            const avgFat = mealCount > 0 ? Math.round(totals.fat / days) : 0;
+            // Calculate daily averages (only for days that have meals planned)
+            const avgCalories = mealCount > 0 ? Math.round(totals.calories / numDaysWithMeals) : 0;
+            const avgProtein = mealCount > 0 ? Math.round(totals.protein / numDaysWithMeals) : 0;
+            const avgCarbs = mealCount > 0 ? Math.round(totals.carbs / numDaysWithMeals) : 0;
+            const avgFat = mealCount > 0 ? Math.round(totals.fat / numDaysWithMeals) : 0;
             
             document.getElementById('totalCalories').textContent = avgCalories;
             document.getElementById('totalProtein').textContent = avgProtein + 'g';
             document.getElementById('totalCarbs').textContent = avgCarbs + 'g';
             document.getElementById('totalFat').textContent = avgFat + 'g';
-            document.getElementById('mealCount').textContent = `${mealCount} meal${mealCount !== 1 ? 's' : ''} planned`;
+            document.getElementById('mealCount').textContent = `${mealCount} meal${mealCount !== 1 ? 's' : ''} across ${numDaysWithMeals} day${numDaysWithMeals !== 1 ? 's' : ''}`;
         }
 
         function updateServings() {
@@ -3414,8 +3423,9 @@
                         };
                     }
                     
-                    // Multiply by servings count (number of people)
-                    ingredientMap[key].amount += ing.amount * servingsCount;
+                    // Multiply by servings count only if perServing is true
+                    const multiplier = ing.perServing !== false ? servingsCount : 1;
+                    ingredientMap[key].amount += ing.amount * multiplier;
                     if (!ingredientMap[key].meals.includes(meal.name)) {
                         ingredientMap[key].meals.push(meal.name);
                     }
