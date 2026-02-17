@@ -2356,8 +2356,45 @@
         let mealPlan = {}; // { "2024-01-15-lunch": recipeId, ... }
         let servingsCount = 1; // Number of people to cook for
 
+        // Load saved data from localStorage
+        function loadSavedData() {
+            try {
+                const savedMealPlan = localStorage.getItem('mealPlan');
+                const savedWeekOffset = localStorage.getItem('currentWeekOffset');
+                const savedServings = localStorage.getItem('servingsCount');
+                
+                if (savedMealPlan) {
+                    mealPlan = JSON.parse(savedMealPlan);
+                    console.log('Loaded meal plan:', Object.keys(mealPlan).length, 'meals');
+                }
+                if (savedWeekOffset) {
+                    currentWeekOffset = parseInt(savedWeekOffset);
+                }
+                if (savedServings) {
+                    servingsCount = parseInt(savedServings);
+                    document.getElementById('servingsInput').value = servingsCount;
+                }
+            } catch (e) {
+                console.error('Error loading saved data:', e);
+            }
+        }
+
+        // Save data to localStorage
+        function saveData() {
+            try {
+                localStorage.setItem('mealPlan', JSON.stringify(mealPlan));
+                localStorage.setItem('currentWeekOffset', currentWeekOffset.toString());
+                localStorage.setItem('servingsCount', servingsCount.toString());
+            } catch (e) {
+                console.error('Error saving data:', e);
+            }
+        }
+
         // Initialize
         async function init() {
+            // Load saved meal plan data first
+            loadSavedData();
+            
             // First check for downloaded videos and update recipe data
             await loadVideoData();
             
@@ -2643,9 +2680,11 @@
             if (draggedElement && draggedElement.dataset.slot) {
                 const sourceSlot = draggedElement.dataset.slot;
                 delete mealPlan[sourceSlot];
+                saveData(); // Persist to localStorage
             }
             
             mealPlan[slotKey] = draggedRecipe;
+            saveData(); // Persist to localStorage
             
             // Animate the change
             requestAnimationFrame(() => {
@@ -2779,6 +2818,7 @@
                 event.stopPropagation();
             }
             delete mealPlan[slotKey];
+            saveData(); // Persist to localStorage
             renderCalendar();
             updateMacroSummary();
         }
@@ -3075,12 +3115,14 @@
 
         function changeWeek(direction) {
             currentWeekOffset += direction;
+            saveData(); // Persist to localStorage
             renderCalendar();
         }
 
         function clearWeek() {
             if (confirm('Clear all meals for this week?')) {
                 mealPlan = {};
+                saveData(); // Persist to localStorage
                 renderCalendar();
                 updateMacroSummary();
             }
@@ -3116,6 +3158,7 @@
             if (servingsCount < 1) servingsCount = 1;
             if (servingsCount > 20) servingsCount = 20;
             input.value = servingsCount;
+            saveData(); // Persist to localStorage
             
             // Update the display to show we're planning for X people
             updateMacroSummary();
@@ -3351,6 +3394,7 @@ ${ingredientList}
                 }
             });
             
+            saveData(); // Persist to localStorage
             renderCalendar();
             updateMacroSummary();
             
