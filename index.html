@@ -2736,15 +2736,17 @@
                 const dateKey = date.toISOString().split('T')[0];
                 const isToday = date.toDateString() === today.toDateString();
                 
+                const breakfast = mealPlan[`${dateKey}-breakfast`];
                 const lunch = mealPlan[`${dateKey}-lunch`];
                 const dinner = mealPlan[`${dateKey}-dinner`];
+                const snacks = mealPlan[`${dateKey}-snacks`];
                 
                 // Calculate daily macros (multiplied by servings)
-                const dailyCalories = ((lunch?.calories || 0) + (dinner?.calories || 0)) * servingsCount;
-                const dailyProtein = ((lunch?.protein || 0) + (dinner?.protein || 0)) * servingsCount;
-                const dailyCarbs = ((lunch?.carbs || 0) + (dinner?.carbs || 0)) * servingsCount;
-                const dailyFat = ((lunch?.fat || 0) + (dinner?.fat || 0)) * servingsCount;
-                const hasMeals = lunch || dinner;
+                const dailyCalories = ((breakfast?.calories || 0) + (lunch?.calories || 0) + (dinner?.calories || 0) + (snacks?.calories || 0)) * servingsCount;
+                const dailyProtein = ((breakfast?.protein || 0) + (lunch?.protein || 0) + (dinner?.protein || 0) + (snacks?.protein || 0)) * servingsCount;
+                const dailyCarbs = ((breakfast?.carbs || 0) + (lunch?.carbs || 0) + (dinner?.carbs || 0) + (snacks?.carbs || 0)) * servingsCount;
+                const dailyFat = ((breakfast?.fat || 0) + (lunch?.fat || 0) + (dinner?.fat || 0) + (snacks?.fat || 0)) * servingsCount;
+                const hasMeals = breakfast || lunch || dinner || snacks;
                 
                 return `
                     <div class="day-column">
@@ -2753,6 +2755,23 @@
                             <div class="day-number">${date.getDate()}</div>
                         </div>
                         <div class="meal-slots">
+                            <div class="meal-slot">
+                                <div class="meal-label">🌅 Breakfast</div>
+                                <div class="drop-zone" data-slot="${dateKey}-breakfast" 
+                                     ondragover="handleDragOver.call(this, event)" 
+                                     ondragleave="handleDragLeave.call(this, event)"
+                                     ondrop="handleDrop.call(this, event)">
+                                    ${breakfast ? `
+                                        <div class="meal-item" draggable="true" data-slot="${dateKey}-breakfast" data-recipe-id="${breakfast.id}"
+                                             ondragstart="handleMealDragStart.call(this, event)"
+                                             ondragend="handleMealDragEnd.call(this, event)"
+                                             onclick="openRecipeModal(${breakfast.id})">
+                                            <span>${breakfast.name}</span>
+                                            <button class="remove" onclick="event.stopPropagation(); removeMeal('${dateKey}-breakfast', event)">×</button>
+                                        </div>
+                                    ` : '<div class="placeholder">Drop here</div>'}
+                                </div>
+                            </div>
                             <div class="meal-slot">
                                 <div class="meal-label">🌞 Lunch</div>
                                 <div class="drop-zone" data-slot="${dateKey}-lunch" 
@@ -2783,6 +2802,23 @@
                                              onclick="openRecipeModal(${dinner.id})">
                                             <span>${dinner.name}</span>
                                             <button class="remove" onclick="event.stopPropagation(); removeMeal('${dateKey}-dinner', event)">×</button>
+                                        </div>
+                                    ` : '<div class="placeholder">Drop here</div>'}
+                                </div>
+                            </div>
+                            <div class="meal-slot">
+                                <div class="meal-label">🍿 Snacks</div>
+                                <div class="drop-zone" data-slot="${dateKey}-snacks"
+                                     ondragover="handleDragOver.call(this, event)" 
+                                     ondragleave="handleDragLeave.call(this, event)"
+                                     ondrop="handleDrop.call(this, event)">
+                                    ${snacks ? `
+                                        <div class="meal-item" draggable="true" data-slot="${dateKey}-snacks" data-recipe-id="${snacks.id}"
+                                             ondragstart="handleMealDragStart.call(this, event)"
+                                             ondragend="handleMealDragEnd.call(this, event)"
+                                             onclick="openRecipeModal(${snacks.id})">
+                                            <span>${snacks.name}</span>
+                                            <button class="remove" onclick="event.stopPropagation(); removeMeal('${dateKey}-snacks', event)">×</button>
                                         </div>
                                     ` : '<div class="placeholder">Drop here</div>'}
                                 </div>
@@ -3373,11 +3409,18 @@ ${ingredientList}
             let recipeIndex = 0;
             let newMealsAdded = 0;
             
-            // Fill each day with lunch and dinner
+            // Fill each day with all meals
             days.forEach((dayName, index) => {
                 const date = new Date(startOfWeek);
                 date.setDate(startOfWeek.getDate() + index);
                 const dateKey = date.toISOString().split('T')[0];
+                
+                // Add breakfast (only if slot is empty)
+                if (!mealPlan[`${dateKey}-breakfast`]) {
+                    mealPlan[`${dateKey}-breakfast`] = availableRecipes[recipeIndex % availableRecipes.length];
+                    recipeIndex++;
+                    newMealsAdded++;
+                }
                 
                 // Add lunch (only if slot is empty)
                 if (!mealPlan[`${dateKey}-lunch`]) {
@@ -3386,9 +3429,16 @@ ${ingredientList}
                     newMealsAdded++;
                 }
                 
-                // Add dinner (only if slot is empty, different recipe from lunch if possible)
+                // Add dinner (only if slot is empty)
                 if (!mealPlan[`${dateKey}-dinner`]) {
                     mealPlan[`${dateKey}-dinner`] = availableRecipes[recipeIndex % availableRecipes.length];
+                    recipeIndex++;
+                    newMealsAdded++;
+                }
+                
+                // Add snacks (only if slot is empty)
+                if (!mealPlan[`${dateKey}-snacks`]) {
+                    mealPlan[`${dateKey}-snacks`] = availableRecipes[recipeIndex % availableRecipes.length];
                     recipeIndex++;
                     newMealsAdded++;
                 }
