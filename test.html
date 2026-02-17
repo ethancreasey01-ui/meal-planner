@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meal Planner Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .recipe-card { border: 1px solid #ddd; padding: 10px; margin: 10px 0; border-radius: 8px; }
+        .error { color: red; background: #fee; padding: 10px; border-radius: 4px; }
+        .success { color: green; background: #efe; padding: 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>🍽️ Meal Planner Test</h1>
+    <div id="status">Loading...</div>
+    <div id="recipeList"></div>
+    
+    <script>
+        const recipes = [
+            { id: 1, name: "🌯 Cheesy Chicken Fajita Wraps", calories: 394, protein: 43, tags: ["high protein"] },
+            { id: 2, name: "🌯 Korean BBQ Chicken Wraps", calories: 417, protein: 39, tags: ["korean"] }
+        ];
+        
+        function renderRecipes() {
+            try {
+                const list = document.getElementById('recipeList');
+                if (!list) throw new Error('recipeList element not found');
+                
+                list.innerHTML = recipes.map(r => `
+                    <div class="recipe-card">
+                        <h3>${r.name}</h3>
+                        <p>🔥 ${r.calories} cal | 💪 ${r.protein}g protein</p>
+                    </div>
+                `).join('');
+                
+                document.getElementById('status').innerHTML = '<div class="success">✅ Recipes loaded successfully!</div>';
+            } catch (e) {
+                document.getElementById('status').innerHTML = '<div class="error">❌ Error: ' + e.message + '</div>';
+                console.error(e);
+            }
+        }
+        
+        // Test if DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', renderRecipes);
+        } else {
+            renderRecipes();
+        }
+    </script>
+</body>
+</html>
