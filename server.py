@@ -862,7 +862,8 @@ def clear_meal_plan():
 
 
 if __name__ == '__main__':
-    print("🍽️ Meal Planner API starting on http://localhost:5000")
+    PORT = int(os.environ.get('PORT', 5001))
+    print(f"🍽️ Meal Planner API starting on http://localhost:{PORT}")
     print(f"📹 Video downloads will be saved to: {VIDEOS_DIR}")
     print(f"💾 Shared data will be saved to: {DATA_DIR}")
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=PORT)
