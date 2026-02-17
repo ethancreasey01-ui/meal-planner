@@ -2617,11 +2617,16 @@
         // Initialize
         async function init() {
             // Load saved meal plan data first
-            loadSavedData();
+            await loadSavedData();
             
             // First check for downloaded videos and update recipe data
-            await loadVideoData();
+            try {
+                await loadVideoData();
+            } catch (e) {
+                console.error('Error loading video data:', e);
+            }
             
+            // Always render recipes even if video loading fails
             renderRecipes();
             renderCalendar();
             updateMacroSummary();
@@ -2643,7 +2648,15 @@
         // Load video data for all recipes on startup
         async function loadVideoData() {
             try {
-                const response = await fetch(`${API_BASE_URL}/api/videos/list`);
+                // Add timeout to prevent hanging
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 5000);
+                
+                const response = await fetch(`${API_BASE_URL}/api/videos/list`, {
+                    signal: controller.signal
+                });
+                clearTimeout(timeoutId);
+                
                 const data = await response.json();
                 
                 if (data.success && data.videos) {
@@ -2655,10 +2668,14 @@
                                 recipe.localVideo = video.path;
                                 
                                 // Also fetch thumbnail
-                                const thumbResponse = await fetch(`${API_BASE_URL}/api/videos/thumbnail?recipeId=${video.recipeId}`);
-                                const thumbData = await thumbResponse.json();
-                                if (thumbData.success && thumbData.thumbnailPath) {
-                                    recipe.localThumbnail = thumbData.thumbnailPath;
+                                try {
+                                    const thumbResponse = await fetch(`${API_BASE_URL}/api/videos/thumbnail?recipeId=${video.recipeId}`);
+                                    const thumbData = await thumbResponse.json();
+                                    if (thumbData.success && thumbData.thumbnailPath) {
+                                        recipe.localThumbnail = thumbData.thumbnailPath;
+                                    }
+                                } catch (thumbError) {
+                                    console.log('No thumbnail for recipe', video.recipeId);
                                 }
                             }
                         }
@@ -2666,6 +2683,7 @@
                 }
             } catch (error) {
                 console.error('Error loading video data:', error);
+                // Don't throw - let the app continue without videos
             }
         }
         
