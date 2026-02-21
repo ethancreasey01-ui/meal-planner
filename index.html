@@ -2339,6 +2339,38 @@
                     "Assemble bowls with sweet potatoes, corn & beans, red onion, and avocado",
                     "Top with cilantro and drizzle with lime crema"
                 ]
+            },
+            {
+                id: 17,
+                name: "🍗 Crunchy Mediterranean Chicken & Potatoes",
+                image: "https://images.unsplash.com/photo-1573140247632-fa58586f6388?w=400&h=300&fit=crop",
+                calories: 710,
+                protein: 46,
+                carbs: 31,
+                fat: 45,
+                servings: 3,
+                tags: ["mediterranean", "high protein", "dinner"],
+                source: "Instagram @jernejkitchen",
+                url: "https://www.instagram.com/reel/C7hyrnrS0RB/",
+                ingredients: [
+                    { name: "Chicken Thighs", amount: 227, unit: "g", perServing: true },
+                    { name: "Garlic Powder", amount: 0.5, unit: "tsp", perServing: false },
+                    { name: "Dried Thyme", amount: 0.5, unit: "tsp", perServing: false },
+                    { name: "Dried Oregano", amount: 0.5, unit: "tsp", perServing: false },
+                    { name: "Olive Oil", amount: 2, unit: "tbsp", perServing: false },
+                    { name: "Potatoes", amount: 1, unit: "pc", perServing: true },
+                    { name: "Lemon", amount: 1, unit: "pc", perServing: false },
+                    { name: "Feta Cheese", amount: 30, unit: "g", perServing: false }
+                ],
+                directions: [
+                    "Preheat oven to 200C / 400F",
+                    "Season chicken thighs with salt, pepper, garlic powder, thyme, and oregano",
+                    "In a large bowl, mix olive oil with lemon zest, lemon juice, and oregano",
+                    "Add potato chunks to the bowl and toss to coat",
+                    "Place chicken and potatoes on a baking sheet",
+                    "Roast for 35-40 minutes until chicken is cooked through and potatoes are crispy",
+                    "Sprinkle with crumbled feta cheese and serve"
+                ]
             }
         ];
 
@@ -3464,10 +3496,25 @@
         }
 
         async function generateShoppingList() {
-            const meals = Object.values(mealPlan);
+            const mealPlanValues = Object.values(mealPlan);
+            
+            if (mealPlanValues.length === 0) {
+                alert('No meals planned yet! Drag recipes onto the calendar first.');
+                return;
+            }
+            
+            // Handle both full recipe objects and recipe IDs
+            const meals = mealPlanValues.map(item => {
+                // If item is already a full recipe object (has ingredients), use it
+                if (item && item.ingredients) {
+                    return item;
+                }
+                // Otherwise, it's an ID - look up the recipe
+                return recipes.find(r => r.id === item || r.id == item);
+            }).filter(Boolean);
             
             if (meals.length === 0) {
-                alert('No meals planned yet! Drag recipes onto the calendar first.');
+                alert('Could not find recipes for planned meals.');
                 return;
             }
             

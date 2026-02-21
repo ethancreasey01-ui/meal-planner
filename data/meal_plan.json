@@ -1,443 +1,652 @@
 {
   "mealPlan": {
-    "2025-02-17-lunch": {
-      "calories": 300,
-      "carbs": 30,
-      "fat": 10,
-      "id": 1,
-      "name": "Test Meal",
-      "protein": 25
-    },
-    "2026-02-17-breakfast": {
-      "calories": 394,
-      "carbs": 27,
+    "2026-02-20-lunch": {
+      "calories": 495,
+      "carbs": 58,
       "directions": [
-        "Cube chicken thighs and season with fajita seasoning, olive oil, and lime juice",
-        "Line sheet pan with baking paper, add onions and peppers, season and roast at 190C for 20 mins",
-        "Spread marinated chicken over vegetables, bake at 200C for 25-30 mins until golden",
-        "Add cheese, tomatoes, and coriander while hot, mix until melted",
-        "Serve with wraps and spicy sauce"
+        "Soak rice noodles in warm water until softened, drain",
+        "Mix tamarind, fish sauce, and palm sugar for sauce",
+        "Stir-fry garlic and chicken until cooked through",
+        "Push chicken aside, scramble egg in the pan",
+        "Add noodles and sauce, toss everything together",
+        "Add bean sprouts and green onions, cook for 1 minute",
+        "Serve with lime wedge and crushed peanuts on top"
       ],
-      "fat": 17,
-      "id": 1,
-      "image": "https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=400&h=300&fit=crop",
+      "fat": 16,
+      "id": 8,
+      "image": "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400&h=300&fit=crop",
       "ingredients": [
         {
           "amount": 160,
-          "name": "Chicken Thighs",
+          "name": "Chicken Breast",
           "perServing": true,
           "unit": "g"
         },
         {
-          "amount": 20,
-          "name": "Red Onion",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 20,
-          "name": "White Onion",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 45,
-          "name": "Bell Peppers",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 10,
-          "name": "Cheddar Cheese",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 10,
-          "name": "Mozzarella",
+          "amount": 80,
+          "name": "Rice Noodles",
           "perServing": true,
           "unit": "g"
         },
         {
           "amount": 1,
-          "name": "Tortilla Wraps",
+          "name": "Eggs",
           "perServing": true,
           "unit": "pc"
         },
         {
-          "amount": 15,
-          "name": "Yogurt",
+          "amount": 40,
+          "name": "Bean Sprouts",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 20,
+          "name": "Green Onions",
           "perServing": true,
           "unit": "g"
         },
         {
           "amount": 8,
-          "name": "Mayo",
+          "name": "Garlic",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 15,
+          "name": "Tamarind Paste",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 15,
+          "name": "Fish Sauce",
+          "perServing": true,
+          "unit": "ml"
+        },
+        {
+          "amount": 15,
+          "name": "Palm Sugar",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 0.5,
+          "name": "Lime",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 15,
+          "name": "Peanuts",
           "perServing": true,
           "unit": "g"
         }
       ],
-      "localThumbnail": "/videos/1_cheesy_chicken_fajita_wraps_video_thumb.jpg",
-      "localVideo": "/videos/1_cheesy_chicken_fajita_wraps_video.mp4",
-      "name": "\ud83c\udf2f Cheesy Chicken Fajita Wraps",
-      "protein": 43,
-      "servings": 10,
-      "source": "TikTok @mealprepking",
+      "name": "\ud83c\udf5c Chicken Pad Thai",
+      "protein": 36,
+      "servings": 4,
+      "source": "TikTok @thaifood",
       "tags": [
+        "thai",
+        "noodles",
+        "stir fry"
+      ],
+      "url": "https://www.tiktok.com/@thaifood/video/padthai"
+    },
+    "2026-02-21-lunch": {
+      "calories": 495,
+      "carbs": 58,
+      "directions": [
+        "Soak rice noodles in warm water until softened, drain",
+        "Mix tamarind, fish sauce, and palm sugar for sauce",
+        "Stir-fry garlic and chicken until cooked through",
+        "Push chicken aside, scramble egg in the pan",
+        "Add noodles and sauce, toss everything together",
+        "Add bean sprouts and green onions, cook for 1 minute",
+        "Serve with lime wedge and crushed peanuts on top"
+      ],
+      "fat": 16,
+      "id": 8,
+      "image": "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=400&h=300&fit=crop",
+      "ingredients": [
+        {
+          "amount": 160,
+          "name": "Chicken Breast",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 80,
+          "name": "Rice Noodles",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 1,
+          "name": "Eggs",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 40,
+          "name": "Bean Sprouts",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 20,
+          "name": "Green Onions",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 8,
+          "name": "Garlic",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 15,
+          "name": "Tamarind Paste",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 15,
+          "name": "Fish Sauce",
+          "perServing": true,
+          "unit": "ml"
+        },
+        {
+          "amount": 15,
+          "name": "Palm Sugar",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 0.5,
+          "name": "Lime",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 15,
+          "name": "Peanuts",
+          "perServing": true,
+          "unit": "g"
+        }
+      ],
+      "name": "\ud83c\udf5c Chicken Pad Thai",
+      "protein": 36,
+      "servings": 4,
+      "source": "TikTok @thaifood",
+      "tags": [
+        "thai",
+        "noodles",
+        "stir fry"
+      ],
+      "url": "https://www.tiktok.com/@thaifood/video/padthai"
+    },
+    "2026-02-22-dinner": {
+      "calories": 520,
+      "carbs": 48,
+      "directions": [
+        "Bread and fry chicken katsu. Smash tortillas in pan. Top with sliced chicken, cabbage, green onions and sauce."
+      ],
+      "fat": 22,
+      "id": 15,
+      "image": "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&h=300&fit=crop",
+      "ingredients": [
+        {
+          "amount": 180,
+          "name": "Chicken Breast",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 2,
+          "name": "Tortillas",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 50,
+          "name": "Cabbage",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 10,
+          "name": "Green Onions",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 5,
+          "name": "Sesame Seeds",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 20,
+          "name": "Katsu Sauce",
+          "perServing": true,
+          "unit": "g"
+        }
+      ],
+      "localThumbnail": "/videos/15_new_recipe_6_video_thumb.jpg",
+      "localVideo": "/videos/15_new_recipe_6_video.mp4",
+      "name": "\ud83c\udf2e Chicken Katsu Smashed Tacos",
+      "protein": 32,
+      "servings": 4,
+      "source": "TikTok @tomjustcooks",
+      "tags": [
+        "crispy",
+        "fusion",
+        "video"
+      ],
+      "url": "https://www.tiktok.com/@tomjustcooks"
+    },
+    "2026-02-22-lunch": {
+      "calories": 485,
+      "carbs": 68,
+      "directions": [
+        "Preheat oven to 220C / 425F",
+        "Cube sweet potatoes, toss with olive oil, chili powder, cumin, salt and pepper",
+        "Roast for 25-30 minutes until tender and slightly crispy",
+        "Mix corn and black beans together",
+        "Make lime crema by mixing Greek yogurt with lime juice and salt",
+        "Assemble bowls with sweet potatoes, corn & beans, red onion, and avocado",
+        "Top with cilantro and drizzle with lime crema"
+      ],
+      "fat": 16,
+      "id": 9,
+      "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
+      "ingredients": [
+        {
+          "amount": 200,
+          "name": "Sweet Potatoes",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 80,
+          "name": "Corn",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 60,
+          "name": "Black Beans",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 30,
+          "name": "Red Onion",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 10,
+          "name": "Cilantro",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 0.5,
+          "name": "Avocado",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 0.5,
+          "name": "Lime",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 30,
+          "name": "Greek Yogurt",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 2,
+          "name": "Chili Powder",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 1,
+          "name": "Cumin",
+          "perServing": true,
+          "unit": "g"
+        }
+      ],
+      "localThumbnail": "/videos/9_sweet_potato_bowls_video_thumb.jpg",
+      "localVideo": "/videos/9_sweet_potato_bowls_video.mp4",
+      "name": "\ud83c\udf60 Sweet Potato Bowls",
+      "protein": 18,
+      "servings": 6,
+      "source": "TikTok @healthyrecipes",
+      "tags": [
+        "vegetarian",
+        "meal prep",
+        "healthy"
+      ],
+      "url": "https://www.tiktok.com/@healthyrecipes/video/sweetpotato"
+    },
+    "2026-02-23-dinner": {
+      "calories": 520,
+      "carbs": 48,
+      "directions": [
+        "Bread and fry chicken katsu. Smash tortillas in pan. Top with sliced chicken, cabbage, green onions and sauce."
+      ],
+      "fat": 22,
+      "id": 15,
+      "image": "https://images.unsplash.com/photo-1529042410759-befb1204b468?w=400&h=300&fit=crop",
+      "ingredients": [
+        {
+          "amount": 180,
+          "name": "Chicken Breast",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 2,
+          "name": "Tortillas",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 50,
+          "name": "Cabbage",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 10,
+          "name": "Green Onions",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 5,
+          "name": "Sesame Seeds",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 20,
+          "name": "Katsu Sauce",
+          "perServing": true,
+          "unit": "g"
+        }
+      ],
+      "localThumbnail": "/videos/15_new_recipe_6_video_thumb.jpg",
+      "localVideo": "/videos/15_new_recipe_6_video.mp4",
+      "name": "\ud83c\udf2e Chicken Katsu Smashed Tacos",
+      "protein": 32,
+      "servings": 4,
+      "source": "TikTok @tomjustcooks",
+      "tags": [
+        "crispy",
+        "fusion",
+        "video"
+      ],
+      "url": "https://www.tiktok.com/@tomjustcooks"
+    },
+    "2026-02-23-lunch": {
+      "calories": 485,
+      "carbs": 68,
+      "directions": [
+        "Preheat oven to 220C / 425F",
+        "Cube sweet potatoes, toss with olive oil, chili powder, cumin, salt and pepper",
+        "Roast for 25-30 minutes until tender and slightly crispy",
+        "Mix corn and black beans together",
+        "Make lime crema by mixing Greek yogurt with lime juice and salt",
+        "Assemble bowls with sweet potatoes, corn & beans, red onion, and avocado",
+        "Top with cilantro and drizzle with lime crema"
+      ],
+      "fat": 16,
+      "id": 9,
+      "image": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400&h=300&fit=crop",
+      "ingredients": [
+        {
+          "amount": 200,
+          "name": "Sweet Potatoes",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 80,
+          "name": "Corn",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 60,
+          "name": "Black Beans",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 30,
+          "name": "Red Onion",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 10,
+          "name": "Cilantro",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 0.5,
+          "name": "Avocado",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 0.5,
+          "name": "Lime",
+          "perServing": true,
+          "unit": "pc"
+        },
+        {
+          "amount": 30,
+          "name": "Greek Yogurt",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 2,
+          "name": "Chili Powder",
+          "perServing": true,
+          "unit": "g"
+        },
+        {
+          "amount": 1,
+          "name": "Cumin",
+          "perServing": true,
+          "unit": "g"
+        }
+      ],
+      "localThumbnail": "/videos/9_sweet_potato_bowls_video_thumb.jpg",
+      "localVideo": "/videos/9_sweet_potato_bowls_video.mp4",
+      "name": "\ud83c\udf60 Sweet Potato Bowls",
+      "protein": 18,
+      "servings": 6,
+      "source": "TikTok @healthyrecipes",
+      "tags": [
+        "vegetarian",
+        "meal prep",
+        "healthy"
+      ],
+      "url": "https://www.tiktok.com/@healthyrecipes/video/sweetpotato"
+    },
+    "2026-02-20-dinner": {
+      "id": 17,
+      "name": "\ud83c\udf57 Crunchy Mediterranean Chicken & Potatoes",
+      "image": "https://images.unsplash.com/photo-1573140247632-fa58586f6388?w=400&h=300&fit=crop",
+      "calories": 710,
+      "protein": 46,
+      "carbs": 31,
+      "fat": 45,
+      "servings": 3,
+      "tags": [
+        "mediterranean",
         "high protein",
-        "meal prep"
+        "dinner"
       ],
-      "url": "https://www.tiktok.com/@mealprepking/video/1234567890"
-    },
-    "2026-02-18-dinner": {
-      "calories": 520,
-      "carbs": 48,
+      "source": "Instagram @jernejkitchen",
+      "url": "https://www.instagram.com/reel/C7hyrnrS0RB/",
+      "ingredients": [
+        {
+          "name": "Chicken Thighs",
+          "amount": 227,
+          "unit": "g",
+          "perServing": true
+        },
+        {
+          "name": "Garlic Powder",
+          "amount": 0.5,
+          "unit": "tsp",
+          "perServing": false
+        },
+        {
+          "name": "Dried Thyme",
+          "amount": 0.5,
+          "unit": "tsp",
+          "perServing": false
+        },
+        {
+          "name": "Dried Oregano",
+          "amount": 0.5,
+          "unit": "tsp",
+          "perServing": false
+        },
+        {
+          "name": "Olive Oil",
+          "amount": 2,
+          "unit": "tbsp",
+          "perServing": false
+        },
+        {
+          "name": "Potatoes",
+          "amount": 1,
+          "unit": "pc",
+          "perServing": true
+        },
+        {
+          "name": "Lemon",
+          "amount": 1,
+          "unit": "pc",
+          "perServing": false
+        },
+        {
+          "name": "Feta Cheese",
+          "amount": 30,
+          "unit": "g",
+          "perServing": false
+        }
+      ],
       "directions": [
         "Preheat oven to 200C / 400F",
-        "Cut potatoes into wedges, toss with olive oil, oregano, salt, and pepper",
-        "Roast potatoes for 20 minutes",
-        "Add chicken thighs, tomatoes, onion, and garlic to the pan",
-        "Squeeze lemon juice over everything, roast for another 25-30 mins",
-        "Top with crumbled feta and olives before serving"
-      ],
-      "fat": 22,
-      "id": 5,
-      "image": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=300&fit=crop",
-      "ingredients": [
-        {
-          "amount": 180,
-          "name": "Chicken Thighs",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 250,
-          "name": "Potatoes",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 80,
-          "name": "Cherry Tomatoes",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 40,
-          "name": "Red Onion",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 10,
-          "name": "Garlic",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 0.5,
-          "name": "Lemon",
-          "perServing": true,
-          "unit": "pc"
-        },
-        {
-          "amount": 15,
-          "name": "Olive Oil",
-          "perServing": true,
-          "unit": "ml"
-        },
-        {
-          "amount": 2,
-          "name": "Dried Oregano",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 30,
-          "name": "Feta Cheese",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 20,
-          "name": "Kalamata Olives",
-          "perServing": true,
-          "unit": "g"
-        }
-      ],
-      "name": "\ud83e\udd54 Mediterranean Roast Potatoes with Chicken",
-      "protein": 35,
-      "servings": 6,
-      "source": "TikTok @mediterraneandiet",
+        "Season chicken thighs with salt, pepper, garlic powder, thyme, and oregano",
+        "In a large bowl, mix olive oil with lemon zest, lemon juice, and oregano",
+        "Add potato chunks to the bowl and toss to coat",
+        "Place chicken and potatoes on a baking sheet",
+        "Roast for 35-40 minutes until chicken is cooked through and potatoes are crispy",
+        "Sprinkle with crumbled feta cheese and serve"
+      ]
+    },
+    "2026-02-21-dinner": {
+      "id": 17,
+      "name": "\ud83c\udf57 Crunchy Mediterranean Chicken & Potatoes",
+      "image": "https://images.unsplash.com/photo-1573140247632-fa58586f6388?w=400&h=300&fit=crop",
+      "calories": 710,
+      "protein": 46,
+      "carbs": 31,
+      "fat": 45,
+      "servings": 3,
       "tags": [
         "mediterranean",
-        "sheet pan",
-        "healthy"
+        "high protein",
+        "dinner"
       ],
-      "url": "https://www.tiktok.com/@mediterraneandiet/video/roast"
-    },
-    "2026-02-18-lunch": {
-      "calories": 650,
-      "carbs": 35,
-      "directions": [
-        "Form beef into patties, season with salt and pepper",
-        "Cook bacon until crispy, set aside",
-        "Grill or pan-sear burger patties over high heat for 3-4 mins per side",
-        "Add cheese in the last minute to melt",
-        "Toast buns until golden",
-        "Mix mayo with bacon bits for 'baconnaise' sauce",
-        "Assemble burgers with sauce, lettuce, tomato, pickles, onion, patties, and bacon"
-      ],
-      "fat": 38,
-      "id": 4,
-      "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop",
+      "source": "Instagram @jernejkitchen",
+      "url": "https://www.instagram.com/reel/C7hyrnrS0RB/",
       "ingredients": [
         {
-          "amount": 200,
-          "name": "Ground Beef",
-          "perServing": true,
-          "unit": "g"
+          "name": "Chicken Thighs",
+          "amount": 227,
+          "unit": "g",
+          "perServing": true
         },
         {
-          "amount": 60,
-          "name": "Bacon",
-          "perServing": true,
-          "unit": "g"
+          "name": "Garlic Powder",
+          "amount": 0.5,
+          "unit": "tsp",
+          "perServing": false
         },
         {
-          "amount": 40,
-          "name": "Cheddar Cheese",
-          "perServing": true,
-          "unit": "g"
+          "name": "Dried Thyme",
+          "amount": 0.5,
+          "unit": "tsp",
+          "perServing": false
         },
         {
+          "name": "Dried Oregano",
+          "amount": 0.5,
+          "unit": "tsp",
+          "perServing": false
+        },
+        {
+          "name": "Olive Oil",
+          "amount": 2,
+          "unit": "tbsp",
+          "perServing": false
+        },
+        {
+          "name": "Potatoes",
           "amount": 1,
-          "name": "Burger Buns",
-          "perServing": true,
-          "unit": "pc"
+          "unit": "pc",
+          "perServing": true
         },
         {
-          "amount": 20,
-          "name": "Mayo",
-          "perServing": true,
-          "unit": "g"
+          "name": "Lemon",
+          "amount": 1,
+          "unit": "pc",
+          "perServing": false
         },
         {
-          "amount": 20,
-          "name": "Lettuce",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
+          "name": "Feta Cheese",
           "amount": 30,
-          "name": "Tomato",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 15,
-          "name": "Pickles",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 20,
-          "name": "Onion",
-          "perServing": true,
-          "unit": "g"
+          "unit": "g",
+          "perServing": false
         }
       ],
-      "localThumbnail": "/videos/4_baconnaise_double_cheeseburgers_video_thumb.jpg",
-      "localVideo": "/videos/4_baconnaise_double_cheeseburgers_video.mp4",
-      "name": "\ud83c\udf54 Baconnaise Double Cheeseburgers",
-      "protein": 42,
-      "servings": 4,
-      "source": "TikTok @burgerking",
-      "tags": [
-        "burger",
-        "american",
-        "comfort food"
-      ],
-      "url": "https://www.tiktok.com/@burgerking/video/baconnaise"
-    },
-    "2026-02-19-dinner": {
-      "calories": 520,
-      "carbs": 48,
       "directions": [
         "Preheat oven to 200C / 400F",
-        "Cut potatoes into wedges, toss with olive oil, oregano, salt, and pepper",
-        "Roast potatoes for 20 minutes",
-        "Add chicken thighs, tomatoes, onion, and garlic to the pan",
-        "Squeeze lemon juice over everything, roast for another 25-30 mins",
-        "Top with crumbled feta and olives before serving"
-      ],
-      "fat": 22,
-      "id": 5,
-      "image": "https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=400&h=300&fit=crop",
-      "ingredients": [
-        {
-          "amount": 180,
-          "name": "Chicken Thighs",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 250,
-          "name": "Potatoes",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 80,
-          "name": "Cherry Tomatoes",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 40,
-          "name": "Red Onion",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 10,
-          "name": "Garlic",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 0.5,
-          "name": "Lemon",
-          "perServing": true,
-          "unit": "pc"
-        },
-        {
-          "amount": 15,
-          "name": "Olive Oil",
-          "perServing": true,
-          "unit": "ml"
-        },
-        {
-          "amount": 2,
-          "name": "Dried Oregano",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 30,
-          "name": "Feta Cheese",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 20,
-          "name": "Kalamata Olives",
-          "perServing": true,
-          "unit": "g"
-        }
-      ],
-      "name": "\ud83e\udd54 Mediterranean Roast Potatoes with Chicken",
-      "protein": 35,
-      "servings": 6,
-      "source": "TikTok @mediterraneandiet",
-      "tags": [
-        "mediterranean",
-        "sheet pan",
-        "healthy"
-      ],
-      "url": "https://www.tiktok.com/@mediterraneandiet/video/roast"
-    },
-    "2026-02-19-lunch": {
-      "calories": 650,
-      "carbs": 35,
-      "directions": [
-        "Form beef into patties, season with salt and pepper",
-        "Cook bacon until crispy, set aside",
-        "Grill or pan-sear burger patties over high heat for 3-4 mins per side",
-        "Add cheese in the last minute to melt",
-        "Toast buns until golden",
-        "Mix mayo with bacon bits for 'baconnaise' sauce",
-        "Assemble burgers with sauce, lettuce, tomato, pickles, onion, patties, and bacon"
-      ],
-      "fat": 38,
-      "id": 4,
-      "image": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&h=300&fit=crop",
-      "ingredients": [
-        {
-          "amount": 200,
-          "name": "Ground Beef",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 60,
-          "name": "Bacon",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 40,
-          "name": "Cheddar Cheese",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 1,
-          "name": "Burger Buns",
-          "perServing": true,
-          "unit": "pc"
-        },
-        {
-          "amount": 20,
-          "name": "Mayo",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 20,
-          "name": "Lettuce",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 30,
-          "name": "Tomato",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 15,
-          "name": "Pickles",
-          "perServing": true,
-          "unit": "g"
-        },
-        {
-          "amount": 20,
-          "name": "Onion",
-          "perServing": true,
-          "unit": "g"
-        }
-      ],
-      "localThumbnail": "/videos/4_baconnaise_double_cheeseburgers_video_thumb.jpg",
-      "localVideo": "/videos/4_baconnaise_double_cheeseburgers_video.mp4",
-      "name": "\ud83c\udf54 Baconnaise Double Cheeseburgers",
-      "protein": 42,
-      "servings": 4,
-      "source": "TikTok @burgerking",
-      "tags": [
-        "burger",
-        "american",
-        "comfort food"
-      ],
-      "url": "https://www.tiktok.com/@burgerking/video/baconnaise"
+        "Season chicken thighs with salt, pepper, garlic powder, thyme, and oregano",
+        "In a large bowl, mix olive oil with lemon zest, lemon juice, and oregano",
+        "Add potato chunks to the bowl and toss to coat",
+        "Place chicken and potatoes on a baking sheet",
+        "Roast for 35-40 minutes until chicken is cooked through and potatoes are crispy",
+        "Sprinkle with crumbled feta cheese and serve"
+      ]
     }
   },
   "currentWeekOffset": 0,
-  "servingsCount": 1,
+  "servingsCount": 2,
   "favoriteRecipes": [
     2,
     1
   ],
   "customGroceryItems": [],
-  "lastUpdated": "2026-02-17T03:29:28Z"
+  "lastUpdated": "2026-02-20T23:55:26Z"
 }
