@@ -115,6 +115,7 @@
             padding-top: calc(var(--space-lg) + env(safe-area-inset-top, 0px));
             border-bottom: 0.5px solid var(--gray4);
             flex-shrink: 0;
+            position: relative;
         }
 
         .panel-header h1 {
@@ -1324,7 +1325,35 @@
         .recipe-panel.mobile-open {
             transform: translateX(0);
         }
-        
+
+        /* Mobile Close Button */
+        .mobile-close-btn {
+            display: none;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border: none;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            font-size: 18px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mobile-close-btn:active {
+            background: rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .mobile-close-btn {
+                display: flex;
+            }
+        }
+
         /* Touch-friendly improvements */
         @media (hover: none) {
             .recipe-card:hover {
@@ -1678,6 +1707,7 @@
             <div class="panel-header">
                 <h1>🍽️ Meal Planner</h1>
                 <p>Plan meals & manage staples</p>
+                <button class="mobile-close-btn" onclick="closeMobilePanel()" aria-label="Close panel">✕</button>
             </div>
             <!-- Tab Navigation -->
             <div class="tab-nav">
